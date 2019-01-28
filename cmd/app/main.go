@@ -3,14 +3,14 @@ package main
 import (
 	"log"
 
-	"github.com/Lighty0410/microservice-test/pkg/handleserver"
+	"github.com/Lighty0410/ekadashi-server/pkg/server"
 	"github.com/gorilla/mux"
 )
 
 var router = mux.NewRouter()
 
 func main() {
-	server := handleserver.NewServer()
+	server := server.NewServer()
 
 	done := make(chan bool)
 	go func() {
