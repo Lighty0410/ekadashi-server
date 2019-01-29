@@ -2,29 +2,38 @@ package server
 
 import (
 	"encoding/json"
+	"errors"
 	"net/http"
+
+	"github.com/Lighty0410/ekadashi-server/pkg/provider"
 )
 
-// AuthName is a struct of users that's gonna connect to the server
-type AuthName struct {
-	Username string `json:"username"`
-	Password string `json:"password"`
-}
-
-// Server is a struct wich we can to handle to
-type Server struct {
+// UserRouter is a providing struct
+type UserRouter struct {
+	userService provider.Handler
 	http.Server
-	shutDown chan bool
-	reqCount uint32
 }
 
-var users []AuthName
+// Registration registrate users.
+func (users *UserRouter) Registration(w http.ResponseWriter, r *http.Request) {
+	user, err := decodeUser(r)
+	if err != nil {
+		Error(w, http.StatusBadRequest, err.Error())
+		return
+	}
+	err = users.userService.Create(&user)
+	if err != nil {
+		Error(w, http.StatusInternalServerError, err.Error())
+	}
+	JSON(w, http.StatusOK, err)
+}
 
-// Login authorize users.
-func (s *Server) Login(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-type", "application/json")
-	var user AuthName
-	json.NewDecoder(r.Body).Decode(&user)
-	users = append(users, user)
-	json.NewEncoder(w).Encode(user)
+func decodeUser(r *http.Request) (provider.User, error) {
+	var u provider.User
+	if r.Body == nil {
+		return u, errors.New("no request body")
+	}
+	decoder := json.NewDecoder(r.Body)
+	err := decoder.Decode(&u)
+	return u, err
 }
