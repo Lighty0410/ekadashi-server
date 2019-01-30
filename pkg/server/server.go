@@ -6,7 +6,7 @@ import (
 	"testsmt/pkg/mongo"
 )
 
-//Registration registrate users and insert user's info in MongoDB
+// Registration registrate users and insert user's info in MongoDB.
 func Registration(w http.ResponseWriter, r *http.Request) {
 	defer r.Body.Close()
 	var user mongo.Users
