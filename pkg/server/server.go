@@ -1,21 +1,22 @@
 package server
 
 import (
-	"encoding/json"
-	"net/http"
-	"testsmt/pkg/mongo"
+	"github.com/Lighty0410/ekadashi-server/pkg/mongo"
+	"github.com/gorilla/mux"
 )
 
-// Registration registrate users and insert user's info in MongoDB.
-func Registration(w http.ResponseWriter, r *http.Request) {
-	defer r.Body.Close()
-	var user mongo.Users
-	if err := json.NewDecoder(r.Body).Decode(&user); err != nil {
-		respondWithError(w, http.StatusBadRequest, "Invalid Request Payload")
-		return
+// EkadashiServer serves ekadashi HTTP requests.
+type EkadashiServer struct {
+	*mux.Router
+	db *mongo.Service
+}
+
+// NewEkadashiServer sets up http routs and returns server ready to use in http.ListenAndServe.
+func NewEkadashiServer(db *mongo.Service) (*EkadashiServer, error) {
+	s := &EkadashiServer{
+		Router: mux.NewRouter(),
+		db:     db,
 	}
-	if err := mongo.CreateUser(&user); err != nil {
-		respondWithError(w, http.StatusBadRequest, err.Error())
-	}
-	respondWithJSON(w, user)
+	s.Methods("POST").Path("/login").HandlerFunc(s.handleRegistration)
+	return s, nil
 }
