@@ -1,20 +1,21 @@
 package server
 
 import (
+	"encoding/json"
 	"net/http"
-	"time"
-
-	"github.com/gorilla/mux"
+	"testsmt/pkg/mongo"
 )
 
-// NewServer creates a new router
-func (u *UserRouter) NewServer() {
-	u.Server = http.Server{
-		Addr:         ":8080",
-		ReadTimeout:  1 * time.Second,
-		WriteTimeout: 1 * time.Second,
+//Registration registrate users and insert user's info in MongoDB
+func Registration(w http.ResponseWriter, r *http.Request) {
+	defer r.Body.Close()
+	var user mongo.Users
+	if err := json.NewDecoder(r.Body).Decode(&user); err != nil {
+		respondWithError(w, http.StatusBadRequest, "Invalid Request Payload")
+		return
 	}
-	router := mux.NewRouter()
-	router.HandleFunc("/login", u.Registration).Methods("POST")
-	u.Handler = router
+	if err := mongo.CreateUser(&user); err != nil {
+		respondWithError(w, http.StatusBadRequest, err.Error())
+	}
+	respondWithJSON(w, user)
 }

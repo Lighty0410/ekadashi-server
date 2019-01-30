@@ -1,16 +1,14 @@
 package main
 
 import (
-	"log"
+	"net/http"
+	"testsmt/pkg/server"
 
-	"github.com/Lighty0410/ekadashi-server/pkg/server"
+	"github.com/gorilla/mux"
 )
 
 func main() {
-	http := &server.UserRouter{}
-	http.NewServer()
-	err := http.ListenAndServe()
-	if err != nil {
-		log.Printf("Listen and serve err: %v", err)
-	}
+	r := mux.NewRouter()
+	r.HandleFunc("/login", server.Registration).Methods("POST")
+	http.ListenAndServe(":9000", r)
 }
