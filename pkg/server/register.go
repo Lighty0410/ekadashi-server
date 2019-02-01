@@ -16,7 +16,7 @@ type registerRequest struct {
 // handleRegistration registers user in the system.
 func (s *EkadashiServer) handleRegistration(w http.ResponseWriter, r *http.Request) {
 	var req registerRequest
-	err := json.NewDecoder(r.Body).Decode(&req) Report 
+	err := json.NewDecoder(r.Body).Decode(&req)
 	if err != nil {
 		jsonError(w, http.StatusBadRequest, fmt.Errorf("could not decode request: %v", err))
 		return

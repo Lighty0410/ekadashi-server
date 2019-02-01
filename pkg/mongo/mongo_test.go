@@ -10,21 +10,33 @@ func TestUserInsert(t *testing.T) {
 			"Can't create a new service",
 		)
 	}
-	var test = []User{
-		User{Name: "a", Password: "wow"},
+	tt := []struct {
+		name        string
+		user        User
+		expectError string
+	}{
+		{
+			name: "all ok",
+			user: User{Name: "a", Password: "wow"},
+		},
+	}
+	tt := []User{
 		User{Name: "", Password: "woah"},
 		User{Name: "", Password: ""},
+		User{Name: "leva", Password: ""},
 		User{Name: "@!#@!#", Password: "123213"},
 		User{Name: "e", Password: "ouch"},
 	}
-	for _, pair := range test {
-		result := testService.AddUser(&pair)
-		if result != nil {
-			t.Error(
-				"For ", pair.Name,
-				"Expected ", pair.Password,
-				"Got ", u.Password, u.Name,
-			)
-		}
+	for _, tc := range tt {
+		t.Run(tc.name, func(t *testing.T) {
+			result := testService.AddUser(&tc.user)
+			if result != nil {
+				t.Error(
+					"For ", pair.Name,
+					"Expected ", pair.Password,
+					"Got ", u.Password, u.Name,
+				)
+			}
+		})
 	}
 }
