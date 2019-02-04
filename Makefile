@@ -1,18 +1,14 @@
-GOBIN=$(shell pwd)/bin
-GOFILES=$(wildcard *.go)
-GONAME=$(shell basename "$(PWD)")
-PKGS := $(shell go list ./... | grep -v /vendor)
+BIN_DIR := ./bin
 
-.PHONY: test
-test: 
-	go test $()
+BUILDNAME := $(BIN_DIR)/server
 
-.PHONY: build
 build:
-  	@echo "Building $(GOFILES) to ./bin"
-	@GOPATH=$(GOPATH) GOBIN=$(GOBIN) go build -o bin/$(GONAME) $(GOFILES)
+	go build -o $(BUILDNAME) ./cmd/app
 
-.PHONY: clean
+test: 
+	go test $() -o $(BUILDNAME) ./pkg
+
+.PHONY:
 clean:
 	@echo " CLEAN"
 	go clean
@@ -39,4 +35,4 @@ lint:
 		--enable=goimports \ 
 		--enable=`lll - Repor` \
 		--enable=misspell \
-		--enable=unparam \
+		--enable=unparam 
