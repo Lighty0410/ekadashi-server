@@ -41,6 +41,6 @@ func main() {
 	log.Printf("Shutting down due to signal: %v", sig)
 	err = server.Shutdown(context.Background())
 	if err != nil {
-		log.Fatalf("Cannot shutdown the server")
+		log.Println("Cannot shutdown the server")
 	}
 }
