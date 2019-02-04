@@ -39,5 +39,8 @@ func main() {
 	sig := <-stop
 
 	log.Printf("Shutting down due to signal: %v", sig)
-	server.Shutdown(context.Background())
+	err = server.Shutdown(context.Background())
+	if err != nil {
+		log.Fatalf("Cannot shutdown the server")
+	}
 }
