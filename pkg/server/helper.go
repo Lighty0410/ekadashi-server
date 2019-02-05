@@ -12,7 +12,7 @@ func jsonError(w http.ResponseWriter, status int, err error) {
 func jsonResponse(w http.ResponseWriter, status int, payload interface{}) {
 	err := json.NewEncoder(w).Encode(payload)
 	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
+		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
 	w.Header().Set("Content-Type", "application/json")
