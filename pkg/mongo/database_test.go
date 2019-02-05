@@ -1,6 +1,8 @@
 package mongo
 
-import "testing"
+import (
+	"testing"
+)
 
 func TestUserInsert(t *testing.T) {
 	testService, err := NewService()
@@ -8,6 +10,7 @@ func TestUserInsert(t *testing.T) {
 		t.Error(
 			"Can't create a new service",
 		)
+		return
 	}
 	tt := []struct {
 		name        string
@@ -40,15 +43,14 @@ func TestUserInsert(t *testing.T) {
 			expectError: nil,
 		},
 	}
-
 	for _, tc := range tt {
 		t.Run(tc.name, func(t *testing.T) {
-			result := testService.AddUser(&tc.user)
-			if result != nil {
+			err := testService.AddUser(&tc.user)
+			if err != nil {
 				t.Fatal(
 					"For ", tc.user,
 					"Expected ", tc.expectError,
-					"Got ", result,
+					"Got ", err,
 				)
 			}
 		})
