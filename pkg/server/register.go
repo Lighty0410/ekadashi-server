@@ -3,6 +3,7 @@ package server
 import (
 	"encoding/json"
 	"fmt"
+	"log"
 	"net/http"
 
 	"github.com/Lighty0410/ekadashi-server/pkg/mongo"
@@ -16,14 +17,25 @@ type registerRequest struct {
 // handleRegistration registers user in the system.
 func (s *EkadashiServer) handleRegistration(w http.ResponseWriter, r *http.Request) {
 	var req registerRequest
+	var password string
 	err := json.NewDecoder(r.Body).Decode(&req)
 	if err != nil {
 		jsonError(w, http.StatusBadRequest, fmt.Errorf("could not decode request: %v", err))
 		return
 	}
+	password, err = generateHash(req.Password)
+	if err != nil {
+		log.Println("Incorrect password")
+		return
+	}
+	err = compareHash(password, req.Password)
+	if err != nil {
+		log.Println("Different hash/password")
+		return
+	}
 	err = s.db.AddUser(&mongo.User{
-		Name:     req.Username,
-		Password: req.Password,
+		Name: req.Username,
+		Hash: password,
 	})
 	if err != nil {
 		jsonError(w, http.StatusInternalServerError, fmt.Errorf("could not add user: %v", err))
@@ -32,4 +44,20 @@ func (s *EkadashiServer) handleRegistration(w http.ResponseWriter, r *http.Reque
 	jsonResponse(w, http.StatusOK, nil)
 }
 
-// here's handlers
+func (s *EkadashiServer) HandleLogin(w http.ResponseWriter, r *http.Request) { //login
+	req := registerRequest{}
+	err := json.NewDecoder(r.Body).Decode(req)
+	if err != nil {
+		jsonError(w, http.StatusBadRequest, fmt.Errorf("incorrect user or password"))
+	}
+	err = s.db.ReadUser()
+	if err != nil {
+		w.WriteHeader(http.StatusUnauthorized)
+	}
+	hash, err := generateHash(req.Password)
+	err = compareHash(req.Password, hash)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+	}
+	jsonResponse(w, http.StatusOK, nil)
+}
