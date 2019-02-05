@@ -1,9 +1,10 @@
 BIN_DIR := ./bin
 BUILDNAME := $(BIN_DIR)/server
 
+.PHONY:
 build:
 	go build -o $(BUILDNAME) ./cmd/app
-
+.PHONY:
 test: 
 	go test -cover ./...
 
