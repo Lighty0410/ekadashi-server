@@ -17,6 +17,8 @@ func NewEkadashiServer(db *mongo.Service) (*EkadashiServer, error) {
 		Router: mux.NewRouter(),
 		db:     db,
 	}
-	s.Methods("POST").Path("/login").HandlerFunc(s.handleRegistration)
+	s.Methods("POST").Path("/register").HandlerFunc(s.handleRegistration)
+	//s.Methods("POST").Path("/login").HandlerFunc(s.login)
+
 	return s, nil
 }

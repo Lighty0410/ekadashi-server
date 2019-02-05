@@ -22,12 +22,16 @@ func (s *EkadashiServer) handleRegistration(w http.ResponseWriter, r *http.Reque
 		return
 	}
 	err = s.db.AddUser(&mongo.User{
-		Name:     req.Username,
-		Password: req.Password,
+		Name: req.Username,
+		Hash: req.Password, //hash
 	})
 	if err != nil {
 		jsonError(w, http.StatusInternalServerError, fmt.Errorf("could not add user: %v", err))
 		return
 	}
 	jsonResponse(w, http.StatusOK, nil)
+}
+
+func (s *EkadashiServer) HandleLogin(w http.ResponseWriter, r *http.Request) { //login
+
 }

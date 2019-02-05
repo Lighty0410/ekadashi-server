@@ -19,27 +19,27 @@ func TestUserInsert(t *testing.T) {
 	}{
 		{
 			name:        "empty name",
-			user:        User{Name: "", Password: "woah"},
+			user:        User{Name: "", Hash: "woah"},
 			expectError: nil,
 		},
 		{
 			name:        "empty name and password",
-			user:        User{Name: "", Password: ""},
+			user:        User{Name: "", Hash: ""},
 			expectError: nil,
 		},
 		{
 			name:        "empty password",
-			user:        User{Name: "Leva", Password: ""},
+			user:        User{Name: "Leva", Hash: ""},
 			expectError: nil,
 		},
 		{
 			name:        "ASCII symobols as a string",
-			user:        User{Name: "@!#@!#", Password: "123213"},
+			user:        User{Name: "@!#@!#", Hash: "123213"},
 			expectError: nil,
 		},
 		{
 			name:        "casual database info",
-			user:        User{Name: "Mesropyan", Password: "SecretKey"},
+			user:        User{Name: "Mesropyan", Hash: "SecretKey"},
 			expectError: nil,
 		},
 	}
