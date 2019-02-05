@@ -41,13 +41,13 @@ func TestUserInsert(t *testing.T) {
 		},
 	}
 
-	for _, table := range tt {
-		t.Run(table.name, func(t *testing.T) {
-			result := testService.AddUser(&table.user)
+	for _, tc := range tt {
+		t.Run(tc.name, func(t *testing.T) {
+			result := testService.AddUser(&tc.user)
 			if result != nil {
-				t.Error(
-					"For ", table.user,
-					"Expected ", table.expectError,
+				t.Fatal(
+					"For ", tc.user,
+					"Expected ", tc.expectError,
 					"Got ", result,
 				)
 			}
