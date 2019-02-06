@@ -33,11 +33,15 @@ func (s *Service) ReadUser(username string) (User, int, error) {
 	var result User
 	filter := bson.D{{"name", username}}
 	err := s.db.Collection("users").FindOne(context.Background(), filter).Decode(&result)
+	fmt.Println(result.Name, result.Hash)
 	switch err != nil {
 	case err == errors.New("mongo: no documents in result"):
 		return result, http.StatusUnauthorized, err
 	case err == errors.New("Registry cannot be nil"):
 		return result, http.StatusUnauthorized, err
+	case err != nil:
+		return result, http.StatusInternalServerError, err
+	default:
+		return result, http.StatusInternalServerError, err
 	}
-	return result, http.StatusOK, err
 }

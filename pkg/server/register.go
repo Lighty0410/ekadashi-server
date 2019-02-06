@@ -53,10 +53,11 @@ func (s *EkadashiServer) handleLogin(w http.ResponseWriter, r *http.Request) { /
 	}
 	user, status, err := s.db.ReadUser(req.Username)
 	if err != nil {
-		jsonError(w, status, fmt.Errorf("incorrect username or password: %v", err))
+		jsonError(w, status, fmt.Errorf("pswd: %v", err))
 		return
-	} else if status != http.StatusUnauthorized && status != http.StatusOK && nil != err {
+	} else if status != http.StatusUnauthorized && status != http.StatusOK && err != nil {
 		jsonError(w, http.StatusInternalServerError, fmt.Errorf("an error occurred in mongoDB: %v", err))
+		return
 	}
 	err = compareHash(user.Hash, []byte(req.Password))
 	if err != nil {
