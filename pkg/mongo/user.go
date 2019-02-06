@@ -3,7 +3,6 @@ package mongo
 import (
 	"context"
 	"fmt"
-	"log"
 	"time"
 
 	"github.com/mongodb/mongo-go-driver/bson"
@@ -27,11 +26,12 @@ func (s *Service) AddUser(u *User) error {
 	return nil
 }
 
-func (s *Service) ReadUser() error {
-	u := &User{}
-	_, err := s.db.Collection("users").Find(context.Background(), bson.M{"name": u.Name})
+func (s *Service) ReadUser(username string) (string, error) {
+	var result User
+	filter := bson.D{{"name", username}}
+	err := s.db.Collection("users").FindOne(context.Background(), filter).Decode(&result)
 	if err != nil {
-		log.Println("incorrect collection")
+		return fmt.Sprintf("	A user with the specified username and password combination does not exist in the system."), err //Is this necessary ?
 	}
-	return nil
+	return result.Hash, err
 }

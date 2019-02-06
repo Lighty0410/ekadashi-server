@@ -20,7 +20,7 @@ func (s *EkadashiServer) handleRegistration(w http.ResponseWriter, r *http.Reque
 	var password string
 	err := json.NewDecoder(r.Body).Decode(&req)
 	if err != nil {
-		jsonError(w, http.StatusBadRequest, fmt.Errorf("could not decode request: %v", err))
+		jsonError(w, http.StatusBadRequest, fmt.Errorf("Can not decode the request: %v", err)) //"The specified password is not in the correct format. The password must be a non-empty string." What do you think about this ?
 		return
 	}
 	password, err = generateHash(req.Password)
@@ -28,11 +28,7 @@ func (s *EkadashiServer) handleRegistration(w http.ResponseWriter, r *http.Reque
 		log.Println("Incorrect password")
 		return
 	}
-	err = compareHash(password, req.Password)
-	if err != nil {
-		log.Println("Different hash/password")
-		return
-	}
+	fmt.Println(req.Username)
 	err = s.db.AddUser(&mongo.User{
 		Name: req.Username,
 		Hash: password,
@@ -44,20 +40,23 @@ func (s *EkadashiServer) handleRegistration(w http.ResponseWriter, r *http.Reque
 	jsonResponse(w, http.StatusOK, nil)
 }
 
-func (s *EkadashiServer) HandleLogin(w http.ResponseWriter, r *http.Request) { //login
-	req := registerRequest{}
-	err := json.NewDecoder(r.Body).Decode(req)
+func (s *EkadashiServer) handleLogin(w http.ResponseWriter, r *http.Request) { //login
+	var req registerRequest
+	var hash string
+	err := json.NewDecoder(r.Body).Decode(&req)
 	if err != nil {
-		jsonError(w, http.StatusBadRequest, fmt.Errorf("incorrect user or password"))
+		jsonError(w, http.StatusBadRequest, fmt.Errorf("Can not decode the request: v", err)) //Which kind of problem is it ? Is it the server-side problem or client one ?
+		return
 	}
-	err = s.db.ReadUser()
+	hash, err = s.db.ReadUser(req.Username)
 	if err != nil {
-		w.WriteHeader(http.StatusUnauthorized)
+		jsonError(w, http.StatusForbidden, fmt.Errorf("A user with the specified username and password combination does not exist in the system.: %v", err))
+		return
 	}
-	hash, err := generateHash(req.Password)
-	err = compareHash(req.Password, hash)
+	err = compareHash(hash, []byte(req.Password))
 	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
+		jsonError(w, http.StatusForbidden, fmt.Errorf("A user with the specified username and password combination does not exist in the system.: %v", err))
+		return
 	}
 	jsonResponse(w, http.StatusOK, nil)
 }

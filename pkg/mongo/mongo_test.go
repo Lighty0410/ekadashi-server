@@ -1,40 +1,56 @@
 package mongo
 
-import "testing"
+import (
+	"testing"
+)
 
 func TestUserInsert(t *testing.T) {
 	testService, err := NewService()
-	u := &User{}
 	if err != nil {
 		t.Error(
 			"Can't create a new service",
 		)
+		return
 	}
 	tt := []struct {
 		name        string
 		user        User
-		expectError string
+		expectError error
 	}{
 		{
-			name: "all ok",
-			user: User{Name: "a", Password: "wow"},
+			name:        "empty name",
+			user:        User{Name: "", Hash: "woah"},
+			expectError: nil,
 		},
-	}
-	tt := []User{
-		User{Name: "", Password: "woah"},
-		User{Name: "", Password: ""},
-		User{Name: "leva", Password: ""},
-		User{Name: "@!#@!#", Password: "123213"},
-		User{Name: "e", Password: "ouch"},
+		{
+			name:        "empty name and password",
+			user:        User{Name: "", Hash: ""},
+			expectError: nil,
+		},
+		{
+			name:        "empty password",
+			user:        User{Name: "Leva", Hash: ""},
+			expectError: nil,
+		},
+		{
+			name:        "ASCII symobols as a string",
+			user:        User{Name: "@!#@!#", Hash: "123213"},
+			expectError: nil,
+		},
+		{
+			name:        "casual database info",
+			user:        User{Name: "Mesropyan", Hash: "SecretKey"},
+			expectError: nil,
+		},
 	}
 	for _, tc := range tt {
 		t.Run(tc.name, func(t *testing.T) {
-			result := testService.AddUser(&tc.user)
-			if result != nil {
-				t.Error(
-					"For ", pair.Name,
-					"Expected ", pair.Password,
-					"Got ", u.Password, u.Name,
+			err := testService.AddUser(&tc.user)
+			if err != nil {
+				t.Fatal(
+					"For ", tc.user,
+					"Expected ", tc.expectError,
+					"Got ", err,
 				)
 			}
 		})
