@@ -2,7 +2,9 @@ package mongo
 
 import (
 	"context"
+	"errors"
 	"fmt"
+	"net/http"
 	"time"
 
 	"github.com/mongodb/mongo-go-driver/bson"
@@ -27,12 +29,15 @@ func (s *Service) AddUser(u *User) error {
 }
 
 // ReadUser retrieves an information from the database and compares it with a request.
-func (s *Service) ReadUser(username string) (string, error) {
+func (s *Service) ReadUser(username string) (User, int, error) {
 	var result User
 	filter := bson.D{{"name", username}}
 	err := s.db.Collection("users").FindOne(context.Background(), filter).Decode(&result)
-	if err != nil {
-		return fmt.Sprintf("	A user with the specified username and password combination does not exist in the system."), err //Is this necessary ?
+	switch err != nil {
+	case err == errors.New("mongo: no documents in result"):
+		return result, http.StatusUnauthorized, err
+	case err == errors.New("Registry cannot be nil"):
+		return result, http.StatusUnauthorized, err
 	}
-	return result.Hash, err
+	return result, http.StatusOK, err
 }
