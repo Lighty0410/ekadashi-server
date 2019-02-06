@@ -13,4 +13,4 @@
 
 .vscode/ 
 .idea/
-cmd/app/debug
+bin/

@@ -60,3 +60,5 @@ func (s *EkadashiServer) handleLogin(w http.ResponseWriter, r *http.Request) { /
 	}
 	jsonResponse(w, http.StatusOK, nil)
 }
+
+}
