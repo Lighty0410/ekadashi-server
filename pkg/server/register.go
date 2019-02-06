@@ -45,7 +45,7 @@ func (s *EkadashiServer) handleLogin(w http.ResponseWriter, r *http.Request) { /
 	var hash string
 	err := json.NewDecoder(r.Body).Decode(&req)
 	if err != nil {
-		jsonError(w, http.StatusBadRequest, fmt.Errorf("Can not decode the request: v", err)) //Which kind of problem is it ? Is it the server-side problem or client one ?
+		jsonError(w, http.StatusBadRequest, fmt.Errorf("Can not decode the request.:  %v", err)) // Which kind of problem is it ? Is it the server-side problem or client one ?
 		return
 	}
 	hash, err = s.db.ReadUser(req.Username)

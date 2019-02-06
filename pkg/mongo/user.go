@@ -26,6 +26,7 @@ func (s *Service) AddUser(u *User) error {
 	return nil
 }
 
+// ReadUser retrieves an information from the database and compares it with a request.
 func (s *Service) ReadUser(username string) (string, error) {
 	var result User
 	filter := bson.D{{"name", username}}
