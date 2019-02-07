@@ -3,7 +3,6 @@ package server
 import (
 	"encoding/json"
 	"fmt"
-	"log"
 	"net/http"
 
 	"github.com/Lighty0410/ekadashi-server/pkg/mongo"
@@ -21,21 +20,19 @@ type registerRequest struct {
 // handleRegistration registers user in the system.
 func (s *EkadashiServer) handleRegistration(w http.ResponseWriter, r *http.Request) {
 	var req registerRequest
-	var password string
 	err := json.NewDecoder(r.Body).Decode(&req)
 	if err != nil {
 		jsonError(w, http.StatusBadRequest, fmt.Errorf("can not decode the request: %v", err))
 		return
 	}
-	password, err = generateHash(req.Password)
+	hashedPassword, err := generateHash(req.Password)
 	if err != nil {
-		log.Println("Incorrect password")
+		jsonError(w, http.StatusUnauthorized, fmt.Errorf("incorrect password: %v", err))
 		return
 	}
-	fmt.Println(req.Username)
 	err = s.db.AddUser(&mongo.User{
 		Name: req.Username,
-		Hash: password,
+		Hash: hashedPassword,
 	})
 	if err != nil {
 		jsonError(w, http.StatusInternalServerError, fmt.Errorf("could not add user: %v", err))
@@ -44,24 +41,25 @@ func (s *EkadashiServer) handleRegistration(w http.ResponseWriter, r *http.Reque
 	jsonResponse(w, http.StatusOK, nil)
 }
 
-func (s *EkadashiServer) handleLogin(w http.ResponseWriter, r *http.Request) { //login
+func (s *EkadashiServer) handleLogin(w http.ResponseWriter, r *http.Request) {
 	var req loginRequest
 	err := json.NewDecoder(r.Body).Decode(&req)
 	if err != nil {
-		jsonError(w, http.StatusBadRequest, fmt.Errorf("can not decode the request.:  %v", err))
+		jsonError(w, http.StatusBadRequest, fmt.Errorf("can not decode the request: %v", err))
 		return
 	}
-	user, status, err := s.db.ReadUser(req.Username)
-	if err != nil {
-		jsonError(w, status, fmt.Errorf("pswd: %v", err))
+	user, err := s.db.ReadUser(req.Username)
+	if err == mongo.ErrUserNotFound {
+		jsonError(w, http.StatusUnauthorized, fmt.Errorf("incorrect username or password: %v", err))
 		return
-	} else if status != http.StatusUnauthorized && status != http.StatusOK && err != nil {
+	}
+	if err != nil {
 		jsonError(w, http.StatusInternalServerError, fmt.Errorf("an error occurred in mongoDB: %v", err))
 		return
 	}
 	err = compareHash(user.Hash, []byte(req.Password))
 	if err != nil {
-		jsonError(w, http.StatusForbidden, fmt.Errorf("incorrect username or password: %v", err))
+		jsonError(w, http.StatusUnauthorized, fmt.Errorf("incorrect username or password"))
 		return
 	}
 	jsonResponse(w, http.StatusOK, nil)
