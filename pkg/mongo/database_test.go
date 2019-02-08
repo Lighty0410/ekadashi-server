@@ -4,7 +4,7 @@ import (
 	"testing"
 )
 
-func TestUserInsert(t *testing.T) {
+func TestAddAndReadUser(t *testing.T) {
 	testService, err := NewService()
 	if err != nil {
 		t.Error(
@@ -18,12 +18,12 @@ func TestUserInsert(t *testing.T) {
 		expectError error
 	}{
 		{
-			name:        "empty name",
-			user:        User{Name: "", Hash: "woah"},
+			name:        "empty password",
+			user:        User{Name: "Greatestmateofalltime", Hash: ""},
 			expectError: nil,
 		},
 		{
-			name:        "empty name and password",
+			name:        "empty name",
 			user:        User{Name: "", Hash: ""},
 			expectError: nil,
 		},
@@ -53,70 +53,19 @@ func TestUserInsert(t *testing.T) {
 					"Got: ", err,
 				)
 			}
-		})
-	}
-}
-
-func TestReadUser(t *testing.T) {
-	testService, err := NewService()
-	if err != nil {
-		t.Error("cannot create a new service")
-		return
-	}
-	tt := []struct {
-		name        string
-		user        User
-		expectError error
-	}{
-		{
-			name:        "empty name",
-			user:        User{Name: "", Hash: "woah"},
-			expectError: nil,
-		},
-		{
-			name:        "empty name and password",
-			user:        User{Name: "", Hash: ""},
-			expectError: nil,
-		},
-		{
-			name:        "empty password",
-			user:        User{Name: "Leva", Hash: ""},
-			expectError: nil,
-		},
-		{
-			name:        "ASCII symobols as a string",
-			user:        User{Name: "@!#@!#", Hash: "123213"},
-			expectError: nil,
-		},
-		{
-			name:        "casual database info",
-			user:        User{Name: "Leva", Hash: "SecretKey"},
-			expectError: nil,
-		},
-	}
-	for _, tc := range tt {
-		t.Run(tc.name, func(t *testing.T) {
-			err := testService.AddUser(&tc.user)
+			user, err := testService.ReadUser(tc.user.Name)
 			if err != tc.expectError {
 				t.Fatal(
-					"For: ", tc.user,
+					"For: ", tc.expectError,
 					"Expected: ", tc.expectError,
 					"Got: ", err,
 				)
 			}
-			user, err := testService.ReadUser(tc.user.Name)
-			if err != tc.expectError {
-				t.Fatal(
-					"For: ", tc.user,
-					"Expected ", tc.expectError,
-					"Got: ", err,
-				)
-			}
-			if user.Name != tc.user.Name {
+			if user != tc.user {
 				t.Fatal(
 					"For: ", tc.user,
 					"Expected: ", tc.user,
-					"Got: ", user.Name,
+					"Got: ", user,
 				)
 			}
 		})
