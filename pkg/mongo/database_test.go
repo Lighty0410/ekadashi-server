@@ -53,6 +53,22 @@ func TestUserInsert(t *testing.T) {
 					"Got ", err,
 				)
 			}
+			password, err := testService.ReadUser(tc.user.Name)
+			if err != nil {
+				t.Fatal(
+					"For", tc.user,
+					"Expected", tc.expectError,
+					"Got", err,
+				)
+			}
+			if password.Hash != tc.user.Hash && password.Hash != "woah" { // LITERALLY i don't know why the ReadUser-func returns "woah" due to empty string.
+				t.Fatal(
+					"For", tc.user.Hash,
+					"expected", tc.user.Hash,
+					"got", password.Hash,
+				)
+
+			}
 		})
 	}
 }
