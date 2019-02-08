@@ -4,6 +4,9 @@ import (
 	"context"
 	"fmt"
 	"time"
+
+	"github.com/mongodb/mongo-go-driver/bson"
+	"github.com/mongodb/mongo-go-driver/mongo"
 )
 
 // User contains information about a single user in a system.
@@ -12,24 +15,31 @@ type User struct {
 	Hash string `bson:"hash"`
 }
 
+// ErrUserNotFound is an error that returns if user is not found
+var ErrUserNotFound = fmt.Errorf("mongo: no documents in result")
+
 // AddUser adds passed user into users collection.
 func (s *Service) AddUser(u *User) error {
-	ctx, _ := context.WithTimeout(context.Background(), 5*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
 	c := s.db.Collection("users")
-	_, err := c.InsertOne(ctx, u) // err := c.Insert(u)
+	_, err := c.InsertOne(ctx, u)
 	if err != nil {
 		return fmt.Errorf("could not insert user: %v", err)
 	}
 	return nil
 }
 
-/*
-func (s *Service) ReadUser() error {
-	u := &User{}
-	err := s.db.C("users").Find(u.Name)
-	if err != nil {
-		log.Println("incorrect collection")
+// ReadUser retrieves an information from the database and compares it with a request.
+func (s *Service) ReadUser(username string) (User, error) {
+	var hash User
+	filter := bson.D{{Key: "name", Value: username}}
+	err := s.db.Collection("users").FindOne(context.Background(), filter).Decode(&hash)
+	if err == mongo.ErrNoDocuments {
+		return hash, ErrUserNotFound
 	}
-	return nil
+	if err != nil {
+		return hash, fmt.Errorf("cannot search user")
+	}
+	return hash, nil
 }
-*/

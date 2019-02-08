@@ -4,7 +4,7 @@ import (
 	"testing"
 )
 
-func TestUserInsert(t *testing.T) {
+func TestAddAndReadUser(t *testing.T) {
 	testService, err := NewService()
 	if err != nil {
 		t.Error(
@@ -18,12 +18,12 @@ func TestUserInsert(t *testing.T) {
 		expectError error
 	}{
 		{
-			name:        "empty name",
-			user:        User{Name: "", Hash: "woah"},
+			name:        "empty password",
+			user:        User{Name: "Greatestmateofalltime", Hash: ""},
 			expectError: nil,
 		},
 		{
-			name:        "empty name and password",
+			name:        "empty name",
 			user:        User{Name: "", Hash: ""},
 			expectError: nil,
 		},
@@ -46,11 +46,26 @@ func TestUserInsert(t *testing.T) {
 	for _, tc := range tt {
 		t.Run(tc.name, func(t *testing.T) {
 			err := testService.AddUser(&tc.user)
-			if err != nil {
+			if err != tc.expectError {
 				t.Fatal(
-					"For ", tc.user,
-					"Expected ", tc.expectError,
-					"Got ", err,
+					"For: ", tc.user,
+					"Expected: ", tc.expectError,
+					"Got: ", err,
+				)
+			}
+			user, err := testService.ReadUser(tc.user.Name)
+			if err != tc.expectError {
+				t.Fatal(
+					"For: ", tc.expectError,
+					"Expected: ", tc.expectError,
+					"Got: ", err,
+				)
+			}
+			if user != tc.user {
+				t.Fatal(
+					"For: ", tc.user,
+					"Expected: ", tc.user,
+					"Got: ", user,
 				)
 			}
 		})
