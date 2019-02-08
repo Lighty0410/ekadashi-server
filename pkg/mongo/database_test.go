@@ -1,11 +1,13 @@
 package mongo
 
 import (
+	"os"
 	"testing"
 )
 
 func TestAddAndReadUser(t *testing.T) {
-	testService, err := NewService()
+	connectionURL := os.Getenv("ekadashiserver")
+	testService, err := NewService(connectionURL)
 	if err != nil {
 		t.Error(
 			"Can't create a new service",
