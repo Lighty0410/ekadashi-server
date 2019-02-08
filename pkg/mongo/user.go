@@ -38,5 +38,8 @@ func (s *Service) ReadUser(username string) (User, error) {
 	if err == mongo.ErrNoDocuments {
 		return hash, ErrUserNotFound
 	}
-	return hash, err
+	if err != nil {
+		return hash, fmt.Errorf("cannot search user")
+	}
+	return hash, nil
 }
