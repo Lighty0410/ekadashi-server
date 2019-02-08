@@ -48,12 +48,13 @@ func TestAddAndReadUser(t *testing.T) {
 			err := testService.AddUser(&tc.user)
 			if err != tc.expectError {
 				t.Fatal(
-					"For: ", tc.expectError,
+					"For: ", tc.user,
 					"Expected: ", tc.expectError,
 					"Got: ", err,
 				)
 			}
-			if user != tc.user {
+			user, err := testService.ReadUser(tc.user.Name)
+			if err != tc.expectError {
 				t.Fatal(
 					"For: ", tc.expectError,
 					"Expected: ", tc.expectError,
