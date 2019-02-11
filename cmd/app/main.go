@@ -13,7 +13,7 @@ import (
 )
 
 func main() {
-	connectionURL := os.Getenv("ekadashiserver")
+	connectionURL := os.Getenv("EKADASHI_MONGO_URL")
 	mongoService, err := mongo.NewService(connectionURL)
 	if err != nil {
 		log.Fatalf("Could not create mongo service: %v", err)
