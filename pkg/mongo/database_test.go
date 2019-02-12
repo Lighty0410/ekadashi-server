@@ -6,11 +6,17 @@ import (
 )
 
 func TestAddAndReadUser(t *testing.T) {
-	connectionURL := os.Getenv("ekadashiserver")
+	connectionURL := os.Getenv("EKADASHI_MONGO_URL")
+	if connectionURL == "" {
+		t.Error(
+			"inappropriate environment variable",
+		)
+		return
+	}
 	testService, err := NewService(connectionURL)
 	if err != nil {
 		t.Error(
-			"Can't create a new service",
+			"can't create a new service",
 		)
 		return
 	}
