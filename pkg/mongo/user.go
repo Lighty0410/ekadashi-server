@@ -15,6 +15,10 @@ type User struct {
 	Hash string `bson:"hash"`
 }
 
+type Session struct {
+	SessionID string `bson:"sessionid"`
+}
+
 // ErrUserNotFound is an error that returns if user is not found
 var ErrUserNotFound = fmt.Errorf("mongo: no documents in result")
 
@@ -27,6 +31,17 @@ func (s *Service) AddUser(u *User) error {
 	if err != nil {
 		return fmt.Errorf("could not insert user: %v", err)
 	}
+	return nil
+}
+
+func (s *Service) EnsureSession(session *Session) error {
+	s.CreateIndex()
+	c := s.db.Collection("session")
+	_, err := c.InsertOne(context.Background(), session)
+	if err != nil {
+		return fmt.Errorf("cannot add session")
+	}
+	fmt.Println("OK")
 	return nil
 }
 
