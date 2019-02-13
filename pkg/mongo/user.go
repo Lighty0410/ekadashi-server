@@ -15,10 +15,6 @@ type User struct {
 	Hash string `bson:"hash"`
 }
 
-type Session struct {
-	SessionID string `bson:"sessionid"`
-}
-
 // ErrUserNotFound is an error that returns if user is not found
 var ErrUserNotFound = fmt.Errorf("mongo: no documents in result")
 
