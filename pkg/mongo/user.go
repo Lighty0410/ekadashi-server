@@ -34,17 +34,6 @@ func (s *Service) AddUser(u *User) error {
 	return nil
 }
 
-func (s *Service) EnsureSession(session *Session) error {
-	s.CreateIndex()
-	c := s.db.Collection("session")
-	_, err := c.InsertOne(context.Background(), session)
-	if err != nil {
-		return fmt.Errorf("cannot add session")
-	}
-	fmt.Println("OK")
-	return nil
-}
-
 // ReadUser retrieves an information from the database and compares it with a request.
 func (s *Service) ReadUser(username string) (User, error) {
 	var hash User

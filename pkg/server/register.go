@@ -63,10 +63,4 @@ func (s *EkadashiServer) handleLogin(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	jsonResponse(w, http.StatusOK, nil)
-	err = s.db.EnsureSession(&mongo.Session{
-		SessionID: "rasras",
-	})
-	if err != nil {
-		fmt.Println("smsm")
-	}
 }
