@@ -24,10 +24,16 @@ func NewService(connectionURL string) (*Service, error) {
 		return nil, fmt.Errorf("could not dial mongo: %v", err)
 	}
 	db := client.Database("ekadashi")
-	return &Service{
+	s := &Service{
 		db: db,
-	}, nil
+	}
+	err = s.CreateIndex()
+	if err != nil{
+		return s, err
+	}
+	return s, nil
 }
+
 // CreateIndex creates an index for session collection
 func (s *Service) CreateIndex() error {
 	var opt options.IndexOptions

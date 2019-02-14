@@ -1,7 +1,6 @@
 package server
 
 import (
-	"fmt"
 	"github.com/Lighty0410/ekadashi-server/pkg/mongo"
 	"github.com/gorilla/mux"
 )
@@ -17,10 +16,6 @@ func NewEkadashiServer(db *mongo.Service) (*EkadashiServer, error) {
 	s := &EkadashiServer{
 		Router: mux.NewRouter(),
 		db:     db,
-	}
-	err := db.CreateIndex()
-	if err != nil {
-		return s, fmt.Errorf("cannot create an index: %v", err)
 	}
 	s.Methods("POST").Path("/register").HandlerFunc(s.handleRegistration)
 	s.Methods("POST").Path("/login").HandlerFunc(s.handleLogin)
