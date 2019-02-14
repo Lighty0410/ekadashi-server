@@ -29,7 +29,7 @@ func NewService(connectionURL string) (*Service, error) {
 	}
 	err = s.CreateIndex()
 	if err != nil{
-		return s, err
+		return s, fmt.Errorf("cannot create an index")
 	}
 	return s, nil
 }
