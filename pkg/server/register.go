@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"time"
 
 	"github.com/Lighty0410/ekadashi-server/pkg/mongo"
 )
@@ -62,5 +63,15 @@ func (s *EkadashiServer) handleLogin(w http.ResponseWriter, r *http.Request) {
 		jsonError(w, http.StatusUnauthorized, fmt.Errorf("incorrect username or password"))
 		return
 	}
+	cookieHash := generateCookieHash()
+	cookie := http.Cookie{Name:req.Username,
+		Value:cookieHash,
+		Expires:time.Now().Add(5 *time.Minute),
+	}
+	err = s.db.CreateSession(&mongo.Session{
+		Name:cookie.Name,
+		CookieHash:cookie.Value,
+		Expiration:cookie.Expires.Format(time.RFC3339),
+	})
 	jsonResponse(w, http.StatusOK, nil)
 }
