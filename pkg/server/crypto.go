@@ -19,7 +19,7 @@ func generateHash(password string) (string, error) {
 func compareHash(hash string, password []byte) error {
 	return bcrypt.CompareHashAndPassword([]byte(hash), password)
 }
-func generateCookieHash() string {
+func generateToken() string {
 	b := make([]byte, 32)
 	if _, err := io.ReadFull(rand.Reader, b); err != nil {
 		return ""

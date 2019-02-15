@@ -17,6 +17,12 @@ type registerRequest struct {
 	loginRequest
 }
 
+type Session struct {
+	SessionID string `json:"sessionID"`
+	UniqueHash string `json:"hash"`
+	LastModifiedDate time.Time `json:"modified"`
+}
+
 // handleRegistration registers user in the system.
 func (s *EkadashiServer) handleRegistration(w http.ResponseWriter, r *http.Request) {
 	var req registerRequest
@@ -40,7 +46,8 @@ func (s *EkadashiServer) handleRegistration(w http.ResponseWriter, r *http.Reque
 	}
 	jsonResponse(w, http.StatusOK, nil)
 }
-
+// handleLogin retrieve an information about login request
+// if login succeed it assigns cookie to user
 func (s *EkadashiServer) handleLogin(w http.ResponseWriter, r *http.Request) {
 	var req loginRequest
 	err := json.NewDecoder(r.Body).Decode(&req)
@@ -59,22 +66,25 @@ func (s *EkadashiServer) handleLogin(w http.ResponseWriter, r *http.Request) {
 	}
 	err = compareHash(user.Hash, []byte(req.Password))
 	if err != nil {
-		jsonError(w, http.StatusUnauthorized, fmt.Errorf("incorrect username or password"))
+		jsonError(w, http.StatusUnauthorized, fmt.Errorf("incorrect username or password: %v", err))
 		return
 	}
-	cookieHash := generateCookieHash()
-	expires := time.Now()
-	cookie := http.Cookie{
-		Name:req.Username,
-		Value:cookieHash,
+	session := Session{
+		SessionID: req.Username,
+		UniqueHash:generateToken(),
+		LastModifiedDate:time.Now(),
 	}
 	err = s.db.CreateSession(&mongo.Session{
-		Name:cookie.Name,
-		CookieHash:cookie.Value,
-		Expiration:expires,
+		Name:session.SessionID,
+		SessionHash:session.UniqueHash,
+		LastModifiedDate:session.LastModifiedDate,
 	})
 	if err != nil{
-		jsonError(w, http.StatusInternalServerError, fmt.Errorf("cannot create a cookie"))
+		jsonError(w, http.StatusInternalServerError, fmt.Errorf("cannot create a cookie: %v",err))
+	}
+	cookie := http.Cookie{
+		Name: session.SessionID,
+		Value: session.UniqueHash,
 	}
 	http.SetCookie(w,&cookie)
 	jsonResponse(w, http.StatusOK, nil)
