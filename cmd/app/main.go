@@ -14,9 +14,9 @@ import (
 
 func main() {
 	connectionURL := os.Getenv("EKADASHI_MONGO_URL")
-	/*if connectionURL == ""
+	if connectionURL == "" {
 		log.Fatalf("Innapropriate environment variable for mongoDB connection")
-	}*/
+	}
 	mongoService, err := mongo.NewService(connectionURL)
 	if err != nil {
 		log.Fatalf("Could not create mongo service: %v", err)
