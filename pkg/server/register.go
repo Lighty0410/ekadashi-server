@@ -3,10 +3,9 @@ package server
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/Lighty0410/ekadashi-server/pkg/mongo"
 	"net/http"
 	"time"
-
-	"github.com/Lighty0410/ekadashi-server/pkg/mongo"
 )
 
 type loginRequest struct {
@@ -64,14 +63,19 @@ func (s *EkadashiServer) handleLogin(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	cookieHash := generateCookieHash()
-	cookie := http.Cookie{Name:req.Username,
+	expires := time.Now()
+	cookie := http.Cookie{
+		Name:req.Username,
 		Value:cookieHash,
-		Expires:time.Now().Add(5 *time.Minute),
 	}
 	err = s.db.CreateSession(&mongo.Session{
 		Name:cookie.Name,
 		CookieHash:cookie.Value,
-		Expiration:cookie.Expires.Format(time.RFC3339),
+		Expiration:expires,
 	})
+	if err != nil{
+		jsonError(w, http.StatusInternalServerError, fmt.Errorf("cannot create a cookie"))
+	}
+	http.SetCookie(w,&cookie)
 	jsonResponse(w, http.StatusOK, nil)
 }
