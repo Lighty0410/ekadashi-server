@@ -3,6 +3,7 @@ package mongo
 import (
 	"context"
 	"fmt"
+	"github.com/mongodb/mongo-go-driver/x/bsonx"
 	"time"
 
 	"github.com/mongodb/mongo-go-driver/mongo"
@@ -19,7 +20,7 @@ type Service struct {
 func NewService(connectionURL string) (*Service, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
-	client, err := mongo.Connect(ctx, "mongodb://localhost:27017")
+	client, err := mongo.Connect(ctx, connectionURL)
 	if err != nil {
 		return nil, fmt.Errorf("could not dial mongo: %v", err)
 	}
@@ -29,7 +30,7 @@ func NewService(connectionURL string) (*Service, error) {
 	}
 	err = s.CreateIndex()
 	if err != nil{
-		return s, fmt.Errorf("cannot create an index")
+		return s, fmt.Errorf("cannot create an index: %v",err)
 	}
 	return s, nil
 }
@@ -38,13 +39,16 @@ func NewService(connectionURL string) (*Service, error) {
 func (s *Service) CreateIndex() error {
 	var opt options.IndexOptions
 	opt.SetExpireAfterSeconds(60*5)
+	opt.SetUnique(true)
+	keys := bsonx.Doc{{Key: "expiration", Value: bsonx.Int32(int32(1))}}
 	model := mongo.IndexModel{
+		Keys:keys,
 		Options: &opt,
 	}
 	c := s.db.Collection("session")
 	_, err := c.Indexes().CreateOne(context.Background(), model)
 	if err != nil {
-		return fmt.Errorf("cannot create an index")
+		return err
 	}
 	return nil
 }
