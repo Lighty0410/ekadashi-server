@@ -18,7 +18,7 @@ type User struct {
 type Session struct {
 	Name string `bson:"name"`
 	CookieHash string `bson:"cookiehash"`
-	Expiration string `bson:"expiration"`
+	Expiration time.Time `bson:"expiration"`
 }
 
 // ErrUserNotFound is an error that returns if user is not found
@@ -42,7 +42,6 @@ func (s *Service)CreateSession(u *Session)error{
 	if err != nil {
 		return fmt.Errorf("cannot create a session")
 	}
-	fmt.Println("YIKES")
 	return nil
 }
 
