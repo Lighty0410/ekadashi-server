@@ -3,7 +3,7 @@ package mongo
 import (
 	"context"
 	"fmt"
-	"github.com/mongodb/mongo-go-driver/x/bsonx"
+	"github.com/mongodb/mongo-go-driver/bson"
 	"time"
 
 	"github.com/mongodb/mongo-go-driver/mongo"
@@ -39,8 +39,7 @@ func NewService(connectionURL string) (*Service, error) {
 func (s *Service) CreateIndex() error {
 	var opt options.IndexOptions
 	opt.SetExpireAfterSeconds(60*5)
-	opt.SetUnique(true)
-	keys := bsonx.Doc{{Key: "expiration", Value: bsonx.Int32(int32(1))}}
+	keys := bson.M{"modified":1}
 	model := mongo.IndexModel{
 		Keys:keys,
 		Options: &opt,
