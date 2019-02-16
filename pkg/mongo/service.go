@@ -47,7 +47,7 @@ func (s *Service) CreateIndex() error {
 	c := s.db.Collection("session")
 	_, err := c.Indexes().CreateOne(context.Background(), model)
 	if err != nil {
-		return fmt.Errorf("cannont create session: %v",err)
+		return fmt.Errorf("cannont create session index: %v",err)
 	}
 	return nil
 }
