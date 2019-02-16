@@ -41,6 +41,19 @@ func (s *EkadashiServer) handleRegistration(w http.ResponseWriter, r *http.Reque
 	jsonResponse(w, http.StatusOK, nil)
 }
 
+func (s *EkadashiServer) showAllUsers(w http.ResponseWriter, r *http.Request){
+	userlist, err := s.db.GetUsers()
+	if err != nil {
+		jsonError(w,http.StatusInternalServerError, fmt.Errorf("cannot show users: %v", err))
+	}
+	for _, user := range userlist{
+		_, err := w.Write([]byte(user+ " "))
+		if err != nil{
+			jsonError(w,http.StatusInternalServerError,fmt.Errorf("something went wrong: %v",err))
+		}
+	}
+}
+
 func (s *EkadashiServer) handleLogin(w http.ResponseWriter, r *http.Request) {
 	var req loginRequest
 	err := json.NewDecoder(r.Body).Decode(&req)
@@ -64,3 +77,4 @@ func (s *EkadashiServer) handleLogin(w http.ResponseWriter, r *http.Request) {
 	}
 	jsonResponse(w, http.StatusOK, nil)
 }
+

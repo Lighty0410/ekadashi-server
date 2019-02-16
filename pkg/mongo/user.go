@@ -3,6 +3,7 @@ package mongo
 import (
 	"context"
 	"fmt"
+	"github.com/mongodb/mongo-go-driver/mongo/options"
 	"time"
 
 	"github.com/mongodb/mongo-go-driver/bson"
@@ -42,4 +43,25 @@ func (s *Service) ReadUser(username string) (User, error) {
 		return hash, fmt.Errorf("cannot search user")
 	}
 	return hash, nil
+}
+
+func (s *Service) GetUsers () ([]string,error){
+	c := s.db.Collection("users")
+	findOption := options.Find()
+	findOption.SetProjection(bson.D{{"name",1}})
+	filter := bson.D{{}}
+	cur, err := c.Find(context.Background(), filter, findOption)
+	if err != nil {
+		return nil, fmt.Errorf("cannot search users: %v", err)
+	}
+	var userlist []string
+	for cur.Next(nil) {
+		var u User
+		err := cur.Decode(&u)
+		if err != nil{
+			return nil, fmt.Errorf("cannot decode userlist: %v", err)
+		}
+		userlist = append(userlist, u.Name)
+	}
+	return userlist, err
 }
