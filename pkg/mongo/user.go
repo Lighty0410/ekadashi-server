@@ -48,20 +48,21 @@ func (s *Service) ReadUser(username string) (User, error) {
 func (s *Service) GetUsers () ([]string,error){
 	c := s.db.Collection("users")
 	findOption := options.Find()
-	findOption.SetProjection(bson.D{{"name",1}})
-	filter := bson.D{{}}
+	findOption.SetProjection(bson.M{"name":1})
+	filter := bson.M{}
 	cur, err := c.Find(context.Background(), filter, findOption)
 	if err != nil {
 		return nil, fmt.Errorf("cannot search users: %v", err)
 	}
-	var userlist []string
-	for cur.Next(nil) {
+	var userList []string
+	for cur.Next(context.Background()) {
 		var u User
 		err := cur.Decode(&u)
 		if err != nil{
-			return nil, fmt.Errorf("cannot decode userlist: %v", err)
+			return nil, fmt.Errorf("cannot decode user: %v", err)
 		}
-		userlist = append(userlist, u.Name)
+		fmt.Println(u.Name)
+		userList = append(userList, u.Name)
 	}
-	return userlist, err
+	return userList, err
 }
