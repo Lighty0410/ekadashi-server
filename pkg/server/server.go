@@ -19,6 +19,6 @@ func NewEkadashiServer(db *mongo.Service) (*EkadashiServer, error) {
 	}
 	s.Methods("POST").Path("/register").HandlerFunc(s.handleRegistration)
 	s.Methods("POST").Path("/login").HandlerFunc(s.handleLogin)
-	s.Methods("GET").Path("/showallusers").HandlerFunc(s.showAllUsers)
+	s.Methods("GET").Path("/users").HandlerFunc(s.showAllUsers)
 	return s, nil
 }
