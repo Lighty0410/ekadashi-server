@@ -63,18 +63,18 @@ func (s *EkadashiServer) handleLogin(w http.ResponseWriter, r *http.Request) {
 		jsonError(w, http.StatusUnauthorized, fmt.Errorf("incorrect username or password: %v", err))
 		return
 	}
-	err = s.db.CreateSession(&mongo.Session{
+	userSession := &mongo.Session{
 		Name:req.Username,
 		SessionHash:generateToken(),
 		LastModifiedDate:time.Now(),
-	})
-	if err != nil{
-		jsonError(w, http.StatusInternalServerError, fmt.Errorf("cannot create a cookie: %v",err))
 	}
-	cookieSettings := &mongo.Session{}
+	err = s.db.CreateSession(userSession)
+	if err != nil{
+		jsonError(w, http.StatusInternalServerError, fmt.Errorf("cannot create a session: %v",err))
+	}
 	cookie := http.Cookie{
-		Name:cookieSettings.Name,
-		Value:cookieSettings.SessionHash,
+		Name:"session_token",
+		Value:userSession.SessionHash,
 	}
 	http.SetCookie(w,&cookie)
 	jsonResponse(w, http.StatusOK, nil)
