@@ -17,12 +17,6 @@ type registerRequest struct {
 	loginRequest
 }
 
-type Session struct {
-	SessionID string `json:"sessionID"`
-	UniqueHash string `json:"hash"`
-	LastModifiedDate time.Time `json:"modified"`
-}
-
 // handleRegistration registers user in the system.
 func (s *EkadashiServer) handleRegistration(w http.ResponseWriter, r *http.Request) {
 	var req registerRequest
