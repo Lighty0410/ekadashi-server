@@ -42,11 +42,11 @@ func (s *EkadashiServer) handleRegistration(w http.ResponseWriter, r *http.Reque
 }
 
 func (s *EkadashiServer) showAllUsers(w http.ResponseWriter, r *http.Request){
-	userlist, err := s.db.GetUsers()
+	userList, err := s.db.GetUsers()
 	if err != nil {
 		jsonError(w,http.StatusInternalServerError, fmt.Errorf("cannot show users: %v", err))
 	}
-	for _, user := range userlist{
+	for _, user := range userList{
 		_, err := w.Write([]byte(user+ " "))
 		if err != nil{
 			jsonError(w,http.StatusInternalServerError,fmt.Errorf("something went wrong: %v",err))
