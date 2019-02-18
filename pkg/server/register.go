@@ -42,8 +42,14 @@ func (s *EkadashiServer) handleRegistration(w http.ResponseWriter, r *http.Reque
 	jsonResponse(w, http.StatusOK, nil)
 }
 
-// handleLogin retrieve an information about login request
-// if login succeed it assigns cookie to user
+func (s *EkadashiServer) showAllUsers(w http.ResponseWriter, _ *http.Request) {
+	userList, err := s.db.GetUsers()
+	if err != nil {
+		jsonError(w, http.StatusInternalServerError, fmt.Errorf("cannot get users: %v", err))
+	}
+	jsonResponse(w, http.StatusOK, userList)
+}
+
 func (s *EkadashiServer) handleLogin(w http.ResponseWriter, r *http.Request) {
 	var req loginRequest
 	err := json.NewDecoder(r.Body).Decode(&req)
