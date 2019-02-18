@@ -16,7 +16,7 @@ type Session struct {
 	LastModifiedDate time.Time `bson:"modified"`
 }
 
-// GetSession receive information about user's hash and if succeed, returns Session structure
+// GetSession receive information about user's hash and if succeed, returns Session structure.
 func (s *Service) GetSession(hash string) (*Session, error) {
 	var session Session
 	c := s.db.Collection("session")
@@ -31,7 +31,7 @@ func (s *Service) GetSession(hash string) (*Session, error) {
 	return &session, nil
 }
 
-// UpdateSession updates TTL index of current session
+// UpdateSession updates TTL index of current session.
 func (s *Service) UpdateSession(session *Session) error {
 	c := s.db.Collection("session")
 	_, err := c.UpdateOne(context.Background(), bson.D{{Key: "hash", Value: session.SessionHash}}, bson.D{{
