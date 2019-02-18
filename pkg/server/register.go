@@ -3,9 +3,10 @@ package server
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/Lighty0410/ekadashi-server/pkg/mongo"
 	"net/http"
 	"time"
+
+	"github.com/Lighty0410/ekadashi-server/pkg/mongo"
 )
 
 type loginRequest struct {
@@ -40,6 +41,7 @@ func (s *EkadashiServer) handleRegistration(w http.ResponseWriter, r *http.Reque
 	}
 	jsonResponse(w, http.StatusOK, nil)
 }
+
 // handleLogin retrieve an information about login request
 // if login succeed it assigns cookie to user
 func (s *EkadashiServer) handleLogin(w http.ResponseWriter, r *http.Request) {
@@ -64,18 +66,18 @@ func (s *EkadashiServer) handleLogin(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	userSession := &mongo.Session{
-		Name:req.Username,
-		SessionHash:generateToken(),
-		LastModifiedDate:time.Now(),
+		Name:             req.Username,
+		SessionHash:      generateToken(),
+		LastModifiedDate: time.Now(),
 	}
 	err = s.db.CreateSession(userSession)
-	if err != nil{
-		jsonError(w, http.StatusInternalServerError, fmt.Errorf("cannot create a session: %v",err))
+	if err != nil {
+		jsonError(w, http.StatusInternalServerError, fmt.Errorf("cannot create a session: %v", err))
 	}
 	cookie := http.Cookie{
-		Name:"session_token",
-		Value:userSession.SessionHash,
+		Name:  "session_token",
+		Value: userSession.SessionHash,
 	}
-	http.SetCookie(w,&cookie)
+	http.SetCookie(w, &cookie)
 	jsonResponse(w, http.StatusOK, nil)
 }

@@ -3,8 +3,9 @@ package mongo
 import (
 	"context"
 	"fmt"
-	"github.com/mongodb/mongo-go-driver/bson"
 	"time"
+
+	"github.com/mongodb/mongo-go-driver/bson"
 
 	"github.com/mongodb/mongo-go-driver/mongo"
 	"github.com/mongodb/mongo-go-driver/mongo/options"
@@ -29,8 +30,8 @@ func NewService(connectionURL string) (*Service, error) {
 		db: db,
 	}
 	err = s.CreateIndex()
-	if err != nil{
-		return s, fmt.Errorf("cannot create an index: %v",err)
+	if err != nil {
+		return s, fmt.Errorf("cannot create an index: %v", err)
 	}
 	return s, nil
 }
@@ -38,16 +39,16 @@ func NewService(connectionURL string) (*Service, error) {
 // CreateIndex creates an index for session collection
 func (s *Service) CreateIndex() error {
 	var opt options.IndexOptions
-	opt.SetExpireAfterSeconds(60*5)
-	keys := bson.M{"modified":1}
+	opt.SetExpireAfterSeconds(60 * 5)
+	keys := bson.M{"modified": 1}
 	model := mongo.IndexModel{
-		Keys:keys,
+		Keys:    keys,
 		Options: &opt,
 	}
 	c := s.db.Collection("session")
 	_, err := c.Indexes().CreateOne(context.Background(), model)
 	if err != nil {
-		return fmt.Errorf("cannont create session index: %v",err)
+		return fmt.Errorf("cannont create session index: %v", err)
 	}
 	return nil
 }

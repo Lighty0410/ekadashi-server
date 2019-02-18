@@ -9,15 +9,16 @@ import (
 	"github.com/mongodb/mongo-go-driver/mongo"
 )
 
-// User contains information about a single user in a system.
+// User contains an information about single user in a system.
 type User struct {
 	Name string `bson:"name"`
 	Hash string `bson:"hash"`
 }
 
+// Session contains an information about user session.
 type Session struct {
-	Name string `bson:"name"`
-	SessionHash string `bson:"hash"`
+	Name             string    `bson:"name"`
+	SessionHash      string    `bson:"hash"`
 	LastModifiedDate time.Time `bson:"modified"`
 }
 
@@ -36,7 +37,8 @@ func (s *Service) AddUser(u *User) error {
 	return nil
 }
 
-func (s *Service)CreateSession(u *Session)error{
+// CreateSession gets an information about session and insert it to database.
+func (s *Service) CreateSession(u *Session) error {
 	c := s.db.Collection("session")
 	_, err := c.InsertOne(context.Background(), u)
 	if err != nil {
