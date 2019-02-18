@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"time"
 
 	"github.com/Lighty0410/ekadashi-server/pkg/mongo"
 )
@@ -41,6 +42,8 @@ func (s *EkadashiServer) handleRegistration(w http.ResponseWriter, r *http.Reque
 	jsonResponse(w, http.StatusOK, nil)
 }
 
+// handleLogin retrieve an information about login request
+// if login succeed it assigns cookie to user
 func (s *EkadashiServer) handleLogin(w http.ResponseWriter, r *http.Request) {
 	var req loginRequest
 	err := json.NewDecoder(r.Body).Decode(&req)
@@ -59,8 +62,22 @@ func (s *EkadashiServer) handleLogin(w http.ResponseWriter, r *http.Request) {
 	}
 	err = compareHash(user.Hash, []byte(req.Password))
 	if err != nil {
-		jsonError(w, http.StatusUnauthorized, fmt.Errorf("incorrect username or password"))
+		jsonError(w, http.StatusUnauthorized, fmt.Errorf("incorrect username or password: %v", err))
 		return
 	}
+	userSession := &mongo.Session{
+		Name:             req.Username,
+		SessionHash:      generateToken(),
+		LastModifiedDate: time.Now(),
+	}
+	err = s.db.CreateSession(userSession)
+	if err != nil {
+		jsonError(w, http.StatusInternalServerError, fmt.Errorf("cannot create a session: %v", err))
+	}
+	cookie := http.Cookie{
+		Name:  "session_token",
+		Value: userSession.SessionHash,
+	}
+	http.SetCookie(w, &cookie)
 	jsonResponse(w, http.StatusOK, nil)
 }

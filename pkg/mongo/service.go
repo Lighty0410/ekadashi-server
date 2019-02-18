@@ -5,7 +5,10 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/mongodb/mongo-go-driver/bson"
+
 	"github.com/mongodb/mongo-go-driver/mongo"
+	"github.com/mongodb/mongo-go-driver/mongo/options"
 )
 
 // Service is used to interact with ekadashi storage.
@@ -23,7 +26,29 @@ func NewService(connectionURL string) (*Service, error) {
 		return nil, fmt.Errorf("could not dial mongo: %v", err)
 	}
 	db := client.Database("ekadashi")
-	return &Service{
+	s := &Service{
 		db: db,
-	}, nil
+	}
+	err = s.CreateIndex()
+	if err != nil {
+		return s, fmt.Errorf("cannot create an index: %v", err)
+	}
+	return s, nil
+}
+
+// CreateIndex creates an index for session collection
+func (s *Service) CreateIndex() error {
+	var opt options.IndexOptions
+	opt.SetExpireAfterSeconds(60 * 5)
+	keys := bson.M{"modified": 1}
+	model := mongo.IndexModel{
+		Keys:    keys,
+		Options: &opt,
+	}
+	c := s.db.Collection("session")
+	_, err := c.Indexes().CreateOne(context.Background(), model)
+	if err != nil {
+		return fmt.Errorf("cannont create session index: %v", err)
+	}
+	return nil
 }

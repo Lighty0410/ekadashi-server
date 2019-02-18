@@ -9,10 +9,17 @@ import (
 	"github.com/mongodb/mongo-go-driver/mongo"
 )
 
-// User contains information about a single user in a system.
+// User contains an information about single user in a system.
 type User struct {
 	Name string `bson:"name"`
 	Hash string `bson:"hash"`
+}
+
+// Session contains an information about user session.
+type Session struct {
+	Name             string    `bson:"name"`
+	SessionHash      string    `bson:"hash"`
+	LastModifiedDate time.Time `bson:"modified"`
 }
 
 // ErrUserNotFound is an error that returns if user is not found
@@ -30,6 +37,16 @@ func (s *Service) AddUser(u *User) error {
 	return nil
 }
 
+// CreateSession gets an information about session and insert it to database.
+func (s *Service) CreateSession(u *Session) error {
+	c := s.db.Collection("session")
+	_, err := c.InsertOne(context.Background(), u)
+	if err != nil {
+		return fmt.Errorf("cannot create a session: %v", err)
+	}
+	return nil
+}
+
 // ReadUser retrieves an information from the database and compares it with a request.
 func (s *Service) ReadUser(username string) (User, error) {
 	var hash User
@@ -39,7 +56,7 @@ func (s *Service) ReadUser(username string) (User, error) {
 		return hash, ErrUserNotFound
 	}
 	if err != nil {
-		return hash, fmt.Errorf("cannot search user")
+		return hash, fmt.Errorf("cannot search user, %v", err)
 	}
 	return hash, nil
 }
