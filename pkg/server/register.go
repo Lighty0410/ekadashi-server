@@ -41,6 +41,7 @@ func (s *EkadashiServer) handleRegistration(w http.ResponseWriter, r *http.Reque
 	}
 	jsonResponse(w, http.StatusOK, nil)
 }
+
 func (s *EkadashiServer) showAllUsers(w http.ResponseWriter, _ *http.Request) {
 	userList, err := s.db.GetUsers()
 	if err != nil {
@@ -50,6 +51,7 @@ func (s *EkadashiServer) showAllUsers(w http.ResponseWriter, _ *http.Request) {
 		jsonResponse(w, http.StatusOK, fmt.Sprint(user))
 	}
 }
+
 func (s *EkadashiServer) handleLogin(w http.ResponseWriter, r *http.Request) {
 	var req loginRequest
 	err := json.NewDecoder(r.Body).Decode(&req)
