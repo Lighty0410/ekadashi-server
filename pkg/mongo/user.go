@@ -17,13 +17,6 @@ type User struct {
 	Hash string `bson:"hash"`
 }
 
-// Session contains an information about user session.
-type Session struct {
-	Name             string    `bson:"name"`
-	SessionHash      string    `bson:"hash"`
-	LastModifiedDate time.Time `bson:"modified"`
-}
-
 // ErrUserNotFound is an error that returns if user is not found
 var ErrUserNotFound = fmt.Errorf("mongo: no documents in result")
 
@@ -63,7 +56,7 @@ func (s *Service) ReadUser(username string) (User, error) {
 	return hash, nil
 }
 
-//GetUsers gets an information about username of users
+// GetUsers gets an information about username of users
 func (s *Service) GetUsers() ([]string, error) {
 	c := s.db.Collection("users")
 	findOption := options.Find()
