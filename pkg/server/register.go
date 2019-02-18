@@ -47,9 +47,7 @@ func (s *EkadashiServer) showAllUsers(w http.ResponseWriter, _ *http.Request) {
 	if err != nil {
 		jsonError(w, http.StatusInternalServerError, fmt.Errorf("cannot get users: %v", err))
 	}
-	for _, user := range userList {
-		jsonResponse(w, http.StatusOK, fmt.Sprint(user))
-	}
+	jsonResponse(w, http.StatusOK, userList)
 }
 
 func (s *EkadashiServer) handleLogin(w http.ResponseWriter, r *http.Request) {
