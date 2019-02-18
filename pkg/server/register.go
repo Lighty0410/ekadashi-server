@@ -41,7 +41,7 @@ func (s *EkadashiServer) handleRegistration(w http.ResponseWriter, r *http.Reque
 	jsonResponse(w, http.StatusOK, nil)
 }
 
-func (s *EkadashiServer) showAllUsers(w http.ResponseWriter, r *http.Request) {
+func (s *EkadashiServer) showAllUsers(w http.ResponseWriter, _ *http.Request) {
 	userList, err := s.db.GetUsers()
 	if err != nil {
 		jsonError(w, http.StatusInternalServerError, fmt.Errorf("cannot get users: %v", err))
