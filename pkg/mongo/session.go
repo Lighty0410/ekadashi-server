@@ -16,6 +16,8 @@ type Session struct {
 	LastModifiedDate time.Time `bson:"modified"`
 }
 
+var ErrNoSession = fmt.Errorf("mongo: User may exist but is unauthorized")
+
 // GetSession receive information about user's hash and if succeed, returns Session structure.
 func (s *Service) GetSession(hash string) (*Session, error) {
 	var session Session
@@ -23,10 +25,10 @@ func (s *Service) GetSession(hash string) (*Session, error) {
 	filter := bson.D{{Key: "hash", Value: hash}}
 	err := c.FindOne(context.Background(), filter).Decode(&session)
 	if err == mongo.ErrNoDocuments {
-		return nil, fmt.Errorf("current user doesn't exist in this database: %v", err)
+		return nil, ErrNoSession
 	}
 	if err != nil {
-		return nil, fmt.Errorf("cannot search hash for this users: %v", err)
+		return nil, fmt.Errorf("could not find session, hash for this user does not exist: %v", err)
 	}
 	return &session, nil
 }
