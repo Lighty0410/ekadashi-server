@@ -3,8 +3,9 @@ package mongo
 import (
 	"context"
 	"fmt"
-	"github.com/mongodb/mongo-go-driver/mongo/options"
 	"time"
+
+	"github.com/mongodb/mongo-go-driver/mongo/options"
 
 	"github.com/mongodb/mongo-go-driver/bson"
 	"github.com/mongodb/mongo-go-driver/mongo"
@@ -45,10 +46,11 @@ func (s *Service) ReadUser(username string) (User, error) {
 	return hash, nil
 }
 
-func (s *Service) GetUsers () ([]string,error){
+//GetUsers gets an information about username of users
+func (s *Service) GetUsers() ([]string, error) {
 	c := s.db.Collection("users")
 	findOption := options.Find()
-	findOption.SetProjection(bson.M{"name":1})
+	findOption.SetProjection(bson.M{"name": 1})
 	filter := bson.M{}
 	cur, err := c.Find(context.Background(), filter, findOption)
 	if err != nil {
@@ -58,7 +60,7 @@ func (s *Service) GetUsers () ([]string,error){
 	for cur.Next(context.Background()) {
 		var u User
 		err := cur.Decode(&u)
-		if err != nil{
+		if err != nil {
 			return nil, fmt.Errorf("cannot decode user: %v", err)
 		}
 		fmt.Println(u.Name)
