@@ -1,0 +1,150 @@
+openapi: 3.0.0
+info:
+  title: Ekadashi-server
+  version: 0.0.1
+servers:
+  - url: http://api.example.com/v1 #this field is required but inappropriate for current time
+paths:
+  /register:
+    post:
+      summary: Registrate user in ekadashi-server system.
+      responses:
+        '200':    # status code
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+        '400':    # status code
+          description: can not decode the request
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+        '401':    # status code
+          description: incorrect password
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+        '500':    # status code
+          description: could not add user
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+      requestBody:
+      $ref: '#/components/schemas/User'
+  /login:
+    post:
+      summary: login users
+      responses:
+        '200':    # status code
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+        '400':    # status code
+          description: can not decode the request
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+        '401':    # status code
+          description: incorrect username or password
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+        '401':    # status code
+          description: incorrect username or password
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+          '500':    # status code
+          description: an error occured in database
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+          description: could not add user
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+      requestBody:
+      $ref: '#/components/schemas/User'
+  /users:
+    post:
+      summary: show all users that exist in database as json response
+      responses:
+        '200':    # status code
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+        '401':    # status code
+          description: incorrect cookie
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+        '500':    # status code
+          description: cannot get users
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+      requestBody:
+      $ref: '#/components/schemas/Cookie'
+components:
+  schemas:
+    User:
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+      # Both properties are required
+      required:
+        - username
+        - password
+      Cookie:
+        properties:
+          name:
+            type: string
+          value:
+            type: string
+        # Both properties are required
+        required:
+          - session_token
+          - hash
