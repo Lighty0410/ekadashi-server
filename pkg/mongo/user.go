@@ -17,7 +17,7 @@ type User struct {
 	Hash string `bson:"hash"`
 }
 
-// ErrUserNotFound is an error that returns if user is not found
+// ErrUserNotFound is an error that returns if user is not found.
 var ErrUserNotFound = fmt.Errorf("mongo: no documents in result")
 
 // AddUser adds passed user into users collection.
@@ -56,7 +56,7 @@ func (s *Service) ReadUser(username string) (User, error) {
 	return hash, nil
 }
 
-// GetUsers gets an information about username of users
+// GetUsers gets an information about username of users.
 func (s *Service) GetUsers() ([]string, error) {
 	c := s.db.Collection("users")
 	findOption := options.Find()

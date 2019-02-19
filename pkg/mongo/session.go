@@ -16,7 +16,8 @@ type Session struct {
 	LastModifiedDate time.Time `bson:"modified"`
 }
 
-var ErrNoSession = fmt.Errorf("mongo: User may exist but is unauthorized")
+// ErrNoSession is returned when session is not found.
+var ErrNoSession = fmt.Errorf("session not found")
 
 // GetSession receive information about user's hash and if succeed, returns Session structure.
 func (s *Service) GetSession(hash string) (*Session, error) {
@@ -28,7 +29,7 @@ func (s *Service) GetSession(hash string) (*Session, error) {
 		return nil, ErrNoSession
 	}
 	if err != nil {
-		return nil, fmt.Errorf("could not find session, hash for this user does not exist: %v", err)
+		return nil, fmt.Errorf("could not find session: %v", err)
 	}
 	return &session, nil
 }
@@ -37,7 +38,7 @@ func (s *Service) GetSession(hash string) (*Session, error) {
 func (s *Service) UpdateSession(session *Session) error {
 	c := s.db.Collection("session")
 	_, err := c.UpdateOne(context.Background(), bson.D{{Key: "hash", Value: session.SessionHash}}, bson.D{{
-		"$set", bson.D{{
+		Key: "$set", Value: bson.D{{
 			Key: "modified", Value: session.LastModifiedDate,
 		}},
 	},
