@@ -7,144 +7,92 @@ servers:
 paths:
   /register:
     post:
-      summary: Registrate user in ekadashi-server system.
+      summary: Register a new user in ekadashi database.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Register'
       responses:
         '200':    # status code
           description: OK
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  type: string
+                $ref: '#/components/schemas/Register'
         '400':    # status code
-          description: can not decode the request
+          description: Cannot decode the request
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  type: string
+                $ref: '#/components/schemas/IncorrectValue'
         '401':    # status code
-          description: incorrect password
+          description: Incorrect username or password
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  type: string
+                $ref: '#/components/schemas/IncorrectValue'
         '500':    # status code
-          description: could not add user
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  type: string
-      requestBody:
-      $ref: '#/components/schemas/User'
+          description: Internal Server Error
   /login:
     post:
-      summary: login users
+      summary: Creates a new user.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Register'
       responses:
         '200':    # status code
           description: OK
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  type: string
+                $ref: '#/components/schemas/Register'
         '400':    # status code
-          description: can not decode the request
+          description: Cannot decode user
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  type: string
+                $ref: '#/components/schemas/IncorrectValue'
         '401':    # status code
-          description: incorrect username or password
+          description: Incorrect username or password
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  type: string
-        '401':    # status code
-          description: incorrect username or password
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  type: string
-          '500':    # status code
-          description: an error occured in database
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  type: string
-          description: could not add user
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  type: string
-      requestBody:
-      $ref: '#/components/schemas/User'
+                $ref: '#/components/schemas/IncorrectValue'
   /users:
-    post:
-      summary: show all users that exist in database as json response
+    get:
+      summary: Show all users in database
       responses:
         '200':    # status code
           description: OK
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  type: string
-        '401':    # status code
-          description: incorrect cookie
-          content:
-            application/json:
+                type: string
+            application/xml:
               schema:
-                type: array
-                items:
-                  type: string
-        '500':    # status code
-          description: cannot get users
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  type: string
-      requestBody:
-      $ref: '#/components/schemas/Cookie'
+                type: string
+        '500':   # status code
+          description: internal server error
 components:
   schemas:
-    User:
+    Register:
       properties:
         username:
           type: string
         password:
           type: string
-      # Both properties are required
       required:
         - username
         - password
-      Cookie:
-        properties:
-          name:
-            type: string
-          value:
-            type: string
-        # Both properties are required
-        required:
-          - session_token
-          - hash
+    IncorrectValue:
+      properties:
+        username:
+          type: string
+      required:
+        - username
+        - password
