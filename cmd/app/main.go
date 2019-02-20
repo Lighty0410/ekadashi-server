@@ -15,9 +15,9 @@ import (
 const ekadashiURL = "EKADASHI_MONGO_URL"
 
 func main() {
-	connectionURL := os.Getenv(ekadashiUrl)
+	connectionURL := os.Getenv(ekadashiURL)
 	if connectionURL == "" {
-		log.Fatalf("Innapropriate %v variable for mongoDB connection", ekadashiUrl)
+		log.Fatalf("Innapropriate %v variable for mongoDB connection", ekadashiURL)
 	}
 	mongoService, err := mongo.NewService(connectionURL)
 	if err != nil {
