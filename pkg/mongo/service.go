@@ -54,7 +54,7 @@ func (s *Service) createIndex() error {
 		return fmt.Errorf("cannont create session index: %v", err)
 	}
 	var usernameOpt options.IndexOptions
-	usernameKey := bson.M{"username": 1}
+	usernameKey := bson.M{"name": 1}
 	usernameOpt.SetUnique(true)
 	userModel := mongo.IndexModel{
 		Keys:    usernameKey,
