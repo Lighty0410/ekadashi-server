@@ -6,7 +6,6 @@ import (
 	"time"
 
 	"github.com/mongodb/mongo-go-driver/bson"
-
 	"github.com/mongodb/mongo-go-driver/mongo"
 	"github.com/mongodb/mongo-go-driver/mongo/options"
 )
@@ -21,7 +20,9 @@ type Service struct {
 func NewService(connectionURL string) (*Service, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
-	client, err := mongo.Connect(ctx, connectionURL)
+	var opt options.ClientOptions
+	opt.ApplyURI(connectionURL)
+	client, err := mongo.Connect(ctx, &opt)
 	if err != nil {
 		return nil, fmt.Errorf("could not dial mongo: %v", err)
 	}
