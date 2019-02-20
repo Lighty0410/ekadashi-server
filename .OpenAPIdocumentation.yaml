@@ -14,37 +14,28 @@ paths:
               $ref: '#/components/schemas/RegisterRequest'
       responses:
         '200':
-          description: Registration succeed
+          description: Registration succeed 
         '400':
           description: Incorrect username or password
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-        '401':
+                $ref: '#/components/schemas/ErrorResponse'
+        '401': 
           description: Incorrect username or password
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-        '500':
+                $ref: '#/components/schemas/ErrorResponse'
+        '500': 
           description: Internal Server Error
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  error:
-                    type: string
+                $ref: '#/components/schemas/ErrorResponse'
   /login:
     post:
-      summary: Login user, add cookie
+      summary: Login user
       requestBody:
         required: true
         content:
@@ -52,43 +43,37 @@ paths:
             schema:
               $ref: '#/components/schemas/LoginRequest'
       responses:
-        '200':
-          description: Login succeed
-        '400':
+        '200':  
+          description: Login succeed 
+        '400':  
           description: Cannot decode user
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-        '401':
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':   
           description: Incorrect username or password
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  error:
-                    type: string
+                $ref: '#/components/schemas/ErrorResponse'
   /users:
     get:
-      security:
-        - cookieAuth: []
+      security: 
+       - cookieAuth: []
       summary: Show all users in database
       responses:
-        '200':
+        '200':    
           description: OK
           content:
             application/json:
               schema:
                 type: array
-                items:
+                items: 
                   type: string
-        '500':
+        '500':  
           description: internal server erro
-
+            
 components:
   schemas:
     RegisterRequest:
@@ -97,7 +82,7 @@ components:
           type: string
         password:
           type: string
-      required:
+      required: 
         - username
         - password
     LoginRequest:
@@ -109,11 +94,14 @@ components:
       required:
         - 'username'
         - 'password'
+    ErrorResponse: 
+      properties: 
+        reason:
+          type: string 
   securitySchemes:
-    cookieAuth:
+    cookieAuth:         
       type: apiKey
       in: cookie
       name: 'session_token'
-security:
-  - cookieAuth: []
-
+security: 
+ - cookieAuth: []
