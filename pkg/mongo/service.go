@@ -29,7 +29,7 @@ func NewService(connectionURL string) (*Service, error) {
 	s := &Service{
 		db: db,
 	}
-	err = s.CreateIndex()
+	err = s.createIndex()
 	if err != nil {
 		return s, fmt.Errorf("cannot create an index: %v", err)
 	}
@@ -37,7 +37,7 @@ func NewService(connectionURL string) (*Service, error) {
 }
 
 // CreateIndex creates an index for collections.
-func (s *Service) CreateIndex() error {
+func (s *Service) createIndex() error {
 	var modifiedOpt, hashOpt options.IndexOptions
 	modifiedOpt.SetExpireAfterSeconds(60 * 5)
 	hashOpt.SetUnique(true)
