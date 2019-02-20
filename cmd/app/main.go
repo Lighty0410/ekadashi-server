@@ -17,7 +17,7 @@ const ekadashiUrl = "EKADASHI_MONGO_URL"
 func main() {
 	connectionURL := os.Getenv(ekadashiUrl)
 	if connectionURL == "" {
-		log.Fatalf("Innapropriate " + ekadashiUrl + " variable for mongoDB connection")
+		log.Fatalf("Innapropriate: %v variable for mongoDB connection", ekadashiUrl)
 	}
 	mongoService, err := mongo.NewService(connectionURL)
 	if err != nil {
