@@ -12,12 +12,12 @@ import (
 	"github.com/Lighty0410/ekadashi-server/pkg/server"
 )
 
-const ekadashiUrl = "EKADASHI_MONGO_URL"
+const ekadashiURL = "EKADASHI_MONGO_URL"
 
 func main() {
 	connectionURL := os.Getenv(ekadashiUrl)
 	if connectionURL == "" {
-		log.Fatalf("Innapropriate: %v variable for mongoDB connection", ekadashiUrl)
+		log.Fatalf("Innapropriate %v variable for mongoDB connection", ekadashiUrl)
 	}
 	mongoService, err := mongo.NewService(connectionURL)
 	if err != nil {
