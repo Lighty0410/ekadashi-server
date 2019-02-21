@@ -77,20 +77,12 @@ paths:
                 items:
                   type: string
         '500':
-          description: internal server error
+          description: Internal server error
 components:
   schemas:
     RegisterRequest:
       allOf:
         - $ref: '#/components/schemas/LoginRequest'
-      properties:
-        username:
-          type: string
-        password:
-          type: string
-      required:
-        - username
-        - password
     LoginRequest:
       properties:
         username:
