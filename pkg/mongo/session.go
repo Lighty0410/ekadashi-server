@@ -16,26 +16,29 @@ type Session struct {
 	LastModifiedDate time.Time `bson:"modified"`
 }
 
-// GetSession receive information about user's hash and if succeed, returns Session structure
+// ErrNoSession is returned when session is not found.
+var ErrNoSession = fmt.Errorf("session not found")
+
+// GetSession receive information about user's hash and if succeed, returns Session structure.
 func (s *Service) GetSession(hash string) (*Session, error) {
 	var session Session
 	c := s.db.Collection("session")
 	filter := bson.D{{Key: "hash", Value: hash}}
 	err := c.FindOne(context.Background(), filter).Decode(&session)
 	if err == mongo.ErrNoDocuments {
-		return nil, fmt.Errorf("current user doesn't exist in this database: %v", err)
+		return nil, ErrNoSession
 	}
 	if err != nil {
-		return nil, fmt.Errorf("cannot search hash for this users: %v", err)
+		return nil, fmt.Errorf("could not find session: %v", err)
 	}
 	return &session, nil
 }
 
-// UpdateSession updates TTL index of current session
+// UpdateSession updates TTL index of current session.
 func (s *Service) UpdateSession(session *Session) error {
 	c := s.db.Collection("session")
 	_, err := c.UpdateOne(context.Background(), bson.D{{Key: "hash", Value: session.SessionHash}}, bson.D{{
-		"$set", bson.D{{
+		Key: "$set", Value: bson.D{{
 			Key: "modified", Value: session.LastModifiedDate,
 		}},
 	},

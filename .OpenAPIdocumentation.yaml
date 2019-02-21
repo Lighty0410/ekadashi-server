@@ -1,0 +1,119 @@
+openapi: 3.0.0
+info:
+  title: Ekadashi-server
+  version: 0.0.1
+paths:
+  /register:
+    post:
+      summary: Register a new user in ekadashi database.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterRequest'
+      responses:
+        '200':
+          description: Registration succeed
+        '400':
+          description: Incorrect username or password
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        '401':
+          description: Incorrect username or password
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+  /login:
+    post:
+      summary: Login user, add cookie
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+      responses:
+        '200':
+          description: Login succeed
+        '400':
+          description: Cannot decode user
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        '401':
+          description: Incorrect username or password
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+  /users:
+    get:
+      security:
+        - cookieAuth: []
+      summary: Show all users in database
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+        '500':
+          description: internal server erro
+
+components:
+  schemas:
+    RegisterRequest:
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+      required:
+        - username
+        - password
+    LoginRequest:
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+      required:
+        - 'username'
+        - 'password'
+  securitySchemes:
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: 'session_token'
+security:
+  - cookieAuth: []
+

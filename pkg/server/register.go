@@ -42,26 +42,32 @@ func (s *EkadashiServer) handleRegistration(w http.ResponseWriter, r *http.Reque
 	jsonResponse(w, http.StatusOK, nil)
 }
 
+// showAllUsers show all users that exist in database as json response.
 func (s *EkadashiServer) showAllUsers(w http.ResponseWriter, r *http.Request) {
 	cookie, err := r.Cookie("session_token")
 	if err != nil {
 		jsonResponse(w, http.StatusUnauthorized, nil)
+		return
 	}
 	err = s.checkAuth(cookie.Value)
-	if err == mongo.ErrUserNotFound {
+	if err == mongo.ErrNoSession {
 		jsonResponse(w, http.StatusUnauthorized, nil)
+		return
 	}
 	if err != nil {
 		jsonError(w, http.StatusInternalServerError, fmt.Errorf("cannot check authentification: %v", err))
+		return
 	}
 	userList, err := s.db.GetUsers()
 	if err != nil {
 		jsonError(w, http.StatusInternalServerError, fmt.Errorf("cannot get users: %v", err))
+		return
 	}
-
 	jsonResponse(w, http.StatusOK, userList)
 }
 
+// checkAuth check current user's session.
+// Return nil if succeed.
 func (s *EkadashiServer) checkAuth(token string) error {
 	session, err := s.db.GetSession(token)
 	if err != nil {
@@ -75,8 +81,8 @@ func (s *EkadashiServer) checkAuth(token string) error {
 	return nil
 }
 
-// handleLogin retrieves information about login request
-// if login succeed it assigns cookie to user
+// handleLogin retrieves information about login request.
+// If login succeed it assigns cookie to user.
 func (s *EkadashiServer) handleLogin(w http.ResponseWriter, r *http.Request) {
 	var req loginRequest
 	err := json.NewDecoder(r.Body).Decode(&req)

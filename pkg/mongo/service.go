@@ -36,7 +36,7 @@ func NewService(connectionURL string) (*Service, error) {
 	return s, nil
 }
 
-// CreateIndex creates an index for session collection
+// CreateIndex creates an index for session collection.
 func (s *Service) CreateIndex() error {
 	var opt options.IndexOptions
 	opt.SetExpireAfterSeconds(60 * 5)
