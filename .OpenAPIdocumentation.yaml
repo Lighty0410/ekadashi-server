@@ -49,7 +49,7 @@ paths:
             Set-Cookie:
               schema:
                 type: string
-                example: JSESSIONID=abcde12345; Path=/; HttpOnly
+                example: session_token=abcde12345
         '400':
           description: Cannot decode user
           content:
