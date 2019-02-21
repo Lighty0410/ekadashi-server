@@ -1,0 +1,26 @@
+language: go
+
+go:
+  - "1.11.x"
+
+dist: xenial
+
+services:
+  - mongodb
+
+env:
+  - EKADASHI_MONGO_URL=mongodb://localhost:27017
+
+install:
+  - go get github.com/alecthomas/gometalinter
+  - gometalinter --install
+  - go get ./...
+
+script:
+  - make lint
+  - make test
+  - make build
+
+before_script:
+  - sleep 20
+  - mongo mydb_test --eval 'db.createUser({user:"travis",pwd:"test",roles:["readWrite"]});'
