@@ -41,7 +41,7 @@ func chainMiddleware(handler http.Handler, mw ...middleware) http.Handler {
 
 func withLogging(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		log.Printf("Logged connection from %s", r.ParseForm())
+		log.Printf("Logged connection from %s", r.RemoteAddr)
 		next.ServeHTTP(w, r)
 	})
 }
