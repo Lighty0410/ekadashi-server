@@ -81,6 +81,8 @@ paths:
 components:
   schemas:
     RegisterRequest:
+      allOf:
+        - $ref: '#/components/schemas/LoginRequest'
       properties:
         username:
           type: string
