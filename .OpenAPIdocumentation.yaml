@@ -14,20 +14,20 @@ paths:
               $ref: '#/components/schemas/RegisterRequest'
       responses:
         '200':
-          description: Registration succeed 
+          description: Registration succeed
         '400':
           description: Incorrect username or password
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-        '401': 
+        '401':
           description: Incorrect username or password
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-        '500': 
+        '500':
           description: Internal Server Error
           content:
             application/json:
@@ -43,15 +43,20 @@ paths:
             schema:
               $ref: '#/components/schemas/LoginRequest'
       responses:
-        '200':  
-          description: Login succeed 
-        '400':  
+        '200':
+          description: Login succeed
+          headers:
+            Set-Cookie:
+              schema:
+                type: string
+                example: JSESSIONID=abcde12345; Path=/; HttpOnly
+        '400':
           description: Cannot decode user
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-        '401':   
+        '401':
           description: Incorrect username or password
           content:
             application/json:
@@ -59,21 +64,20 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
   /users:
     get:
-      security: 
-       - cookieAuth: []
+      security:
+        - cookieAuth: []
       summary: Show all users in database
       responses:
-        '200':    
+        '200':
           description: OK
           content:
             application/json:
               schema:
                 type: array
-                items: 
+                items:
                   type: string
-        '500':  
-          description: internal server erro
-            
+        '500':
+          description: internal server error
 components:
   schemas:
     RegisterRequest:
@@ -82,7 +86,7 @@ components:
           type: string
         password:
           type: string
-      required: 
+      required:
         - username
         - password
     LoginRequest:
@@ -94,14 +98,12 @@ components:
       required:
         - 'username'
         - 'password'
-    ErrorResponse: 
-      properties: 
+    ErrorResponse:
+      properties:
         reason:
-          type: string 
+          type: string
   securitySchemes:
-    cookieAuth:         
+    cookieAuth:
       type: apiKey
       in: cookie
       name: 'session_token'
-security: 
- - cookieAuth: []
