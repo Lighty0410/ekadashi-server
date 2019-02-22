@@ -1,6 +1,8 @@
 package server
 
 import (
+	"fmt"
+
 	"github.com/Lighty0410/ekadashi-server/pkg/mongo"
 	"github.com/gorilla/mux"
 )
@@ -20,5 +22,9 @@ func NewEkadashiServer(db *mongo.Service) (*EkadashiServer, error) {
 	s.Methods("POST").Path("/register").HandlerFunc(s.handleRegistration)
 	s.Methods("POST").Path("/login").HandlerFunc(s.handleLogin)
 	s.Methods("GET").Path("/users").HandlerFunc(s.showAllUsers)
+	err := s.fillEkadashi()
+	if err != nil {
+		return nil, fmt.Errorf("cannot fill ekadashiAPI: %v", err)
+	}
 	return s, nil
 }
