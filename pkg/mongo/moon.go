@@ -10,15 +10,15 @@ import (
 type EkadashiDate struct {
 	Year  int        `bson:"year"`
 	Month time.Month `bson:"month"`
-	Date  int        `bson:"day"`
+	Day   int        `bson:"day"`
 }
 
-// AddMoonPhases add ekadashi date to the database.
-func (s *Service) AddMoonPhases(days *EkadashiDate) error {
+// AddEkadashi add ekadashi date to the database.
+func (s *Service) AddEkadashi(day *EkadashiDate) error {
 	c := s.db.Collection("ekadashi")
-	_, err := c.InsertOne(context.Background(), days)
+	_, err := c.InsertOne(context.Background(), day)
 	if err != nil {
-		return fmt.Errorf("%v", err)
+		return fmt.Errorf("cannot insert date to mongo DB: %v", err)
 	}
 	return nil
 }

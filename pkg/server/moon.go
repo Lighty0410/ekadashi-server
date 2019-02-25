@@ -12,7 +12,6 @@ import (
 
 type sunMoonResponse struct {
 	Success bool      `json:"success"`
-	Err     error     `json:"error"`
 	Resp    []sunMoon `json:"response"`
 }
 
@@ -50,27 +49,26 @@ func getJSON(url string, target interface{}) error {
 func (s *EkadashiServer) fillEkadashi() error {
 	accessID := os.Getenv(clientID)
 	secretKey := os.Getenv(clientSecret)
+	if accessID == "" || secretKey == "" {
+		return fmt.Errorf("invalid accessID or secretkey value")
+	}
 	url := fmt.Sprintf("http://api.aerisapi.com/sunmoon/minsk,mn?from=now&to=1month&limit=31&client_id=%s&client_secret=%s",
 		accessID, secretKey)
 	moonPhase := sunMoonResponse{}
 	err := getJSON(url, &moonPhase)
-	if err != nil {
-		err = fmt.Errorf("cannot get API server: %v", err)
-		return err
-	} else if !moonPhase.Success || moonPhase.Err != nil {
-		err = fmt.Errorf("cannot get API server: %v", err)
-		return err
+	if err != nil || !moonPhase.Success {
+		return fmt.Errorf("cannot get API server: %v %v", err, moonPhase.Success)
 	}
 	filteredDate := ekadashiFilter(moonPhase.Resp)
-	err = s.moonDateTransmit(filteredDate)
+	dayFilter := s.shiftEkadashi(filteredDate)
+	err = s.moonDateTransmit(dayFilter)
 	if err != nil {
-		err = fmt.Errorf("cannot insert ekadashi date todatabase: %v", err)
-		return err
+		return fmt.Errorf("an error occurred in mongoDB :%v", err)
 	}
 	return nil
 }
 
-func ekadashiFilter(m []sunMoon) []sunMoon {
+func ekadashiFilter(sm []sunMoon) []sunMoon {
 	const (
 		newMoon  = "new moon"
 		fullMoon = "full moon"
@@ -78,11 +76,11 @@ func ekadashiFilter(m []sunMoon) []sunMoon {
 	var ekadashiDate []sunMoon
 	isNewMoon := false
 	ekadashiDays := 0
-	for _, date := range m {
+	for _, date := range sm {
 		if date.Moon.Phase.Name == newMoon || date.Moon.Phase.Name == fullMoon {
 			isNewMoon = true
 		}
-		if isNewMoon && !date.Moon.RiseISO.IsZero() {
+		if isNewMoon {
 			ekadashiDays++
 		}
 		if ekadashiDays == 11 {
@@ -94,16 +92,23 @@ func ekadashiFilter(m []sunMoon) []sunMoon {
 	return ekadashiDate
 }
 
+func (s *EkadashiServer) shiftEkadashi(ekadashiDate []sunMoon) []sunMoon {
+	var ekadashiDay []sunMoon
+	for _, ekadashiFilter := range ekadashiDate {
+		if ekadashiFilter.Moon.RiseISO.After(ekadashiFilter.Sun.RiseISO) {
+			ekadashiFilter.Sun.RiseISO = ekadashiFilter.Sun.RiseISO.Add(time.Hour * 24)
+		}
+		ekadashiDay = append(ekadashiDay, ekadashiFilter)
+	}
+	return ekadashiDay
+}
+
 func (s *EkadashiServer) moonDateTransmit(ekadashiDate []sunMoon) error {
 	for _, ekadashiDay := range ekadashiDate {
-		ekadashi := ekadashiDay.Sun.RiseISO
-		if ekadashiDay.Moon.RiseISO.After(ekadashiDay.Sun.RiseISO) {
-			ekadashi = ekadashi.Add(24 * time.Hour)
-		}
-		year, month, day := ekadashi.Date()
-		err := s.db.AddMoonPhases(&mongo.EkadashiDate{Year: year, Month: month, Date: day})
+		year, month, day := ekadashiDay.Sun.RiseISO.Date()
+		err := s.db.AddEkadashi(&mongo.EkadashiDate{Year: year, Month: month, Day: day})
 		if err != nil {
-			return fmt.Errorf("cannot add time to the database: %v", err)
+			return fmt.Errorf("cannot add date to the database: %v", err)
 		}
 	}
 	return nil
