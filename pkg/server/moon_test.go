@@ -20,7 +20,7 @@ func convertStringToTime(t *testing.T, str string) time.Time {
 
 func TestEkadashi(t *testing.T) {
 	testService := &EkadashiServer{}
-	file, err := os.Open("/home/levon/go/src/github.com/Lighty0410/ekadashi-server/test-data/ekadashi-data.json")
+	file, err := os.Open("../../test-data/ekadashi-data.json")
 	defer file.Close()
 	var testMoonDate []sunMoon
 	err = json.NewDecoder(file).Decode(&testMoonDate)
@@ -34,7 +34,7 @@ func TestEkadashi(t *testing.T) {
 		{Sun: sun{RiseISO: convertStringToTime(t, "2019-01-31T07:32:06-06:00")}},
 	}
 	for i, tc := range expectedData {
-		if tc.Sun.RiseISO.Equal(date[i].Sun.RiseISO) {
+		if !tc.Sun.RiseISO.Equal(date[i].Sun.RiseISO) {
 			t.Fatalf("For: %v\nExpected: %v\nGot: %v",
 				tc.Sun.RiseISO, tc.Sun.RiseISO, date[i].Sun.RiseISO)
 		}
