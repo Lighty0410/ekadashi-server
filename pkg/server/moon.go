@@ -38,7 +38,8 @@ const (
 	clientSecret = "CLIENT_SECRET"
 )
 
-func getJSON(url string, target interface{}) error {
+//nolint:errcheck
+func getJSON(url string, target interface{}) (err error) {
 	r, err := http.Get(url)
 	if err != nil {
 		return fmt.Errorf("cannot get url: %v", err)
@@ -54,7 +55,7 @@ func (s *EkadashiServer) fillEkadashi() error {
 	}
 	url := fmt.Sprintf("http://api.aerisapi.com/sunmoon/minsk,mn?from=now&to=1month&limit=31&client_id=%s&client_secret=%s",
 		accessID, secretKey)
-	moonPhase := sunMoonResponse{}
+	var moonPhase sunMoonResponse
 	err := getJSON(url, &moonPhase)
 	if err != nil || !moonPhase.Success {
 		return fmt.Errorf("cannot get API server: %v %v", err, moonPhase.Success)
@@ -81,7 +82,14 @@ func ekadashiFilter(sm []sunMoon) []sunMoon {
 			isNewMoon = true
 		}
 		if isNewMoon {
-			ekadashiDays++
+			if ekadashiDays <= 10 && date.Moon.RiseISO.IsZero() {
+				ekadashiDays++
+			}
+			if ekadashiDays == 11 && !date.Moon.RiseISO.IsZero() {
+				continue
+			} else {
+				ekadashiDays++
+			}
 		}
 		if ekadashiDays == 11 {
 			ekadashiDate = append(ekadashiDate, date)
