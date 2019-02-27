@@ -9,17 +9,17 @@ services:
   - mongodb
 
 env:
-  - EKADASHI_MONGO_URL=mongodb://localhost:27017
-
-install:
-  - go get github.com/alecthomas/gometalinter
-  - gometalinter --install
-  - go get ./...
+  -EKADASHI_MONGO_URL=mongodb://localhost:27017
+  -GO111MODULE=on
 
 script:
+  - make mod
   - make lint
   - make test
   - make build
+
+install:
+  - curl -sfL https://install.goreleaser.com/github.com/golangci/golangci-lint.sh | sh -s -- -b $(go env GOPATH)/bin v1.15.0
 
 before_script:
   - sleep 20
