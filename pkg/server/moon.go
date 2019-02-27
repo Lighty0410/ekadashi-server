@@ -82,14 +82,7 @@ func ekadashiFilter(sm []sunMoon) []sunMoon {
 			isNewMoon = true
 		}
 		if isNewMoon {
-			if ekadashiDays <= 10 && date.Moon.RiseISO.IsZero() {
-				ekadashiDays++
-			}
-			if ekadashiDays == 11 && !date.Moon.RiseISO.IsZero() {
-				continue
-			} else {
-				ekadashiDays++
-			}
+			ekadashiDays++
 		}
 		if ekadashiDays == 11 {
 			ekadashiDate = append(ekadashiDate, date)
@@ -113,8 +106,7 @@ func (s *EkadashiServer) shiftEkadashi(ekadashiDate []sunMoon) []sunMoon {
 
 func (s *EkadashiServer) moonDateTransmit(ekadashiDate []sunMoon) error {
 	for _, ekadashiDay := range ekadashiDate {
-		year, month, day := ekadashiDay.Sun.RiseISO.Date()
-		err := s.db.AddEkadashi(&mongo.EkadashiDate{Year: year, Month: month, Day: day})
+		err := s.db.AddEkadashi(&mongo.EkadashiDate{Date: ekadashiDay.Sun.RiseISO})
 		if err != nil {
 			return fmt.Errorf("cannot add date to the database: %v", err)
 		}
