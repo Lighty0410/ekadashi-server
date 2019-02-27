@@ -44,16 +44,3 @@ func (s *Service) RetrieveEkadashi(day time.Time) (EkadashiDate, error) {
 	}
 	return ekadashiDay, nil
 }
-
-func (s *Service) UpdateEkadashi(date time.Time) error {
-	c := s.db.Collection("ekadashi")
-	_, err := c.DeleteMany(context.Background(), bson.D{{
-		Key: "date", Value: bson.D{{
-			Key: "$lt", Value: date,
-		}},
-	}})
-	if err != nil {
-		return fmt.Errorf("cannot delete date in database :%v", err)
-	}
-	return nil
-}

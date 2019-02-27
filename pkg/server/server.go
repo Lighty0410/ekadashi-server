@@ -33,7 +33,6 @@ func NewEkadashiServer(db *mongo.Service) (*EkadashiServer, error) {
 	if err != nil {
 		return nil, fmt.Errorf("cannot fill ekadashiAPI: %v", err)
 	}
-
 	return s, nil
 }
 
