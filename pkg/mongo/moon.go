@@ -26,7 +26,7 @@ func (s *Service) AddEkadashi(day *EkadashiDate) error {
 }
 
 // SendEkadashi retrieves information from database and send it to another function.
-func (s *Service) SendEkadashi() ([]EkadashiDate, error) {
+func (s *Service) RetrieveEkadashi() ([]EkadashiDate, error) {
 	c := s.db.Collection("ekadashi")
 	cur, err := c.Find(context.Background(), bson.M{})
 	if err != nil {
