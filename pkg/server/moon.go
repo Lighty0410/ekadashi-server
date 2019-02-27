@@ -53,7 +53,7 @@ func (s *EkadashiServer) fillEkadashi() error {
 	if accessID == "" || secretKey == "" {
 		return fmt.Errorf("invalid accessID or secretkey value")
 	}
-	url := fmt.Sprintf("http://api.aerisapi.com/sunmoon/minsk,mn?from=2019-02-01&to=1month&limit=31&client_id=%s&client_secret=%s",
+	url := fmt.Sprintf("http://api.aerisapi.com/sunmoon/minsk,mn?from=now&to=1month&limit=31&client_id=%s&client_secret=%s",
 		accessID, secretKey)
 	var moonPhase sunMoonResponse
 	err := getJSON(url, &moonPhase)
