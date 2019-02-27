@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/mongodb/mongo-go-driver/bson"
+	"github.com/mongodb/mongo-go-driver/mongo"
 	"time"
 )
 
@@ -30,7 +31,7 @@ func (s *Service) RetrieveEkadashi(day time.Time) (EkadashiDate, error) {
 			Key: "$gt", Value: day,
 		}},
 	}})
-	if err != nil {
+	if err != mongo.ErrNoDocuments {
 		return EkadashiDate{}, fmt.Errorf("cannot find an existing file: %v", err)
 	}
 	var ekadashiDay EkadashiDate
@@ -42,4 +43,17 @@ func (s *Service) RetrieveEkadashi(day time.Time) (EkadashiDate, error) {
 		break
 	}
 	return ekadashiDay, nil
+}
+
+func (s *Service) UpdateEkadashi(date time.Time) error {
+	c := s.db.Collection("ekadashi")
+	_, err := c.DeleteMany(context.Background(), bson.D{{
+		Key: "date", Value: bson.D{{
+			Key: "$lt", Value: date,
+		}},
+	}})
+	if err != nil {
+		return fmt.Errorf("cannot delete date in database :%v", err)
+	}
+	return nil
 }
