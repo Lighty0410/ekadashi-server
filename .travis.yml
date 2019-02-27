@@ -10,13 +10,10 @@ services:
 
 env:
   - EKADASHI_MONGO_URL=mongodb://localhost:27017
-
-install:
-  - go get github.com/alecthomas/gometalinter
-  - gometalinter --install
-  - go get ./...
-
+  - GO111MODULE=on
+  -
 script:
+  - make mod
   - make lint
   - make test
   - make build

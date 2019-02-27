@@ -14,9 +14,9 @@ clean:
 
 .PHONY: lint
 lint:
-	gometalinter --vendor --disable-all \
+	golangci-lint run --disable-all \
 		--enable=vet \
-		--enable=gotype \
+		--enable=typecheck \
 		--enable=deadcode \
 		--enable=gocyclo \
 		--enable=golint \
@@ -33,3 +33,6 @@ lint:
 		--enable=goimports \
 		--enable=misspell \
 		--enable=unparam ./...
+
+mod:
+	go mod tidy
