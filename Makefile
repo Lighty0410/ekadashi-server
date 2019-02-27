@@ -24,7 +24,6 @@ lint:
 		--enable=structcheck \
 		--enable=maligned \
 		--enable=errcheck \
-		--enable=staticcheck \
 		--enable=ineffassign \
 		--enable=interfacer \
 		--enable=unconvert \

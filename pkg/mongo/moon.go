@@ -3,8 +3,9 @@ package mongo
 import (
 	"context"
 	"fmt"
-	"github.com/mongodb/mongo-go-driver/bson"
 	"time"
+
+	"github.com/mongodb/mongo-go-driver/bson"
 )
 
 // EkadashiDate is a structure that contains information about ekadashi date.
