@@ -8,9 +8,7 @@ import (
 
 // EkadashiDate is a structure that contains information about ekadashi date.
 type EkadashiDate struct {
-	Year  int        `bson:"year"`
-	Month time.Month `bson:"month"`
-	Day   int        `bson:"day"`
+	Date time.Time `bson:"date"`
 }
 
 // AddEkadashi add ekadashi date to the database.
