@@ -9,8 +9,8 @@ services:
   - mongodb
 
 env:
-  - EKADASHI_MONGO_URL=mongodb://localhost:27017
-  - GO111MODULE=on
+  -EKADASHI_MONGO_URL=mongodb://localhost:27017
+  -GO111MODULE=on
 
 script:
   - make mod
