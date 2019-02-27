@@ -28,7 +28,7 @@ func (s *EkadashiServer) handleRegistration(w http.ResponseWriter, r *http.Reque
 	}
 	hashedPassword, err := generateHash(req.Password)
 	if err != nil {
-		jsonError(w, http.StatusUnauthorized, fmt.Errorf("incorrect password: %v", err))
+		jsonError(w, http.StatusInternalServerError, fmt.Errorf("incorrect password: %v", err))
 		return
 	}
 	err = s.db.AddUser(&mongo.User{
