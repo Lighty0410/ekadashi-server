@@ -3,9 +3,8 @@ package mongo
 import (
 	"context"
 	"fmt"
-	"time"
-
 	"github.com/mongodb/mongo-go-driver/bson"
+	"time"
 )
 
 // EkadashiDate is a structure that contains information about ekadashi date.
@@ -24,20 +23,23 @@ func (s *Service) AddEkadashi(day *EkadashiDate) error {
 }
 
 // SendEkadashi retrieves information from database and send it to another function.
-func (s *Service) RetrieveEkadashi() ([]EkadashiDate, error) {
+func (s *Service) RetrieveEkadashi(day time.Time) (EkadashiDate, error) {
 	c := s.db.Collection("ekadashi")
-	cur, err := c.Find(context.Background(), bson.M{})
+	cur, err := c.Find(context.Background(), bson.D{{
+		Key: "date", Value: bson.D{{
+			Key: "$gt", Value: day,
+		}},
+	}})
 	if err != nil {
-		return nil, fmt.Errorf("cannot search any date: %v", err)
+		return EkadashiDate{}, fmt.Errorf("cannot find an existing file: %v", err)
 	}
-	var ekadashiDay []EkadashiDate
+	var ekadashiDay EkadashiDate
 	for cur.Next(context.Background()) {
-		var ekadashiIteration EkadashiDate
-		err := cur.Decode(&ekadashiIteration)
+		err := cur.Decode(&ekadashiDay)
 		if err != nil {
-			return nil, fmt.Errorf("cannot decode date: %v", err)
+			return EkadashiDate{}, fmt.Errorf("cannot decode date: %v", err)
 		}
-		ekadashiDay = append(ekadashiDay, ekadashiIteration)
+		break
 	}
 	return ekadashiDay, nil
 }

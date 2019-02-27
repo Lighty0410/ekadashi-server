@@ -23,19 +23,9 @@ func (s *EkadashiServer) showEkadashiEnpoint(w http.ResponseWriter, r *http.Requ
 		jsonError(w, http.StatusInternalServerError, fmt.Errorf("cannot check authentification: %v", err))
 		return
 	}
-	ekadashiDate, err := s.db.RetrieveEkadashi()
+	ekadashiDate, err := s.db.RetrieveEkadashi(time.Now())
 	if err != nil {
 		jsonError(w, http.StatusInternalServerError, fmt.Errorf("there is no information in database: %v", err))
 	}
-
-	for _, currentEkadashi := range ekadashiDate {
-		nextEkadashi := time.Date(currentEkadashi.Year, currentEkadashi.Month, currentEkadashi.Day,
-			10, 0, 0, 0, time.UTC)
-		if nextEkadashi.After(time.Now()) {
-			jsonResponse(w, http.StatusOK, currentEkadashi)
-		} else {
-			continue
-		}
-		return
-	}
+	jsonResponse(w, http.StatusOK, ekadashiDate.Date)
 }
