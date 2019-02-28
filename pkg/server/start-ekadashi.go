@@ -17,15 +17,17 @@ func (s *EkadashiServer) startEkadashi(ctx context.Context) error {
 	}
 	go func() {
 		timer := time.NewTimer(ekadashi.Date.Sub(time.Now().Add(time.Hour * 24)))
+		defer timer.Stop()
 		for {
 			select {
 			case <-ctx.Done():
-				timer.Stop()
 				return
 			case <-timer.C:
 				err := s.fillEkadashi()
 				if err != nil {
 					log.Println("cannot fill ekadashi date: ", err)
+					timer.Reset(time.Hour)
+					continue
 				}
 				currentEkadashi, _ := s.db.RetrieveEkadashi(time.Now())
 				timer.Reset(currentEkadashi.Date.Sub(time.Now().Add(time.Hour * 24)))
