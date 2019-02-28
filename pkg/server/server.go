@@ -26,7 +26,6 @@ func NewEkadashiServer(db *mongo.Service) (*EkadashiServer, error) {
 	s.Use(withLogging)
 	s.Methods("POST").Path("/register").HandlerFunc(s.handleRegistration)
 	s.Methods("POST").Path("/login").HandlerFunc(s.handleLogin)
-	s.Methods("GET").Path("/users").HandlerFunc(s.showAllUsers)
 	s.Methods("GET").Path("/ekadashi/next").HandlerFunc(s.showEkadashiEnpoint)
 	err := s.fillEkadashi()
 	if err != nil {
