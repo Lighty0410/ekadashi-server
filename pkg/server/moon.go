@@ -63,10 +63,7 @@ func (s *EkadashiServer) fillEkadashi() error {
 		return fmt.Errorf("cannot get API server: %v", err)
 	}
 	if !moonPhase.Success {
-		return fmt.Errorf("cannot succeed with API response")
-	}
-	if moonPhase.Err != nil {
-		return fmt.Errorf("incorect response from API server: %v", err)
+		return fmt.Errorf("cannot succeed with API response: %v", moonPhase.Err)
 	}
 
 	filteredDate := ekadashiFilter(moonPhase.Resp)
