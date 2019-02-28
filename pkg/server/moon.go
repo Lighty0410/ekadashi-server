@@ -12,6 +12,7 @@ import (
 
 type sunMoonResponse struct {
 	Success bool      `json:"success"`
+	Err     error     `json:"error"`
 	Resp    []sunMoon `json:"response"`
 }
 
@@ -47,6 +48,7 @@ func getJSON(url string, target interface{}) (err error) {
 	defer r.Body.Close()
 	return json.NewDecoder(r.Body).Decode(&target)
 }
+
 func (s *EkadashiServer) fillEkadashi() error {
 	accessID := os.Getenv(clientID)
 	secretKey := os.Getenv(clientSecret)
@@ -63,6 +65,10 @@ func (s *EkadashiServer) fillEkadashi() error {
 	if !moonPhase.Success {
 		return fmt.Errorf("cannot succeed with API response")
 	}
+	if moonPhase.Err != nil {
+		return fmt.Errorf("incorect response from API server: %v", err)
+	}
+
 	filteredDate := ekadashiFilter(moonPhase.Resp)
 	dayFilter := s.shiftEkadashi(filteredDate)
 	err = s.saveEkadashi(dayFilter)
