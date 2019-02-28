@@ -25,22 +25,15 @@ func (s *Service) AddEkadashi(day *EkadashiDate) error {
 
 // LastEkadashi retrieves information about the last ekadashi date from the database.
 func (s *Service) LastEkadashi(day time.Time) (EkadashiDate, error) {
+	var ekadashiDay EkadashiDate
 	c := s.db.Collection("ekadashi")
-	cur, err := c.Find(context.Background(), bson.D{{
+	err := c.FindOne(context.Background(), bson.D{{
 		Key: "date", Value: bson.D{{
 			Key: "$gt", Value: day,
 		}},
-	}})
+	}}).Decode(ekadashiDay)
 	if err != nil {
-		return EkadashiDate{}, fmt.Errorf("cannot find an existing file: %v", err)
+		return ekadashiDay, fmt.Errorf("cannot find user: %v", err)
 	}
-	var ekadashiDay EkadashiDate
-	for cur.Next(context.Background()) {
-		err := cur.Decode(&ekadashiDay)
-		if err != nil {
-			return EkadashiDate{}, fmt.Errorf("cannot decode date: %v", err)
-		}
-		break
-	}
-	return ekadashiDay, nil
+	return ekadashiDay, err
 }
