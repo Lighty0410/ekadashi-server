@@ -53,16 +53,19 @@ func (s *EkadashiServer) fillEkadashi() error {
 	if accessID == "" || secretKey == "" {
 		return fmt.Errorf("invalid accessID or secretkey value")
 	}
-	url := fmt.Sprintf("http://api.aerisapi.com/sunmoon/minsk,mn?from=now&to=1month&limit=31&client_id=%s&client_secret=%s",
+	url := fmt.Sprintf("http://api.aerisapi.com/sunmoon/minsk,belarusmn?from=now&to=1month&limit=31&client_id=%s&client_secret=%s",
 		accessID, secretKey)
 	var moonPhase sunMoonResponse
 	err := getJSON(url, &moonPhase)
-	if err != nil || !moonPhase.Success {
-		return fmt.Errorf("cannot get API server: %v %v", err, moonPhase.Success)
+	if err != nil {
+		return fmt.Errorf("cannot get API server: %v", err)
+	}
+	if !moonPhase.Success {
+		return fmt.Errorf("cannot succeed with API response")
 	}
 	filteredDate := ekadashiFilter(moonPhase.Resp)
 	dayFilter := s.shiftEkadashi(filteredDate)
-	err = s.moonDateTransmit(dayFilter)
+	err = s.saveEkadashi(dayFilter)
 	if err != nil {
 		return fmt.Errorf("an error occurred in mongoDB :%v", err)
 	}
@@ -104,7 +107,7 @@ func (s *EkadashiServer) shiftEkadashi(ekadashiDate []sunMoon) []sunMoon {
 	return ekadashiDay
 }
 
-func (s *EkadashiServer) moonDateTransmit(ekadashiDate []sunMoon) error {
+func (s *EkadashiServer) saveEkadashi(ekadashiDate []sunMoon) error {
 	for _, ekadashiDay := range ekadashiDate {
 		err := s.db.AddEkadashi(&mongo.EkadashiDate{Date: ekadashiDay.Sun.RiseISO})
 		if err != nil {
