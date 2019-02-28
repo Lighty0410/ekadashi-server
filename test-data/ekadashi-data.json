@@ -1,0 +1,1769 @@
+[
+  {
+    "timestamp": 1546322400,
+    "dateTimeISO": "2019-01-01T00:00:00-06:00",
+    "loc": {
+      "lat": 44.11802,
+      "long": -93.59217
+    },
+    "place": {
+      "name": "minske cemetery",
+      "state": "mn",
+      "country": "us"
+    },
+    "profile": {
+      "tz": "America\/Chicago"
+    },
+    "sun": {
+      "rise": 1546350566,
+      "riseISO": "2019-01-01T07:49:26-06:00",
+      "set": 1546382828,
+      "setISO": "2019-01-01T16:47:08-06:00",
+      "transit": 1546366697,
+      "transitISO": "2019-01-01T12:18:17-06:00",
+      "midnightSun": false,
+      "polarNight": false,
+      "twilight": {
+        "civilBegin": 1546348597,
+        "civilBeginISO": "2019-01-01T07:16:37-06:00",
+        "civilEnd": 1546384797,
+        "civilEndISO": "2019-01-01T17:19:57-06:00",
+        "nauticalBegin": 1546346411,
+        "nauticalBeginISO": "2019-01-01T06:40:11-06:00",
+        "nauticalEnd": 1546386982,
+        "nauticalEndISO": "2019-01-01T17:56:22-06:00",
+        "astronomicalBegin": 1546344306,
+        "astronomicalBeginISO": "2019-01-01T06:05:06-06:00",
+        "astronomicalEnd": 1546389087,
+        "astronomicalEndISO": "2019-01-01T18:31:27-06:00"
+      }
+    },
+    "moon": {
+      "rise": 1546334820,
+      "riseISO": "2019-01-01T03:27:00-06:00",
+      "set": 1546372860,
+      "setISO": "2019-01-01T14:01:00-06:00",
+      "transit": 1546354020,
+      "transitISO": "2019-01-01T08:47:00-06:00",
+      "underfoot": 1546398660,
+      "underfootISO": "2019-01-01T21:11:00-06:00",
+      "phase": {
+        "phase": 0.8469,
+        "name": "waning crescent",
+        "illum": 21,
+        "age": 25.01,
+        "angle": 0.52
+      }
+    }
+  },
+  {
+    "timestamp": 1546408800,
+    "dateTimeISO": "2019-01-02T00:00:00-06:00",
+    "loc": {
+      "lat": 44.11802,
+      "long": -93.59217
+    },
+    "place": {
+      "name": "minske cemetery",
+      "state": "mn",
+      "country": "us"
+    },
+    "profile": {
+      "tz": "America\/Chicago"
+    },
+    "sun": {
+      "rise": 1546436966,
+      "riseISO": "2019-01-02T07:49:26-06:00",
+      "set": 1546469283,
+      "setISO": "2019-01-02T16:48:03-06:00",
+      "transit": 1546453124,
+      "transitISO": "2019-01-02T12:18:44-06:00",
+      "midnightSun": false,
+      "polarNight": false,
+      "twilight": {
+        "civilBegin": 1546434999,
+        "civilBeginISO": "2019-01-02T07:16:39-06:00",
+        "civilEnd": 1546471250,
+        "civilEndISO": "2019-01-02T17:20:50-06:00",
+        "nauticalBegin": 1546432816,
+        "nauticalBeginISO": "2019-01-02T06:40:16-06:00",
+        "nauticalEnd": 1546473433,
+        "nauticalEndISO": "2019-01-02T17:57:13-06:00",
+        "astronomicalBegin": 1546430713,
+        "astronomicalBeginISO": "2019-01-02T06:05:13-06:00",
+        "astronomicalEnd": 1546475536,
+        "astronomicalEndISO": "2019-01-02T18:32:16-06:00"
+      }
+    },
+    "moon": {
+      "rise": 1546425060,
+      "riseISO": "2019-01-02T04:31:00-06:00",
+      "set": 1546461240,
+      "setISO": "2019-01-02T14:34:00-06:00",
+      "transit": 1546443360,
+      "transitISO": "2019-01-02T09:36:00-06:00",
+      "underfoot": 1546488000,
+      "underfootISO": "2019-01-02T22:00:00-06:00",
+      "phase": {
+        "phase": 0.8797,
+        "name": "waning crescent",
+        "illum": 14,
+        "age": 25.98,
+        "angle": 0.51
+      }
+    }
+  },
+  {
+    "timestamp": 1546495200,
+    "dateTimeISO": "2019-01-03T00:00:00-06:00",
+    "loc": {
+      "lat": 44.11802,
+      "long": -93.59217
+    },
+    "place": {
+      "name": "minske cemetery",
+      "state": "mn",
+      "country": "us"
+    },
+    "profile": {
+      "tz": "America\/Chicago"
+    },
+    "sun": {
+      "rise": 1546523363,
+      "riseISO": "2019-01-03T07:49:23-06:00",
+      "set": 1546555741,
+      "setISO": "2019-01-03T16:49:01-06:00",
+      "transit": 1546539552,
+      "transitISO": "2019-01-03T12:19:12-06:00",
+      "midnightSun": false,
+      "polarNight": false,
+      "twilight": {
+        "civilBegin": 1546521400,
+        "civilBeginISO": "2019-01-03T07:16:40-06:00",
+        "civilEnd": 1546557704,
+        "civilEndISO": "2019-01-03T17:21:44-06:00",
+        "nauticalBegin": 1546519219,
+        "nauticalBeginISO": "2019-01-03T06:40:19-06:00",
+        "nauticalEnd": 1546559885,
+        "nauticalEndISO": "2019-01-03T17:58:05-06:00",
+        "astronomicalBegin": 1546517117,
+        "astronomicalBeginISO": "2019-01-03T06:05:17-06:00",
+        "astronomicalEnd": 1546561987,
+        "astronomicalEndISO": "2019-01-03T18:33:07-06:00"
+      }
+    },
+    "moon": {
+      "rise": 1546515240,
+      "riseISO": "2019-01-03T05:34:00-06:00",
+      "set": 1546549920,
+      "setISO": "2019-01-03T15:12:00-06:00",
+      "transit": 1546532700,
+      "transitISO": "2019-01-03T10:25:00-06:00",
+      "underfoot": 1546577400,
+      "underfootISO": "2019-01-03T22:50:00-06:00",
+      "phase": {
+        "phase": 0.9119,
+        "name": "waning crescent",
+        "illum": 7,
+        "age": 26.93,
+        "angle": 0.51
+      }
+    }
+  },
+  {
+    "timestamp": 1546581600,
+    "dateTimeISO": "2019-01-04T00:00:00-06:00",
+    "loc": {
+      "lat": 44.11802,
+      "long": -93.59217
+    },
+    "place": {
+      "name": "minske cemetery",
+      "state": "mn",
+      "country": "us"
+    },
+    "profile": {
+      "tz": "America\/Chicago"
+    },
+    "sun": {
+      "rise": 1546609758,
+      "riseISO": "2019-01-04T07:49:18-06:00",
+      "set": 1546642199,
+      "setISO": "2019-01-04T16:49:59-06:00",
+      "transit": 1546625979,
+      "transitISO": "2019-01-04T12:19:39-06:00",
+      "midnightSun": false,
+      "polarNight": false,
+      "twilight": {
+        "civilBegin": 1546607798,
+        "civilBeginISO": "2019-01-04T07:16:38-06:00",
+        "civilEnd": 1546644160,
+        "civilEndISO": "2019-01-04T17:22:40-06:00",
+        "nauticalBegin": 1546605619,
+        "nauticalBeginISO": "2019-01-04T06:40:19-06:00",
+        "nauticalEnd": 1546646338,
+        "nauticalEndISO": "2019-01-04T17:58:58-06:00",
+        "astronomicalBegin": 1546603519,
+        "astronomicalBeginISO": "2019-01-04T06:05:19-06:00",
+        "astronomicalEnd": 1546648439,
+        "astronomicalEndISO": "2019-01-04T18:33:59-06:00"
+      }
+    },
+    "moon": {
+      "rise": 1546605120,
+      "riseISO": "2019-01-04T06:32:00-06:00",
+      "set": 1546638900,
+      "setISO": "2019-01-04T15:55:00-06:00",
+      "transit": 1546622100,
+      "transitISO": "2019-01-04T11:15:00-06:00",
+      "underfoot": 1546666800,
+      "underfootISO": "2019-01-04T23:40:00-06:00",
+      "phase": {
+        "phase": 0.9436,
+        "name": "waning crescent",
+        "illum": 3,
+        "age": 27.86,
+        "angle": 0.5
+      }
+    }
+  },
+  {
+    "timestamp": 1546668000,
+    "dateTimeISO": "2019-01-05T00:00:00-06:00",
+    "loc": {
+      "lat": 44.11802,
+      "long": -93.59217
+    },
+    "place": {
+      "name": "minske cemetery",
+      "state": "mn",
+      "country": "us"
+    },
+    "profile": {
+      "tz": "America\/Chicago"
+    },
+    "sun": {
+      "rise": 1546696151,
+      "riseISO": "2019-01-05T07:49:11-06:00",
+      "set": 1546728660,
+      "setISO": "2019-01-05T16:51:00-06:00",
+      "transit": 1546712406,
+      "transitISO": "2019-01-05T12:20:06-06:00",
+      "midnightSun": false,
+      "polarNight": false,
+      "twilight": {
+        "civilBegin": 1546694194,
+        "civilBeginISO": "2019-01-05T07:16:34-06:00",
+        "civilEnd": 1546730617,
+        "civilEndISO": "2019-01-05T17:23:37-06:00",
+        "nauticalBegin": 1546692018,
+        "nauticalBeginISO": "2019-01-05T06:40:18-06:00",
+        "nauticalEnd": 1546732793,
+        "nauticalEndISO": "2019-01-05T17:59:53-06:00",
+        "astronomicalBegin": 1546689920,
+        "astronomicalBeginISO": "2019-01-05T06:05:20-06:00",
+        "astronomicalEnd": 1546734891,
+        "astronomicalEndISO": "2019-01-05T18:34:51-06:00"
+      }
+    },
+    "moon": {
+      "rise": 1546694760,
+      "riseISO": "2019-01-05T07:26:00-06:00",
+      "set": 1546728180,
+      "setISO": "2019-01-05T16:43:00-06:00",
+      "transit": 1546711500,
+      "transitISO": "2019-01-05T12:05:00-06:00",
+      "underfootISO": null,
+      "underfoot": null,
+      "phase": {
+        "phase": 0.9748,
+        "name": "waning crescent",
+        "illum": 1,
+        "age": 28.79,
+        "angle": 0.5
+      }
+    }
+  },
+  {
+    "timestamp": 1546754400,
+    "dateTimeISO": "2019-01-06T00:00:00-06:00",
+    "loc": {
+      "lat": 44.11802,
+      "long": -93.59217
+    },
+    "place": {
+      "name": "minske cemetery",
+      "state": "mn",
+      "country": "us"
+    },
+    "profile": {
+      "tz": "America\/Chicago"
+    },
+    "sun": {
+      "rise": 1546782541,
+      "riseISO": "2019-01-06T07:49:01-06:00",
+      "set": 1546815122,
+      "setISO": "2019-01-06T16:52:02-06:00",
+      "transit": 1546798832,
+      "transitISO": "2019-01-06T12:20:32-06:00",
+      "midnightSun": false,
+      "polarNight": false,
+      "twilight": {
+        "civilBegin": 1546780587,
+        "civilBeginISO": "2019-01-06T07:16:27-06:00",
+        "civilEnd": 1546817076,
+        "civilEndISO": "2019-01-06T17:24:36-06:00",
+        "nauticalBegin": 1546778414,
+        "nauticalBeginISO": "2019-01-06T06:40:14-06:00",
+        "nauticalEnd": 1546819249,
+        "nauticalEndISO": "2019-01-06T18:00:49-06:00",
+        "astronomicalBegin": 1546776318,
+        "astronomicalBeginISO": "2019-01-06T06:05:18-06:00",
+        "astronomicalEnd": 1546821346,
+        "astronomicalEndISO": "2019-01-06T18:35:46-06:00"
+      }
+    },
+    "moon": {
+      "rise": 1546784040,
+      "riseISO": "2019-01-06T08:14:00-06:00",
+      "set": 1546817760,
+      "setISO": "2019-01-06T17:36:00-06:00",
+      "transit": 1546800840,
+      "transitISO": "2019-01-06T12:54:00-06:00",
+      "underfoot": 1546756140,
+      "underfootISO": "2019-01-06T00:29:00-06:00",
+      "phase": {
+        "phase": 0.0057,
+        "name": "new moon",
+        "illum": 0,
+        "age": 0.17,
+        "angle": 0.49
+      }
+    }
+  },
+  {
+    "timestamp": 1546840800,
+    "dateTimeISO": "2019-01-07T00:00:00-06:00",
+    "loc": {
+      "lat": 44.11802,
+      "long": -93.59217
+    },
+    "place": {
+      "name": "minske cemetery",
+      "state": "mn",
+      "country": "us"
+    },
+    "profile": {
+      "tz": "America\/Chicago"
+    },
+    "sun": {
+      "rise": 1546868928,
+      "riseISO": "2019-01-07T07:48:48-06:00",
+      "set": 1546901586,
+      "setISO": "2019-01-07T16:53:06-06:00",
+      "transit": 1546885257,
+      "transitISO": "2019-01-07T12:20:57-06:00",
+      "midnightSun": false,
+      "polarNight": false,
+      "twilight": {
+        "civilBegin": 1546866978,
+        "civilBeginISO": "2019-01-07T07:16:18-06:00",
+        "civilEnd": 1546903537,
+        "civilEndISO": "2019-01-07T17:25:37-06:00",
+        "nauticalBegin": 1546864808,
+        "nauticalBeginISO": "2019-01-07T06:40:08-06:00",
+        "nauticalEnd": 1546905707,
+        "nauticalEndISO": "2019-01-07T18:01:47-06:00",
+        "astronomicalBegin": 1546862714,
+        "astronomicalBeginISO": "2019-01-07T06:05:14-06:00",
+        "astronomicalEnd": 1546907801,
+        "astronomicalEndISO": "2019-01-07T18:36:41-06:00"
+      }
+    },
+    "moon": {
+      "rise": 1546872960,
+      "riseISO": "2019-01-07T08:56:00-06:00",
+      "set": 1546907460,
+      "setISO": "2019-01-07T18:31:00-06:00",
+      "transit": 1546890120,
+      "transitISO": "2019-01-07T13:42:00-06:00",
+      "underfoot": 1546845480,
+      "underfootISO": "2019-01-07T01:18:00-06:00",
+      "phase": {
+        "phase": 0.0362,
+        "name": "waxing crescent",
+        "illum": 1,
+        "age": 1.07,
+        "angle": 0.49
+      }
+    }
+  },
+  {
+    "timestamp": 1546927200,
+    "dateTimeISO": "2019-01-08T00:00:00-06:00",
+    "loc": {
+      "lat": 44.11802,
+      "long": -93.59217
+    },
+    "place": {
+      "name": "minske cemetery",
+      "state": "mn",
+      "country": "us"
+    },
+    "profile": {
+      "tz": "America\/Chicago"
+    },
+    "sun": {
+      "rise": 1546955313,
+      "riseISO": "2019-01-08T07:48:33-06:00",
+      "set": 1546988051,
+      "setISO": "2019-01-08T16:54:11-06:00",
+      "transit": 1546971682,
+      "transitISO": "2019-01-08T12:21:22-06:00",
+      "midnightSun": false,
+      "polarNight": false,
+      "twilight": {
+        "civilBegin": 1546953367,
+        "civilBeginISO": "2019-01-08T07:16:07-06:00",
+        "civilEnd": 1546989998,
+        "civilEndISO": "2019-01-08T17:26:38-06:00",
+        "nauticalBegin": 1546951199,
+        "nauticalBeginISO": "2019-01-08T06:39:59-06:00",
+        "nauticalEnd": 1546992165,
+        "nauticalEndISO": "2019-01-08T18:02:45-06:00",
+        "astronomicalBegin": 1546949107,
+        "astronomicalBeginISO": "2019-01-08T06:05:07-06:00",
+        "astronomicalEnd": 1546994257,
+        "astronomicalEndISO": "2019-01-08T18:37:37-06:00"
+      }
+    },
+    "moon": {
+      "rise": 1546961520,
+      "riseISO": "2019-01-08T09:32:00-06:00",
+      "set": 1546997400,
+      "setISO": "2019-01-08T19:30:00-06:00",
+      "transit": 1546979280,
+      "transitISO": "2019-01-08T14:28:00-06:00",
+      "underfoot": 1546934700,
+      "underfootISO": "2019-01-08T02:05:00-06:00",
+      "phase": {
+        "phase": 0.0664,
+        "name": "waxing crescent",
+        "illum": 4,
+        "age": 1.96,
+        "angle": 0.49
+      }
+    }
+  },
+  {
+    "timestamp": 1547013600,
+    "dateTimeISO": "2019-01-09T00:00:00-06:00",
+    "loc": {
+      "lat": 44.11802,
+      "long": -93.59217
+    },
+    "place": {
+      "name": "minske cemetery",
+      "state": "mn",
+      "country": "us"
+    },
+    "profile": {
+      "tz": "America\/Chicago"
+    },
+    "sun": {
+      "rise": 1547041696,
+      "riseISO": "2019-01-09T07:48:16-06:00",
+      "set": 1547074518,
+      "setISO": "2019-01-09T16:55:18-06:00",
+      "transit": 1547058107,
+      "transitISO": "2019-01-09T12:21:47-06:00",
+      "midnightSun": false,
+      "polarNight": false,
+      "twilight": {
+        "civilBegin": 1547039753,
+        "civilBeginISO": "2019-01-09T07:15:53-06:00",
+        "civilEnd": 1547076461,
+        "civilEndISO": "2019-01-09T17:27:41-06:00",
+        "nauticalBegin": 1547037589,
+        "nauticalBeginISO": "2019-01-09T06:39:49-06:00",
+        "nauticalEnd": 1547078625,
+        "nauticalEndISO": "2019-01-09T18:03:45-06:00",
+        "astronomicalBegin": 1547035499,
+        "astronomicalBeginISO": "2019-01-09T06:04:59-06:00",
+        "astronomicalEnd": 1547080715,
+        "astronomicalEndISO": "2019-01-09T18:38:35-06:00"
+      }
+    },
+    "moon": {
+      "rise": 1547049840,
+      "riseISO": "2019-01-09T10:04:00-06:00",
+      "set": 1547087340,
+      "setISO": "2019-01-09T20:29:00-06:00",
+      "transit": 1547068380,
+      "transitISO": "2019-01-09T15:13:00-06:00",
+      "underfoot": 1547023860,
+      "underfootISO": "2019-01-09T02:51:00-06:00",
+      "phase": {
+        "phase": 0.0965,
+        "name": "waxing crescent",
+        "illum": 9,
+        "age": 2.85,
+        "angle": 0.49
+      }
+    }
+  },
+  {
+    "timestamp": 1547100000,
+    "dateTimeISO": "2019-01-10T00:00:00-06:00",
+    "loc": {
+      "lat": 44.11802,
+      "long": -93.59217
+    },
+    "place": {
+      "name": "minske cemetery",
+      "state": "mn",
+      "country": "us"
+    },
+    "profile": {
+      "tz": "America\/Chicago"
+    },
+    "sun": {
+      "rise": 1547128076,
+      "riseISO": "2019-01-10T07:47:56-06:00",
+      "set": 1547160986,
+      "setISO": "2019-01-10T16:56:26-06:00",
+      "transit": 1547144531,
+      "transitISO": "2019-01-10T12:22:11-06:00",
+      "midnightSun": false,
+      "polarNight": false,
+      "twilight": {
+        "civilBegin": 1547126137,
+        "civilBeginISO": "2019-01-10T07:15:37-06:00",
+        "civilEnd": 1547162925,
+        "civilEndISO": "2019-01-10T17:28:45-06:00",
+        "nauticalBegin": 1547123976,
+        "nauticalBeginISO": "2019-01-10T06:39:36-06:00",
+        "nauticalEnd": 1547165086,
+        "nauticalEndISO": "2019-01-10T18:04:46-06:00",
+        "astronomicalBegin": 1547121888,
+        "astronomicalBeginISO": "2019-01-10T06:04:48-06:00",
+        "astronomicalEnd": 1547167174,
+        "astronomicalEndISO": "2019-01-10T18:39:34-06:00"
+      }
+    },
+    "moon": {
+      "rise": 1547137920,
+      "riseISO": "2019-01-10T10:32:00-06:00",
+      "set": 1547177340,
+      "setISO": "2019-01-10T21:29:00-06:00",
+      "transit": 1547157420,
+      "transitISO": "2019-01-10T15:57:00-06:00",
+      "underfoot": 1547112900,
+      "underfootISO": "2019-01-10T03:35:00-06:00",
+      "phase": {
+        "phase": 0.1266,
+        "name": "waxing crescent",
+        "illum": 15,
+        "age": 3.74,
+        "angle": 0.49
+      }
+    }
+  },
+  {
+    "timestamp": 1547186400,
+    "dateTimeISO": "2019-01-11T00:00:00-06:00",
+    "loc": {
+      "lat": 44.11802,
+      "long": -93.59217
+    },
+    "place": {
+      "name": "minske cemetery",
+      "state": "mn",
+      "country": "us"
+    },
+    "profile": {
+      "tz": "America\/Chicago"
+    },
+    "sun": {
+      "rise": 1547214453,
+      "riseISO": "2019-01-11T07:47:33-06:00",
+      "set": 1547247455,
+      "setISO": "2019-01-11T16:57:35-06:00",
+      "transit": 1547230954,
+      "transitISO": "2019-01-11T12:22:34-06:00",
+      "midnightSun": false,
+      "polarNight": false,
+      "twilight": {
+        "civilBegin": 1547212518,
+        "civilBeginISO": "2019-01-11T07:15:18-06:00",
+        "civilEnd": 1547249390,
+        "civilEndISO": "2019-01-11T17:29:50-06:00",
+        "nauticalBegin": 1547210361,
+        "nauticalBeginISO": "2019-01-11T06:39:21-06:00",
+        "nauticalEnd": 1547251548,
+        "nauticalEndISO": "2019-01-11T18:05:48-06:00",
+        "astronomicalBegin": 1547208276,
+        "astronomicalBeginISO": "2019-01-11T06:04:36-06:00",
+        "astronomicalEnd": 1547253633,
+        "astronomicalEndISO": "2019-01-11T18:40:33-06:00"
+      }
+    },
+    "moon": {
+      "rise": 1547225880,
+      "riseISO": "2019-01-11T10:58:00-06:00",
+      "set": 1547267340,
+      "setISO": "2019-01-11T22:29:00-06:00",
+      "transit": 1547246340,
+      "transitISO": "2019-01-11T16:39:00-06:00",
+      "underfoot": 1547201880,
+      "underfootISO": "2019-01-11T04:18:00-06:00",
+      "phase": {
+        "phase": 0.1567,
+        "name": "waxing crescent",
+        "illum": 22,
+        "age": 4.63,
+        "angle": 0.49
+      }
+    }
+  },
+  {
+    "timestamp": 1547272800,
+    "dateTimeISO": "2019-01-12T00:00:00-06:00",
+    "loc": {
+      "lat": 44.11802,
+      "long": -93.59217
+    },
+    "place": {
+      "name": "minske cemetery",
+      "state": "mn",
+      "country": "us"
+    },
+    "profile": {
+      "tz": "America\/Chicago"
+    },
+    "sun": {
+      "rise": 1547300828,
+      "riseISO": "2019-01-12T07:47:08-06:00",
+      "set": 1547333926,
+      "setISO": "2019-01-12T16:58:46-06:00",
+      "transit": 1547317377,
+      "transitISO": "2019-01-12T12:22:57-06:00",
+      "midnightSun": false,
+      "polarNight": false,
+      "twilight": {
+        "civilBegin": 1547298898,
+        "civilBeginISO": "2019-01-12T07:14:58-06:00",
+        "civilEnd": 1547335857,
+        "civilEndISO": "2019-01-12T17:30:57-06:00",
+        "nauticalBegin": 1547296744,
+        "nauticalBeginISO": "2019-01-12T06:39:04-06:00",
+        "nauticalEnd": 1547338010,
+        "nauticalEndISO": "2019-01-12T18:06:50-06:00",
+        "astronomicalBegin": 1547294661,
+        "astronomicalBeginISO": "2019-01-12T06:04:21-06:00",
+        "astronomicalEnd": 1547340094,
+        "astronomicalEndISO": "2019-01-12T18:41:34-06:00"
+      }
+    },
+    "moon": {
+      "rise": 1547313780,
+      "riseISO": "2019-01-12T11:23:00-06:00",
+      "set": 1547357400,
+      "setISO": "2019-01-12T23:30:00-06:00",
+      "transit": 1547335260,
+      "transitISO": "2019-01-12T17:21:00-06:00",
+      "underfoot": 1547290800,
+      "underfootISO": "2019-01-12T05:00:00-06:00",
+      "phase": {
+        "phase": 0.1871,
+        "name": "waxing crescent",
+        "illum": 31,
+        "age": 5.52,
+        "angle": 0.5
+      }
+    }
+  },
+  {
+    "timestamp": 1547359200,
+    "dateTimeISO": "2019-01-13T00:00:00-06:00",
+    "loc": {
+      "lat": 44.11802,
+      "long": -93.59217
+    },
+    "place": {
+      "name": "minske cemetery",
+      "state": "mn",
+      "country": "us"
+    },
+    "profile": {
+      "tz": "America\/Chicago"
+    },
+    "sun": {
+      "rise": 1547387201,
+      "riseISO": "2019-01-13T07:46:41-06:00",
+      "set": 1547420398,
+      "setISO": "2019-01-13T16:59:58-06:00",
+      "transit": 1547403799,
+      "transitISO": "2019-01-13T12:23:19-06:00",
+      "midnightSun": false,
+      "polarNight": false,
+      "twilight": {
+        "civilBegin": 1547385275,
+        "civilBeginISO": "2019-01-13T07:14:35-06:00",
+        "civilEnd": 1547422324,
+        "civilEndISO": "2019-01-13T17:32:04-06:00",
+        "nauticalBegin": 1547383124,
+        "nauticalBeginISO": "2019-01-13T06:38:44-06:00",
+        "nauticalEnd": 1547424474,
+        "nauticalEndISO": "2019-01-13T18:07:54-06:00",
+        "astronomicalBegin": 1547381044,
+        "astronomicalBeginISO": "2019-01-13T06:04:04-06:00",
+        "astronomicalEnd": 1547426555,
+        "astronomicalEndISO": "2019-01-13T18:42:35-06:00"
+      }
+    },
+    "moon": {
+      "rise": 1547401620,
+      "riseISO": "2019-01-13T11:47:00-06:00",
+      "setISO": null,
+      "set": null,
+      "transit": 1547424240,
+      "transitISO": "2019-01-13T18:04:00-06:00",
+      "underfoot": 1547379780,
+      "underfootISO": "2019-01-13T05:43:00-06:00",
+      "phase": {
+        "phase": 0.2179,
+        "name": "waxing crescent",
+        "illum": 40,
+        "age": 6.43,
+        "angle": 0.5
+      }
+    }
+  },
+  {
+    "timestamp": 1547445600,
+    "dateTimeISO": "2019-01-14T00:00:00-06:00",
+    "loc": {
+      "lat": 44.11802,
+      "long": -93.59217
+    },
+    "place": {
+      "name": "minske cemetery",
+      "state": "mn",
+      "country": "us"
+    },
+    "profile": {
+      "tz": "America\/Chicago"
+    },
+    "sun": {
+      "rise": 1547473571,
+      "riseISO": "2019-01-14T07:46:11-06:00",
+      "set": 1547506870,
+      "setISO": "2019-01-14T17:01:10-06:00",
+      "transit": 1547490221,
+      "transitISO": "2019-01-14T12:23:41-06:00",
+      "midnightSun": false,
+      "polarNight": false,
+      "twilight": {
+        "civilBegin": 1547471649,
+        "civilBeginISO": "2019-01-14T07:14:09-06:00",
+        "civilEnd": 1547508792,
+        "civilEndISO": "2019-01-14T17:33:12-06:00",
+        "nauticalBegin": 1547469503,
+        "nauticalBeginISO": "2019-01-14T06:38:23-06:00",
+        "nauticalEnd": 1547510939,
+        "nauticalEndISO": "2019-01-14T18:08:59-06:00",
+        "astronomicalBegin": 1547467425,
+        "astronomicalBeginISO": "2019-01-14T06:03:45-06:00",
+        "astronomicalEnd": 1547513017,
+        "astronomicalEndISO": "2019-01-14T18:43:37-06:00"
+      }
+    },
+    "moon": {
+      "rise": 1547489520,
+      "riseISO": "2019-01-14T12:12:00-06:00",
+      "set": 1547447520,
+      "setISO": "2019-01-14T00:32:00-06:00",
+      "transit": 1547513340,
+      "transitISO": "2019-01-14T18:49:00-06:00",
+      "underfoot": 1547468820,
+      "underfootISO": "2019-01-14T06:27:00-06:00",
+      "phase": {
+        "phase": 0.2493,
+        "name": "first quarter",
+        "illum": 50,
+        "age": 7.36,
+        "angle": 0.51
+      }
+    }
+  },
+  {
+    "timestamp": 1547532000,
+    "dateTimeISO": "2019-01-15T00:00:00-06:00",
+    "loc": {
+      "lat": 44.11802,
+      "long": -93.59217
+    },
+    "place": {
+      "name": "minske cemetery",
+      "state": "mn",
+      "country": "us"
+    },
+    "profile": {
+      "tz": "America\/Chicago"
+    },
+    "sun": {
+      "rise": 1547559939,
+      "riseISO": "2019-01-15T07:45:39-06:00",
+      "set": 1547593344,
+      "setISO": "2019-01-15T17:02:24-06:00",
+      "transit": 1547576642,
+      "transitISO": "2019-01-15T12:24:02-06:00",
+      "midnightSun": false,
+      "polarNight": false,
+      "twilight": {
+        "civilBegin": 1547558022,
+        "civilBeginISO": "2019-01-15T07:13:42-06:00",
+        "civilEnd": 1547595262,
+        "civilEndISO": "2019-01-15T17:34:22-06:00",
+        "nauticalBegin": 1547555879,
+        "nauticalBeginISO": "2019-01-15T06:37:59-06:00",
+        "nauticalEnd": 1547597405,
+        "nauticalEndISO": "2019-01-15T18:10:05-06:00",
+        "astronomicalBegin": 1547553803,
+        "astronomicalBeginISO": "2019-01-15T06:03:23-06:00",
+        "astronomicalEnd": 1547599480,
+        "astronomicalEndISO": "2019-01-15T18:44:40-06:00"
+      }
+    },
+    "moon": {
+      "rise": 1547577660,
+      "riseISO": "2019-01-15T12:41:00-06:00",
+      "set": 1547537760,
+      "setISO": "2019-01-15T01:36:00-06:00",
+      "transit": 1547602620,
+      "transitISO": "2019-01-15T19:37:00-06:00",
+      "underfoot": 1547557980,
+      "underfootISO": "2019-01-15T07:13:00-06:00",
+      "phase": {
+        "phase": 0.2817,
+        "name": "waxing gibbous",
+        "illum": 60,
+        "age": 8.32,
+        "angle": 0.51
+      }
+    }
+  },
+  {
+    "timestamp": 1547618400,
+    "dateTimeISO": "2019-01-16T00:00:00-06:00",
+    "loc": {
+      "lat": 44.11802,
+      "long": -93.59217
+    },
+    "place": {
+      "name": "minske cemetery",
+      "state": "mn",
+      "country": "us"
+    },
+    "profile": {
+      "tz": "America\/Chicago"
+    },
+    "sun": {
+      "rise": 1547646305,
+      "riseISO": "2019-01-16T07:45:05-06:00",
+      "set": 1547679819,
+      "setISO": "2019-01-16T17:03:39-06:00",
+      "transit": 1547663062,
+      "transitISO": "2019-01-16T12:24:22-06:00",
+      "midnightSun": false,
+      "polarNight": false,
+      "twilight": {
+        "civilBegin": 1547644392,
+        "civilBeginISO": "2019-01-16T07:13:12-06:00",
+        "civilEnd": 1547681732,
+        "civilEndISO": "2019-01-16T17:35:32-06:00",
+        "nauticalBegin": 1547642253,
+        "nauticalBeginISO": "2019-01-16T06:37:33-06:00",
+        "nauticalEnd": 1547683871,
+        "nauticalEndISO": "2019-01-16T18:11:11-06:00",
+        "astronomicalBegin": 1547640180,
+        "astronomicalBeginISO": "2019-01-16T06:03:00-06:00",
+        "astronomicalEnd": 1547685944,
+        "astronomicalEndISO": "2019-01-16T18:45:44-06:00"
+      }
+    },
+    "moon": {
+      "rise": 1547665980,
+      "riseISO": "2019-01-16T13:13:00-06:00",
+      "set": 1547628180,
+      "setISO": "2019-01-16T02:43:00-06:00",
+      "transit": 1547692080,
+      "transitISO": "2019-01-16T20:28:00-06:00",
+      "underfoot": 1547647320,
+      "underfootISO": "2019-01-16T08:02:00-06:00",
+      "phase": {
+        "phase": 0.3151,
+        "name": "waxing gibbous",
+        "illum": 70,
+        "age": 9.31,
+        "angle": 0.52
+      }
+    }
+  },
+  {
+    "timestamp": 1547704800,
+    "dateTimeISO": "2019-01-17T00:00:00-06:00",
+    "loc": {
+      "lat": 44.11802,
+      "long": -93.59217
+    },
+    "place": {
+      "name": "minske cemetery",
+      "state": "mn",
+      "country": "us"
+    },
+    "profile": {
+      "tz": "America\/Chicago"
+    },
+    "sun": {
+      "rise": 1547732668,
+      "riseISO": "2019-01-17T07:44:28-06:00",
+      "set": 1547766295,
+      "setISO": "2019-01-17T17:04:55-06:00",
+      "transit": 1547749481,
+      "transitISO": "2019-01-17T12:24:41-06:00",
+      "midnightSun": false,
+      "polarNight": false,
+      "twilight": {
+        "civilBegin": 1547730760,
+        "civilBeginISO": "2019-01-17T07:12:40-06:00",
+        "civilEnd": 1547768203,
+        "civilEndISO": "2019-01-17T17:36:43-06:00",
+        "nauticalBegin": 1547728624,
+        "nauticalBeginISO": "2019-01-17T06:37:04-06:00",
+        "nauticalEnd": 1547770338,
+        "nauticalEndISO": "2019-01-17T18:12:18-06:00",
+        "astronomicalBegin": 1547726554,
+        "astronomicalBeginISO": "2019-01-17T06:02:34-06:00",
+        "astronomicalEnd": 1547772409,
+        "astronomicalEndISO": "2019-01-17T18:46:49-06:00"
+      }
+    },
+    "moon": {
+      "rise": 1547754720,
+      "riseISO": "2019-01-17T13:52:00-06:00",
+      "set": 1547718720,
+      "setISO": "2019-01-17T03:52:00-06:00",
+      "transit": 1547781780,
+      "transitISO": "2019-01-17T21:23:00-06:00",
+      "underfoot": 1547736900,
+      "underfootISO": "2019-01-17T08:55:00-06:00",
+      "phase": {
+        "phase": 0.3499,
+        "name": "waxing gibbous",
+        "illum": 79,
+        "age": 10.33,
+        "angle": 0.53
+      }
+    }
+  },
+  {
+    "timestamp": 1547791200,
+    "dateTimeISO": "2019-01-18T00:00:00-06:00",
+    "loc": {
+      "lat": 44.11802,
+      "long": -93.59217
+    },
+    "place": {
+      "name": "minske cemetery",
+      "state": "mn",
+      "country": "us"
+    },
+    "profile": {
+      "tz": "America\/Chicago"
+    },
+    "sun": {
+      "rise": 1547819029,
+      "riseISO": "2019-01-18T07:43:49-06:00",
+      "set": 1547852771,
+      "setISO": "2019-01-18T17:06:11-06:00",
+      "transit": 1547835900,
+      "transitISO": "2019-01-18T12:25:00-06:00",
+      "midnightSun": false,
+      "polarNight": false,
+      "twilight": {
+        "civilBegin": 1547817125,
+        "civilBeginISO": "2019-01-18T07:12:05-06:00",
+        "civilEnd": 1547854675,
+        "civilEndISO": "2019-01-18T17:37:55-06:00",
+        "nauticalBegin": 1547814994,
+        "nauticalBeginISO": "2019-01-18T06:36:34-06:00",
+        "nauticalEnd": 1547856806,
+        "nauticalEndISO": "2019-01-18T18:13:26-06:00",
+        "astronomicalBegin": 1547812926,
+        "astronomicalBeginISO": "2019-01-18T06:02:06-06:00",
+        "astronomicalEnd": 1547858874,
+        "astronomicalEndISO": "2019-01-18T18:47:54-06:00"
+      }
+    },
+    "moon": {
+      "rise": 1547843940,
+      "riseISO": "2019-01-18T14:39:00-06:00",
+      "set": 1547809380,
+      "setISO": "2019-01-18T05:03:00-06:00",
+      "transit": 1547871780,
+      "transitISO": "2019-01-18T22:23:00-06:00",
+      "underfoot": 1547826780,
+      "underfootISO": "2019-01-18T09:53:00-06:00",
+      "phase": {
+        "phase": 0.386,
+        "name": "waxing gibbous",
+        "illum": 88,
+        "age": 11.4,
+        "angle": 0.53
+      }
+    }
+  },
+  {
+    "timestamp": 1547877600,
+    "dateTimeISO": "2019-01-19T00:00:00-06:00",
+    "loc": {
+      "lat": 44.11802,
+      "long": -93.59217
+    },
+    "place": {
+      "name": "minske cemetery",
+      "state": "mn",
+      "country": "us"
+    },
+    "profile": {
+      "tz": "America\/Chicago"
+    },
+    "sun": {
+      "rise": 1547905387,
+      "riseISO": "2019-01-19T07:43:07-06:00",
+      "set": 1547939249,
+      "setISO": "2019-01-19T17:07:29-06:00",
+      "transit": 1547922318,
+      "transitISO": "2019-01-19T12:25:18-06:00",
+      "midnightSun": false,
+      "polarNight": false,
+      "twilight": {
+        "civilBegin": 1547903489,
+        "civilBeginISO": "2019-01-19T07:11:29-06:00",
+        "civilEnd": 1547941147,
+        "civilEndISO": "2019-01-19T17:39:07-06:00",
+        "nauticalBegin": 1547901361,
+        "nauticalBeginISO": "2019-01-19T06:36:01-06:00",
+        "nauticalEnd": 1547943275,
+        "nauticalEndISO": "2019-01-19T18:14:35-06:00",
+        "astronomicalBegin": 1547899296,
+        "astronomicalBeginISO": "2019-01-19T06:01:36-06:00",
+        "astronomicalEnd": 1547945340,
+        "astronomicalEndISO": "2019-01-19T18:49:00-06:00"
+      }
+    },
+    "moon": {
+      "rise": 1547933820,
+      "riseISO": "2019-01-19T15:37:00-06:00",
+      "set": 1547899860,
+      "setISO": "2019-01-19T06:11:00-06:00",
+      "transit": 1547961960,
+      "transitISO": "2019-01-19T23:26:00-06:00",
+      "underfoot": 1547916840,
+      "underfootISO": "2019-01-19T10:54:00-06:00",
+      "phase": {
+        "phase": 0.4234,
+        "name": "waxing gibbous",
+        "illum": 94,
+        "age": 12.5,
+        "angle": 0.54
+      }
+    }
+  },
+  {
+    "timestamp": 1547964000,
+    "dateTimeISO": "2019-01-20T00:00:00-06:00",
+    "loc": {
+      "lat": 44.11802,
+      "long": -93.59217
+    },
+    "place": {
+      "name": "minske cemetery",
+      "state": "mn",
+      "country": "us"
+    },
+    "profile": {
+      "tz": "America\/Chicago"
+    },
+    "sun": {
+      "rise": 1547991744,
+      "riseISO": "2019-01-20T07:42:24-06:00",
+      "set": 1548025727,
+      "setISO": "2019-01-20T17:08:47-06:00",
+      "transit": 1548008735,
+      "transitISO": "2019-01-20T12:25:35-06:00",
+      "midnightSun": false,
+      "polarNight": false,
+      "twilight": {
+        "civilBegin": 1547989850,
+        "civilBeginISO": "2019-01-20T07:10:50-06:00",
+        "civilEnd": 1548027621,
+        "civilEndISO": "2019-01-20T17:40:21-06:00",
+        "nauticalBegin": 1547987727,
+        "nauticalBeginISO": "2019-01-20T06:35:27-06:00",
+        "nauticalEnd": 1548029744,
+        "nauticalEndISO": "2019-01-20T18:15:44-06:00",
+        "astronomicalBegin": 1547985664,
+        "astronomicalBeginISO": "2019-01-20T06:01:04-06:00",
+        "astronomicalEnd": 1548031807,
+        "astronomicalEndISO": "2019-01-20T18:50:07-06:00"
+      }
+    },
+    "moon": {
+      "rise": 1548024180,
+      "riseISO": "2019-01-20T16:43:00-06:00",
+      "set": 1547989980,
+      "setISO": "2019-01-20T07:13:00-06:00",
+      "transitISO": null,
+      "transit": null,
+      "underfoot": 1548007020,
+      "underfootISO": "2019-01-20T11:57:00-06:00",
+      "phase": {
+        "phase": 0.4619,
+        "name": "waxing gibbous",
+        "illum": 99,
+        "age": 13.64,
+        "angle": 0.54
+      }
+    }
+  },
+  {
+    "timestamp": 1548050400,
+    "dateTimeISO": "2019-01-21T00:00:00-06:00",
+    "loc": {
+      "lat": 44.11802,
+      "long": -93.59217
+    },
+    "place": {
+      "name": "minske cemetery",
+      "state": "mn",
+      "country": "us"
+    },
+    "profile": {
+      "tz": "America\/Chicago"
+    },
+    "sun": {
+      "rise": 1548078098,
+      "riseISO": "2019-01-21T07:41:38-06:00",
+      "set": 1548112206,
+      "setISO": "2019-01-21T17:10:06-06:00",
+      "transit": 1548095152,
+      "transitISO": "2019-01-21T12:25:52-06:00",
+      "midnightSun": false,
+      "polarNight": false,
+      "twilight": {
+        "civilBegin": 1548076209,
+        "civilBeginISO": "2019-01-21T07:10:09-06:00",
+        "civilEnd": 1548114095,
+        "civilEndISO": "2019-01-21T17:41:35-06:00",
+        "nauticalBegin": 1548074090,
+        "nauticalBeginISO": "2019-01-21T06:34:50-06:00",
+        "nauticalEnd": 1548116214,
+        "nauticalEndISO": "2019-01-21T18:16:54-06:00",
+        "astronomicalBegin": 1548072030,
+        "astronomicalBeginISO": "2019-01-21T06:00:30-06:00",
+        "astronomicalEnd": 1548118274,
+        "astronomicalEndISO": "2019-01-21T18:51:14-06:00"
+      }
+    },
+    "moon": {
+      "rise": 1548115080,
+      "riseISO": "2019-01-21T17:58:00-06:00",
+      "set": 1548079680,
+      "setISO": "2019-01-21T08:08:00-06:00",
+      "transit": 1548052140,
+      "transitISO": "2019-01-21T00:29:00-06:00",
+      "underfoot": 1548097200,
+      "underfootISO": "2019-01-21T13:00:00-06:00",
+      "phase": {
+        "phase": 0.5011,
+        "name": "full moon",
+        "illum": 100,
+        "age": 14.8,
+        "angle": 0.55
+      }
+    }
+  },
+  {
+    "timestamp": 1548136800,
+    "dateTimeISO": "2019-01-22T00:00:00-06:00",
+    "loc": {
+      "lat": 44.11802,
+      "long": -93.59217
+    },
+    "place": {
+      "name": "minske cemetery",
+      "state": "mn",
+      "country": "us"
+    },
+    "profile": {
+      "tz": "America\/Chicago"
+    },
+    "sun": {
+      "rise": 1548164450,
+      "riseISO": "2019-01-22T07:40:50-06:00",
+      "set": 1548198685,
+      "setISO": "2019-01-22T17:11:25-06:00",
+      "transit": 1548181568,
+      "transitISO": "2019-01-22T12:26:08-06:00",
+      "midnightSun": false,
+      "polarNight": false,
+      "twilight": {
+        "civilBegin": 1548162566,
+        "civilBeginISO": "2019-01-22T07:09:26-06:00",
+        "civilEnd": 1548200569,
+        "civilEndISO": "2019-01-22T17:42:49-06:00",
+        "nauticalBegin": 1548160451,
+        "nauticalBeginISO": "2019-01-22T06:34:11-06:00",
+        "nauticalEnd": 1548202685,
+        "nauticalEndISO": "2019-01-22T18:18:05-06:00",
+        "astronomicalBegin": 1548158394,
+        "astronomicalBeginISO": "2019-01-22T05:59:54-06:00",
+        "astronomicalEnd": 1548204742,
+        "astronomicalEndISO": "2019-01-22T18:52:22-06:00"
+      }
+    },
+    "moon": {
+      "rise": 1548206160,
+      "riseISO": "2019-01-22T19:16:00-06:00",
+      "set": 1548168840,
+      "setISO": "2019-01-22T08:54:00-06:00",
+      "transit": 1548142260,
+      "transitISO": "2019-01-22T01:31:00-06:00",
+      "underfoot": 1548187260,
+      "underfootISO": "2019-01-22T14:01:00-06:00",
+      "phase": {
+        "phase": 0.5406,
+        "name": "waning gibbous",
+        "illum": 98,
+        "age": 15.96,
+        "angle": 0.55
+      }
+    }
+  },
+  {
+    "timestamp": 1548223200,
+    "dateTimeISO": "2019-01-23T00:00:00-06:00",
+    "loc": {
+      "lat": 44.11802,
+      "long": -93.59217
+    },
+    "place": {
+      "name": "minske cemetery",
+      "state": "mn",
+      "country": "us"
+    },
+    "profile": {
+      "tz": "America\/Chicago"
+    },
+    "sun": {
+      "rise": 1548250800,
+      "riseISO": "2019-01-23T07:40:00-06:00",
+      "set": 1548285165,
+      "setISO": "2019-01-23T17:12:45-06:00",
+      "transit": 1548267983,
+      "transitISO": "2019-01-23T12:26:23-06:00",
+      "midnightSun": false,
+      "polarNight": false,
+      "twilight": {
+        "civilBegin": 1548248921,
+        "civilBeginISO": "2019-01-23T07:08:41-06:00",
+        "civilEnd": 1548287044,
+        "civilEndISO": "2019-01-23T17:44:04-06:00",
+        "nauticalBegin": 1548246810,
+        "nauticalBeginISO": "2019-01-23T06:33:30-06:00",
+        "nauticalEnd": 1548289156,
+        "nauticalEndISO": "2019-01-23T18:19:16-06:00",
+        "astronomicalBegin": 1548244755,
+        "astronomicalBeginISO": "2019-01-23T05:59:15-06:00",
+        "astronomicalEnd": 1548291210,
+        "astronomicalEndISO": "2019-01-23T18:53:30-06:00"
+      }
+    },
+    "moon": {
+      "rise": 1548297180,
+      "riseISO": "2019-01-23T20:33:00-06:00",
+      "set": 1548257580,
+      "setISO": "2019-01-23T09:33:00-06:00",
+      "transit": 1548232200,
+      "transitISO": "2019-01-23T02:30:00-06:00",
+      "underfoot": 1548277080,
+      "underfootISO": "2019-01-23T14:58:00-06:00",
+      "phase": {
+        "phase": 0.5798,
+        "name": "waning gibbous",
+        "illum": 94,
+        "age": 17.12,
+        "angle": 0.55
+      }
+    }
+  },
+  {
+    "timestamp": 1548309600,
+    "dateTimeISO": "2019-01-24T00:00:00-06:00",
+    "loc": {
+      "lat": 44.11802,
+      "long": -93.59217
+    },
+    "place": {
+      "name": "minske cemetery",
+      "state": "mn",
+      "country": "us"
+    },
+    "profile": {
+      "tz": "America\/Chicago"
+    },
+    "sun": {
+      "rise": 1548337148,
+      "riseISO": "2019-01-24T07:39:08-06:00",
+      "set": 1548371646,
+      "setISO": "2019-01-24T17:14:06-06:00",
+      "transit": 1548354397,
+      "transitISO": "2019-01-24T12:26:37-06:00",
+      "midnightSun": false,
+      "polarNight": false,
+      "twilight": {
+        "civilBegin": 1548335274,
+        "civilBeginISO": "2019-01-24T07:07:54-06:00",
+        "civilEnd": 1548373520,
+        "civilEndISO": "2019-01-24T17:45:20-06:00",
+        "nauticalBegin": 1548333166,
+        "nauticalBeginISO": "2019-01-24T06:32:46-06:00",
+        "nauticalEnd": 1548375627,
+        "nauticalEndISO": "2019-01-24T18:20:27-06:00",
+        "astronomicalBegin": 1548331115,
+        "astronomicalBeginISO": "2019-01-24T05:58:35-06:00",
+        "astronomicalEnd": 1548377679,
+        "astronomicalEndISO": "2019-01-24T18:54:39-06:00"
+      }
+    },
+    "moon": {
+      "rise": 1548388080,
+      "riseISO": "2019-01-24T21:48:00-06:00",
+      "set": 1548345960,
+      "setISO": "2019-01-24T10:06:00-06:00",
+      "transit": 1548321960,
+      "transitISO": "2019-01-24T03:26:00-06:00",
+      "underfoot": 1548366720,
+      "underfootISO": "2019-01-24T15:52:00-06:00",
+      "phase": {
+        "phase": 0.6184,
+        "name": "waning gibbous",
+        "illum": 87,
+        "age": 18.26,
+        "angle": 0.55
+      }
+    }
+  },
+  {
+    "timestamp": 1548396000,
+    "dateTimeISO": "2019-01-25T00:00:00-06:00",
+    "loc": {
+      "lat": 44.11802,
+      "long": -93.59217
+    },
+    "place": {
+      "name": "minske cemetery",
+      "state": "mn",
+      "country": "us"
+    },
+    "profile": {
+      "tz": "America\/Chicago"
+    },
+    "sun": {
+      "rise": 1548423493,
+      "riseISO": "2019-01-25T07:38:13-06:00",
+      "set": 1548458127,
+      "setISO": "2019-01-25T17:15:27-06:00",
+      "transit": 1548440810,
+      "transitISO": "2019-01-25T12:26:50-06:00",
+      "midnightSun": false,
+      "polarNight": false,
+      "twilight": {
+        "civilBegin": 1548421624,
+        "civilBeginISO": "2019-01-25T07:07:04-06:00",
+        "civilEnd": 1548459996,
+        "civilEndISO": "2019-01-25T17:46:36-06:00",
+        "nauticalBegin": 1548419521,
+        "nauticalBeginISO": "2019-01-25T06:32:01-06:00",
+        "nauticalEnd": 1548462099,
+        "nauticalEndISO": "2019-01-25T18:21:39-06:00",
+        "astronomicalBegin": 1548417472,
+        "astronomicalBeginISO": "2019-01-25T05:57:52-06:00",
+        "astronomicalEnd": 1548464148,
+        "astronomicalEndISO": "2019-01-25T18:55:48-06:00"
+      }
+    },
+    "moon": {
+      "rise": 1548478860,
+      "riseISO": "2019-01-25T23:01:00-06:00",
+      "set": 1548434160,
+      "setISO": "2019-01-25T10:36:00-06:00",
+      "transit": 1548411480,
+      "transitISO": "2019-01-25T04:18:00-06:00",
+      "underfoot": 1548456180,
+      "underfootISO": "2019-01-25T16:43:00-06:00",
+      "phase": {
+        "phase": 0.656,
+        "name": "waning gibbous",
+        "illum": 78,
+        "age": 19.37,
+        "angle": 0.54
+      }
+    }
+  },
+  {
+    "timestamp": 1548482400,
+    "dateTimeISO": "2019-01-26T00:00:00-06:00",
+    "loc": {
+      "lat": 44.11802,
+      "long": -93.59217
+    },
+    "place": {
+      "name": "minske cemetery",
+      "state": "mn",
+      "country": "us"
+    },
+    "profile": {
+      "tz": "America\/Chicago"
+    },
+    "sun": {
+      "rise": 1548509837,
+      "riseISO": "2019-01-26T07:37:17-06:00",
+      "set": 1548544609,
+      "setISO": "2019-01-26T17:16:49-06:00",
+      "transit": 1548527223,
+      "transitISO": "2019-01-26T12:27:03-06:00",
+      "midnightSun": false,
+      "polarNight": false,
+      "twilight": {
+        "civilBegin": 1548507973,
+        "civilBeginISO": "2019-01-26T07:06:13-06:00",
+        "civilEnd": 1548546472,
+        "civilEndISO": "2019-01-26T17:47:52-06:00",
+        "nauticalBegin": 1548505874,
+        "nauticalBeginISO": "2019-01-26T06:31:14-06:00",
+        "nauticalEnd": 1548548571,
+        "nauticalEndISO": "2019-01-26T18:22:51-06:00",
+        "astronomicalBegin": 1548503827,
+        "astronomicalBeginISO": "2019-01-26T05:57:07-06:00",
+        "astronomicalEnd": 1548550618,
+        "astronomicalEndISO": "2019-01-26T18:56:58-06:00"
+      }
+    },
+    "moon": {
+      "riseISO": null,
+      "rise": null,
+      "set": 1548522300,
+      "setISO": "2019-01-26T11:05:00-06:00",
+      "transit": 1548500880,
+      "transitISO": "2019-01-26T05:08:00-06:00",
+      "underfoot": 1548545580,
+      "underfootISO": "2019-01-26T17:33:00-06:00",
+      "phase": {
+        "phase": 0.6924,
+        "name": "waning gibbous",
+        "illum": 68,
+        "age": 20.45,
+        "angle": 0.54
+      }
+    }
+  },
+  {
+    "timestamp": 1548568800,
+    "dateTimeISO": "2019-01-27T00:00:00-06:00",
+    "loc": {
+      "lat": 44.11802,
+      "long": -93.59217
+    },
+    "place": {
+      "name": "minske cemetery",
+      "state": "mn",
+      "country": "us"
+    },
+    "profile": {
+      "tz": "America\/Chicago"
+    },
+    "sun": {
+      "rise": 1548596179,
+      "riseISO": "2019-01-27T07:36:19-06:00",
+      "set": 1548631090,
+      "setISO": "2019-01-27T17:18:10-06:00",
+      "transit": 1548613634,
+      "transitISO": "2019-01-27T12:27:14-06:00",
+      "midnightSun": false,
+      "polarNight": false,
+      "twilight": {
+        "civilBegin": 1548594320,
+        "civilBeginISO": "2019-01-27T07:05:20-06:00",
+        "civilEnd": 1548632949,
+        "civilEndISO": "2019-01-27T17:49:09-06:00",
+        "nauticalBegin": 1548592225,
+        "nauticalBeginISO": "2019-01-27T06:30:25-06:00",
+        "nauticalEnd": 1548635044,
+        "nauticalEndISO": "2019-01-27T18:24:04-06:00",
+        "astronomicalBegin": 1548590181,
+        "astronomicalBeginISO": "2019-01-27T05:56:21-06:00",
+        "astronomicalEnd": 1548637088,
+        "astronomicalEndISO": "2019-01-27T18:58:08-06:00"
+      }
+    },
+    "moon": {
+      "rise": 1548569460,
+      "riseISO": "2019-01-27T00:11:00-06:00",
+      "set": 1548610440,
+      "setISO": "2019-01-27T11:34:00-06:00",
+      "transit": 1548590220,
+      "transitISO": "2019-01-27T05:57:00-06:00",
+      "underfoot": 1548634860,
+      "underfootISO": "2019-01-27T18:21:00-06:00",
+      "phase": {
+        "phase": 0.7277,
+        "name": "waning gibbous",
+        "illum": 57,
+        "age": 21.49,
+        "angle": 0.53
+      }
+    }
+  },
+  {
+    "timestamp": 1548655200,
+    "dateTimeISO": "2019-01-28T00:00:00-06:00",
+    "loc": {
+      "lat": 44.11802,
+      "long": -93.59217
+    },
+    "place": {
+      "name": "minske cemetery",
+      "state": "mn",
+      "country": "us"
+    },
+    "profile": {
+      "tz": "America\/Chicago"
+    },
+    "sun": {
+      "rise": 1548682518,
+      "riseISO": "2019-01-28T07:35:18-06:00",
+      "set": 1548717573,
+      "setISO": "2019-01-28T17:19:33-06:00",
+      "transit": 1548700045,
+      "transitISO": "2019-01-28T12:27:25-06:00",
+      "midnightSun": false,
+      "polarNight": false,
+      "twilight": {
+        "civilBegin": 1548680664,
+        "civilBeginISO": "2019-01-28T07:04:24-06:00",
+        "civilEnd": 1548719427,
+        "civilEndISO": "2019-01-28T17:50:27-06:00",
+        "nauticalBegin": 1548678573,
+        "nauticalBeginISO": "2019-01-28T06:29:33-06:00",
+        "nauticalEnd": 1548721517,
+        "nauticalEndISO": "2019-01-28T18:25:17-06:00",
+        "astronomicalBegin": 1548676532,
+        "astronomicalBeginISO": "2019-01-28T05:55:32-06:00",
+        "astronomicalEnd": 1548723559,
+        "astronomicalEndISO": "2019-01-28T18:59:19-06:00"
+      }
+    },
+    "moon": {
+      "rise": 1548659940,
+      "riseISO": "2019-01-28T01:19:00-06:00",
+      "set": 1548698640,
+      "setISO": "2019-01-28T12:04:00-06:00",
+      "transit": 1548679500,
+      "transitISO": "2019-01-28T06:45:00-06:00",
+      "underfoot": 1548724140,
+      "underfootISO": "2019-01-28T19:09:00-06:00",
+      "phase": {
+        "phase": 0.7618,
+        "name": "waning crescent",
+        "illum": 46,
+        "age": 22.5,
+        "angle": 0.52
+      }
+    }
+  },
+  {
+    "timestamp": 1548741600,
+    "dateTimeISO": "2019-01-29T00:00:00-06:00",
+    "loc": {
+      "lat": 44.11802,
+      "long": -93.59217
+    },
+    "place": {
+      "name": "minske cemetery",
+      "state": "mn",
+      "country": "us"
+    },
+    "profile": {
+      "tz": "America\/Chicago"
+    },
+    "sun": {
+      "rise": 1548768856,
+      "riseISO": "2019-01-29T07:34:16-06:00",
+      "set": 1548804055,
+      "setISO": "2019-01-29T17:20:55-06:00",
+      "transit": 1548786456,
+      "transitISO": "2019-01-29T12:27:36-06:00",
+      "midnightSun": false,
+      "polarNight": false,
+      "twilight": {
+        "civilBegin": 1548767007,
+        "civilBeginISO": "2019-01-29T07:03:27-06:00",
+        "civilEnd": 1548805904,
+        "civilEndISO": "2019-01-29T17:51:44-06:00",
+        "nauticalBegin": 1548764920,
+        "nauticalBeginISO": "2019-01-29T06:28:40-06:00",
+        "nauticalEnd": 1548807991,
+        "nauticalEndISO": "2019-01-29T18:26:31-06:00",
+        "astronomicalBegin": 1548762881,
+        "astronomicalBeginISO": "2019-01-29T05:54:41-06:00",
+        "astronomicalEnd": 1548810030,
+        "astronomicalEndISO": "2019-01-29T19:00:30-06:00"
+      }
+    },
+    "moon": {
+      "rise": 1548750240,
+      "riseISO": "2019-01-29T02:24:00-06:00",
+      "set": 1548786960,
+      "setISO": "2019-01-29T12:36:00-06:00",
+      "transit": 1548768780,
+      "transitISO": "2019-01-29T07:33:00-06:00",
+      "underfoot": 1548813480,
+      "underfootISO": "2019-01-29T19:58:00-06:00",
+      "phase": {
+        "phase": 0.7949,
+        "name": "waning crescent",
+        "illum": 36,
+        "age": 23.47,
+        "angle": 0.52
+      }
+    }
+  },
+  {
+    "timestamp": 1548828000,
+    "dateTimeISO": "2019-01-30T00:00:00-06:00",
+    "loc": {
+      "lat": 44.11802,
+      "long": -93.59217
+    },
+    "place": {
+      "name": "minske cemetery",
+      "state": "mn",
+      "country": "us"
+    },
+    "profile": {
+      "tz": "America\/Chicago"
+    },
+    "sun": {
+      "rise": 1548855192,
+      "riseISO": "2019-01-30T07:33:12-06:00",
+      "set": 1548890538,
+      "setISO": "2019-01-30T17:22:18-06:00",
+      "transit": 1548872865,
+      "transitISO": "2019-01-30T12:27:45-06:00",
+      "midnightSun": false,
+      "polarNight": false,
+      "twilight": {
+        "civilBegin": 1548853348,
+        "civilBeginISO": "2019-01-30T07:02:28-06:00",
+        "civilEnd": 1548892382,
+        "civilEndISO": "2019-01-30T17:53:02-06:00",
+        "nauticalBegin": 1548851265,
+        "nauticalBeginISO": "2019-01-30T06:27:45-06:00",
+        "nauticalEnd": 1548894465,
+        "nauticalEndISO": "2019-01-30T18:27:45-06:00",
+        "astronomicalBegin": 1548849228,
+        "astronomicalBeginISO": "2019-01-30T05:53:48-06:00",
+        "astronomicalEnd": 1548896501,
+        "astronomicalEndISO": "2019-01-30T19:01:41-06:00"
+      }
+    },
+    "moon": {
+      "rise": 1548840420,
+      "riseISO": "2019-01-30T03:27:00-06:00",
+      "set": 1548875580,
+      "setISO": "2019-01-30T13:13:00-06:00",
+      "transit": 1548858120,
+      "transitISO": "2019-01-30T08:22:00-06:00",
+      "underfoot": 1548902820,
+      "underfootISO": "2019-01-30T20:47:00-06:00",
+      "phase": {
+        "phase": 0.8271,
+        "name": "waning crescent",
+        "illum": 27,
+        "age": 24.43,
+        "angle": 0.51
+      }
+    }
+  },
+  {
+    "timestamp": 1548914400,
+    "dateTimeISO": "2019-01-31T00:00:00-06:00",
+    "loc": {
+      "lat": 44.11802,
+      "long": -93.59217
+    },
+    "place": {
+      "name": "minske cemetery",
+      "state": "mn",
+      "country": "us"
+    },
+    "profile": {
+      "tz": "America\/Chicago"
+    },
+    "sun": {
+      "rise": 1548941526,
+      "riseISO": "2019-01-31T07:32:06-06:00",
+      "set": 1548977021,
+      "setISO": "2019-01-31T17:23:41-06:00",
+      "transit": 1548959273,
+      "transitISO": "2019-01-31T12:27:53-06:00",
+      "midnightSun": false,
+      "polarNight": false,
+      "twilight": {
+        "civilBegin": 1548939687,
+        "civilBeginISO": "2019-01-31T07:01:27-06:00",
+        "civilEnd": 1548978860,
+        "civilEndISO": "2019-01-31T17:54:20-06:00",
+        "nauticalBegin": 1548937608,
+        "nauticalBeginISO": "2019-01-31T06:26:48-06:00",
+        "nauticalEnd": 1548980939,
+        "nauticalEndISO": "2019-01-31T18:28:59-06:00",
+        "astronomicalBegin": 1548935574,
+        "astronomicalBeginISO": "2019-01-31T05:52:54-06:00",
+        "astronomicalEnd": 1548982973,
+        "astronomicalEndISO": "2019-01-31T19:02:53-06:00"
+      }
+    },
+    "moon": {
+      "rise": 1548930420,
+      "riseISO": "2019-01-31T04:27:00-06:00",
+      "set": 1548964440,
+      "setISO": "2019-01-31T13:54:00-06:00",
+      "transit": 1548947460,
+      "transitISO": "2019-01-31T09:11:00-06:00",
+      "underfoot": 1548992160,
+      "underfootISO": "2019-01-31T21:36:00-06:00",
+      "phase": {
+        "phase": 0.8587,
+        "name": "waning crescent",
+        "illum": 18,
+        "age": 25.36,
+        "angle": 0.5
+      }
+    }
+  }
+]
