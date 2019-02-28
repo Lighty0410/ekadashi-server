@@ -23,8 +23,8 @@ func (s *Service) AddEkadashi(day *EkadashiDate) error {
 	return nil
 }
 
-// SendEkadashi retrieves information from database and send it to another function.
-func (s *Service) RetrieveEkadashi(day time.Time) (EkadashiDate, error) {
+// LastEkadashi retrieves information about the last ekadashi date from the database.
+func (s *Service) LastEkadashi(day time.Time) (EkadashiDate, error) {
 	c := s.db.Collection("ekadashi")
 	cur, err := c.Find(context.Background(), bson.D{{
 		Key: "date", Value: bson.D{{
