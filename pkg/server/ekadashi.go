@@ -23,7 +23,7 @@ func (s *EkadashiServer) nextEkadashiHandler(w http.ResponseWriter, r *http.Requ
 		jsonError(w, http.StatusInternalServerError, fmt.Errorf("cannot check authentification: %v", err))
 		return
 	}
-	ekadashiDate, err := s.db.LastEkadashi(time.Now())
+	ekadashiDate, err := s.db.NextEkadashi(time.Now())
 	if err != nil {
 		jsonError(w, http.StatusInternalServerError, fmt.Errorf("there is no information in database: %v", err))
 	}
