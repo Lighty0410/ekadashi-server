@@ -82,7 +82,7 @@ func TestAddAndReadUser(t *testing.T) {
 }
 
 func TestService_NextEkadashiAndAddEkadashi(t *testing.T) {
-	connectionURL := os.Getenv("MONGO_EKADASHI_URL")
+	connectionURL := os.Getenv("EKADASHI_MONGO_URL")
 	if connectionURL == "" {
 		t.Error("incorrect environment variable")
 		return
