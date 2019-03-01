@@ -25,7 +25,8 @@ func (s *EkadashiServer) nextEkadashiHandler(w http.ResponseWriter, r *http.Requ
 	}
 	ekadashiDate, err := s.db.NextEkadashi(time.Now())
 	if err != nil {
-		jsonError(w, http.StatusInternalServerError, fmt.Errorf("there is no information in database: %v", err))
+		jsonError(w, http.StatusInternalServerError, fmt.Errorf("cannot get next ekadashi day: %v", err))
+		return
 	}
 	jsonResponse(w, http.StatusOK, ekadashiDate.Date)
 }

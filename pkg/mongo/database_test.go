@@ -4,8 +4,6 @@ import (
 	"os"
 	"testing"
 	"time"
-
-	"github.com/mongodb/mongo-go-driver/mongo"
 )
 
 func TestAddAndReadUser(t *testing.T) {
@@ -84,57 +82,64 @@ func TestAddAndReadUser(t *testing.T) {
 }
 
 func TestService_NextEkadashiAndAddEkadashi(t *testing.T) {
-	connectionURL := "mongodb://localhost:27017"
-	/*if connectionURL == "" {
+	connectionURL := os.Getenv("MONGO_EKADASHI_URL")
+	if connectionURL == "" {
 		t.Error("incorrect environment variable")
 		return
-	}*/
+	}
 	testService, err := NewService(connectionURL)
 	if err != nil {
-		t.Error("cannot connect to database: ", err)
-		return
+		t.Fatalf("cannot connect to database: %v", err)
+
 	}
 	tt := []struct {
 		name         string
-		dateSince    time.Time
+		userDate     time.Time
 		date         []EkadashiDate
 		expectedDate time.Time
 		expectErr    error
 	}{
 		{
-			name: "casual date",
-			dateSince: time.Date(
+			name: "dateSince before the first date",
+			userDate: time.Date(
 				2009, 11, 17, 20, 34, 58, 0, time.UTC),
 			date: []EkadashiDate{
 				{Date: time.Date(
 					2009, 11, 23, 20, 34, 58, 0, time.UTC)},
 				{Date: time.Date(
-					2009, 11, 25, 20, 34, 58, 0, time.UTC)},
+					2009, 11, 26, 20, 34, 58, 0, time.UTC)},
 				{Date: time.Date(
 					2009, 11, 30, 20, 34, 58, 0, time.UTC)}},
 			expectedDate: time.Date(
 				2009, 11, 23, 20, 34, 58, 0, time.UTC),
-		}, {
-			name: "next month",
-			dateSince: time.Date(
-				2015, 10, 20, 20, 34, 58, 0, time.UTC),
+		},
+		{
+			name: "dateSince before the second date",
+			userDate: time.Date(
+				2009, 11, 25, 20, 34, 58, 0, time.UTC),
 			date: []EkadashiDate{
 				{Date: time.Date(
-					2015, 11, 10, 20, 34, 58, 0, time.UTC)}},
+					2009, 11, 23, 20, 34, 58, 0, time.UTC)},
+				{Date: time.Date(
+					2009, 11, 26, 20, 34, 58, 0, time.UTC)},
+				{Date: time.Date(
+					2009, 11, 30, 20, 34, 58, 0, time.UTC)}},
 			expectedDate: time.Date(
-				2015, 11, 10, 20, 34, 58, 0, time.UTC),
-		}, {
-			name: "time now",
-			dateSince: time.Date(
-				2015, 11, 10, 20, 34, 58, 0, time.UTC),
+				2009, 11, 26, 20, 34, 58, 0, time.UTC),
+		},
+		{
+			name: "day to day",
+			userDate: time.Date(
+				2009, 11, 30, 20, 34, 58, 0, time.UTC),
 			date: []EkadashiDate{
 				{Date: time.Date(
-					2015, 11, 10, 20, 34, 58, 0, time.UTC)}},
+					2009, 11, 23, 20, 34, 58, 0, time.UTC)},
+				{Date: time.Date(
+					2009, 11, 26, 20, 34, 58, 0, time.UTC)},
+				{Date: time.Date(
+					2009, 11, 30, 20, 34, 58, 0, time.UTC)}},
 			expectedDate: time.Date(
-				2015, 11, 10, 20, 34, 58, 0, time.UTC),
-		}, {
-			name:      "zero date",
-			expectErr: mongo.ErrNoDocuments,
+				2009, 11, 30, 20, 34, 58, 0, time.UTC),
 		},
 	}
 	for _, tc := range tt {
@@ -145,13 +150,13 @@ func TestService_NextEkadashiAndAddEkadashi(t *testing.T) {
 					t.Fatalf("an error occurred in database: %v", err)
 				}
 			}
-			ekadashiDate, err := testService.NextEkadashi(tc.dateSince)
+			ekadashiDate, err := testService.NextEkadashi(tc.userDate)
 			if err != tc.expectErr {
 				t.Error("an error occurred in database: ", err)
 			}
 			if !ekadashiDate.Date.UTC().Equal(tc.expectedDate.UTC()) {
 				t.Fatal(
-					"For: ", tc.name, " ", tc.dateSince,
+					"For: ", tc.name, " ", tc.userDate,
 					"\nexpected: ", tc.expectedDate,
 					"\n     got: ", ekadashiDate.Date)
 			}

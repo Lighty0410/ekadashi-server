@@ -6,7 +6,6 @@ import (
 	"time"
 
 	"github.com/mongodb/mongo-go-driver/bson"
-	"github.com/mongodb/mongo-go-driver/mongo"
 	"github.com/mongodb/mongo-go-driver/mongo/options"
 )
 
@@ -27,16 +26,13 @@ func (s *Service) AddEkadashi(day *EkadashiDate) error {
 
 // NextEkadashi retrieves information about the last ekadashi date from the database.
 func (s *Service) NextEkadashi(day time.Time) (EkadashiDate, error) {
-	if day.IsZero() {
-		return EkadashiDate{}, mongo.ErrNoDocuments
-	}
 	var ekadashiDay EkadashiDate
 	searchOpt := options.FindOneOptions{}
 	searchOpt.Sort = bson.M{"date": 1}
 	c := s.db.Collection("ekadashi")
 	err := c.FindOne(context.Background(), bson.D{{
 		Key: "date", Value: bson.D{{
-			Key: "$gt", Value: day.AddDate(0, 0, -1),
+			Key: "$gt", Value: day.Add(-24 * time.Hour),
 		}},
 	}}, &searchOpt).Decode(&ekadashiDay)
 	if err != nil {
