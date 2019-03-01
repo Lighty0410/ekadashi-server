@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ekadashi-deployment
+  labels:
+    app: ekadashi
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ekadashi
+  template:
+    metadata:
+      labels:
+        app: ekadashi
+    spec:
+      containers:
+        - name: ekadashi
+          image: lighty0410/ekadashi:latest
+          env:
+            - name: EKADASHI_MONGO_URL
+              value: "mongodb://mongo-deployment.ekadashi:27017"
+          ports:
+            - containerPort: 9000
+---
