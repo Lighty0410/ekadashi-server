@@ -4,7 +4,9 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"regexp"
 	"time"
+	"unicode"
 
 	"github.com/Lighty0410/ekadashi-server/pkg/mongo"
 )
@@ -26,6 +28,11 @@ func (s *EkadashiServer) handleRegistration(w http.ResponseWriter, r *http.Reque
 		jsonError(w, http.StatusBadRequest, fmt.Errorf("can not decode the request: %v", err))
 		return
 	}
+	err = req.validateRequest()
+	if err != nil {
+		jsonError(w, http.StatusBadRequest, fmt.Errorf("%v", err))
+		return
+	}
 	hashedPassword, err := generateHash(req.Password)
 	if err != nil {
 		jsonError(w, http.StatusInternalServerError, fmt.Errorf("incorrect password: %v", err))
@@ -40,6 +47,30 @@ func (s *EkadashiServer) handleRegistration(w http.ResponseWriter, r *http.Reque
 		return
 	}
 	jsonResponse(w, http.StatusOK, nil)
+}
+
+func (req *loginRequest) validateRequest() error {
+	IsLetter := regexp.MustCompile(`^[a-zA-Z1-9]+$`).MatchString
+	var count int
+	for amount, symbol := range req.Username {
+		if unicode.IsSpace(symbol) {
+			return fmt.Errorf("field username cannot contains empty space")
+		}
+		count = amount
+	}
+	for amount, symbol := range req.Password {
+		if unicode.IsSpace(symbol) {
+			return fmt.Errorf("field password cannot contains empty space")
+		}
+		count = amount
+	}
+	if !IsLetter(req.Username) || !IsLetter(req.Password) {
+		return fmt.Errorf("field username or password contains innappropriate symbols")
+	}
+	if count < 6 {
+		return fmt.Errorf("field username or password cannot contains less than 6 character")
+	}
+	return nil
 }
 
 // checkAuth check current user's session.
@@ -64,6 +95,11 @@ func (s *EkadashiServer) handleLogin(w http.ResponseWriter, r *http.Request) {
 	err := json.NewDecoder(r.Body).Decode(&req)
 	if err != nil {
 		jsonError(w, http.StatusBadRequest, fmt.Errorf("can not decode the request: %v", err))
+		return
+	}
+	err = req.validateRequest()
+	if err != nil {
+		jsonError(w, http.StatusBadRequest, fmt.Errorf("%v", err))
 		return
 	}
 	user, err := s.db.ReadUser(req.Username)
