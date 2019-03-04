@@ -11,6 +11,9 @@
 # Output of the go coverage tool, specifically when used with LiteIDE
 *.out
 
+# Secret keys must be unknown
+./k8s/secrets.yaml
+
 .vscode/ 
 .idea/
 bin/
