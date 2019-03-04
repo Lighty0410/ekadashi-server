@@ -6,7 +6,6 @@ import (
 	"net/http"
 	"regexp"
 	"time"
-	"unicode"
 
 	"github.com/Lighty0410/ekadashi-server/pkg/mongo"
 )
@@ -49,29 +48,21 @@ func (s *EkadashiServer) handleRegistration(w http.ResponseWriter, r *http.Reque
 	jsonResponse(w, http.StatusOK, nil)
 }
 
+var isLetter = regexp.MustCompile(`^[a-zA-Z1-9]+$`).MatchString
+
 func (req *loginRequest) validateRequest() error {
-	IsLetter := regexp.MustCompile(`^[a-zA-Z1-9]+$`).MatchString
-	var count int
-	if !IsLetter(req.Username) || !IsLetter(req.Password) {
-		return fmt.Errorf("field username should contains latin characters only")
+	const minSymbols = 6
+	if !isLetter(req.Username) {
+		return fmt.Errorf("fields username contain latin characters and numbers without space only")
 	}
-	for amount, symbol := range req.Username {
-		if unicode.IsSpace(symbol) {
-			return fmt.Errorf("field username cannot contains empty space")
-		}
-		count = amount
+	if !isLetter(req.Password) {
+		return fmt.Errorf("fields password contain latin characters and numbers without space only")
 	}
-	if count < 6 {
-		return fmt.Errorf("field username cannot contains less than 6 character")
+	if len(req.Username) < minSymbols {
+		return fmt.Errorf("field username could not be less than 6 characters")
 	}
-	for amount, symbol := range req.Password {
-		if unicode.IsSpace(symbol) {
-			return fmt.Errorf("field password cannot contains empty space")
-		}
-		count = amount
-	}
-	if count < 6 {
-		return fmt.Errorf("field username or password cannot contains less than 6 character")
+	if len(req.Password) < minSymbols {
+		return fmt.Errorf("field password could not be less than 6 characters")
 	}
 	return nil
 }
