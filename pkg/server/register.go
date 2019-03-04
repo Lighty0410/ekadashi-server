@@ -53,10 +53,10 @@ var isLetter = regexp.MustCompile(`^[a-zA-Z1-9]+$`).MatchString
 func (req *loginRequest) validateRequest() error {
 	const minSymbols = 6
 	if !isLetter(req.Username) {
-		return fmt.Errorf("fields username contain latin characters and numbers without space only")
+		return fmt.Errorf("field username contain latin characters and numbers without space only")
 	}
 	if !isLetter(req.Password) {
-		return fmt.Errorf("fields password contain latin characters and numbers without space only")
+		return fmt.Errorf("field password contain latin characters and numbers without space only")
 	}
 	if len(req.Username) < minSymbols {
 		return fmt.Errorf("field username could not be less than 6 characters")
