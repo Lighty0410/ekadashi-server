@@ -29,7 +29,7 @@ func (s *EkadashiServer) handleRegistration(w http.ResponseWriter, r *http.Reque
 	}
 	err = req.validateRequest()
 	if err != nil {
-		jsonError(w, http.StatusBadRequest, fmt.Errorf("%v", err))
+		jsonError(w, http.StatusBadRequest, err)
 		return
 	}
 	hashedPassword, err := generateHash(req.Password)
@@ -93,7 +93,7 @@ func (s *EkadashiServer) handleLogin(w http.ResponseWriter, r *http.Request) {
 	}
 	err = req.validateRequest()
 	if err != nil {
-		jsonError(w, http.StatusBadRequest, fmt.Errorf("%v", err))
+		jsonError(w, http.StatusBadRequest, err)
 		return
 	}
 	user, err := s.db.ReadUser(req.Username)

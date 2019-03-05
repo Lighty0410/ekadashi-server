@@ -12,6 +12,11 @@ func TestValidateRequest(t *testing.T) {
 		expectedError error
 	}{
 		{
+			testValue:     "ordinary username and password",
+			value:         loginRequest{Username: "Username", Password: "Password"},
+			expectedError: nil,
+		},
+		{
 			testValue:     "spaces only",
 			value:         loginRequest{Username: "   ", Password: "    "},
 			expectedError: fmt.Errorf("field username contain latin characters and numbers without space only"),
@@ -45,14 +50,21 @@ func TestValidateRequest(t *testing.T) {
 			value:         loginRequest{Username: "yikes", Password: "smtwentwrong"},
 			expectedError: fmt.Errorf("field username could not be less than 6 characters"),
 		},
+		{
+			testValue:     "space between characters",
+			value:         loginRequest{Username: "kekeke", Password: "kek kek"},
+			expectedError: fmt.Errorf("field password contain latin characters and numbers without space only"),
+		},
 	}
 	for _, tc := range tt {
 		t.Run(tc.testValue, func(t *testing.T) {
-			err := tc.value.validateRequest().Error()
-			if err != tc.expectedError.Error() {
-				t.Fatal("\nFor: ", tc.testValue,
-					"\nExpected: ", tc.expectedError,
-					"\nGot: ", err)
+			err := tc.value.validateRequest()
+			if err != tc.expectedError {
+				if err.Error() != tc.expectedError.Error() {
+					t.Fatal("\nFor: ", tc.testValue,
+						"\nExpected: ", tc.expectedError,
+						"\nGot: ", err)
+				}
 			}
 		})
 	}
