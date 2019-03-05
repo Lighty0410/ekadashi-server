@@ -12,7 +12,7 @@
 *.out
 
 # Secret keys must be unknown
-./k8s/secrets.yaml
+secrets.yaml
 
 .vscode/ 
 .idea/
