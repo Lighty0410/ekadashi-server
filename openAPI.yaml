@@ -7,7 +7,6 @@ paths:
     post:
       summary: Register a new user in ekadashi database.
       requestBody:
-        required: true
         content:
           application/json:
             schema:
@@ -85,8 +84,14 @@ components:
       properties:
         username:
           type: string
+          minLength: 6
+          nullable: false
+          pattern: '`^[a-zA-Z1-9]+$`'
         password:
           type: string
+          minLength: 6
+          nullable: false
+          pattern: '`^[a-zA-Z1-9]+$`'
       required:
         - 'username'
         - 'password'
