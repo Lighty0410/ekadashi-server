@@ -8,6 +8,10 @@ import (
 	"github.com/Lighty0410/ekadashi-server/pkg/mongo"
 )
 
+type ekadashiJSON struct {
+	Date string `json:"date"`
+}
+
 func (s *EkadashiServer) nextEkadashiHandler(w http.ResponseWriter, r *http.Request) {
 	cookie, err := r.Cookie("session_token")
 	if err != nil {
@@ -28,5 +32,7 @@ func (s *EkadashiServer) nextEkadashiHandler(w http.ResponseWriter, r *http.Requ
 		jsonError(w, http.StatusInternalServerError, fmt.Errorf("cannot get next ekadashi day: %v", err))
 		return
 	}
-	jsonResponse(w, http.StatusOK, ekadashiDate.Date)
+	jsonResponse(w, http.StatusOK, ekadashiJSON{Date: fmt.Sprintf("%v %s %v", ekadashiDate.Date.Day(),
+		ekadashiDate.Date.Month(), ekadashiDate.Date.Year()),
+	})
 }
