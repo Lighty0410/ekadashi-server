@@ -8,7 +8,7 @@ import (
 )
 
 func (s *EkadashiServer) startEkadashi(ctx context.Context) error {
-	ekadashi, _ := s.db.RetrieveEkadashi(time.Now())
+	ekadashi, _ := s.db.NextEkadashi(time.Now())
 	if ekadashi.Date.IsZero() {
 		err := s.fillEkadashi()
 		if err != nil {
@@ -29,7 +29,7 @@ func (s *EkadashiServer) startEkadashi(ctx context.Context) error {
 					timer.Reset(time.Hour)
 					continue
 				}
-				currentEkadashi, _ := s.db.RetrieveEkadashi(time.Now())
+				currentEkadashi, _ := s.db.NextEkadashi(time.Now())
 				timer.Reset(currentEkadashi.Date.Sub(time.Now().Add(time.Hour * 24)))
 			}
 		}
