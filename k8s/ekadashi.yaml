@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ekadashi-deployment
+  labels:
+    app: ekadashi
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ekadashi
+  template:
+    metadata:
+      labels:
+        app: ekadashi
+    spec:
+      containers:
+        - name: ekadashi
+          image: lighty0410/ekadashi:latest
+          env:
+            - name: CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: ekadashi-secret
+                  key: client_id
+            - name: CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: ekadashi-secret
+                  key: client_secret
+            - name: EKADASHI_MONGO_URL
+              value: "mongodb://mongo-service:27017"
+          ports:
+            - containerPort: 9000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ekadashiservice
+  labels:
+    app: ekadashi
+spec:
+  selector:
+    app: ekadashi
+  type: NodePort
+  ports:
+    - port: 9000
+      nodePort: 31514
+      protocol: TCP
