@@ -2,7 +2,6 @@ package server
 
 import (
 	"encoding/json"
-	"fmt"
 	"os"
 	"testing"
 	"time"
@@ -14,7 +13,6 @@ func convertStringToTime(t *testing.T, str string) time.Time {
 		t.Log(err)
 		return time.Time{}
 	}
-	fmt.Println(dateTime, "convert")
 	return dateTime
 }
 

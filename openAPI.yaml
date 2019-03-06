@@ -7,7 +7,6 @@ paths:
     post:
       summary: Register a new user in ekadashi database.
       requestBody:
-        required: true
         content:
           application/json:
             schema:
@@ -62,20 +61,18 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-  /users:
+  /ekadashi/next:
     get:
       security:
         - cookieAuth: []
-      summary: Show all users in database
+      summary: Show next ekadashi day
       responses:
         '200':
           description: OK
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  type: string
+                type: string
         '500':
           description: Internal server error
 components:
@@ -87,8 +84,14 @@ components:
       properties:
         username:
           type: string
+          minLength: 6
+          nullable: false
+          pattern: '`^[a-zA-Z1-9]+$`'
         password:
           type: string
+          minLength: 6
+          nullable: false
+          pattern: '`^[a-zA-Z1-9]+$`'
       required:
         - 'username'
         - 'password'

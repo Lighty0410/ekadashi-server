@@ -2,7 +2,6 @@ package server
 
 import (
 	"bytes"
-	"context"
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -27,9 +26,9 @@ func NewEkadashiServer(db *mongo.Service) (*EkadashiServer, error) {
 	s.Use(withLogging)
 	s.Methods("POST").Path("/register").HandlerFunc(s.handleRegistration)
 	s.Methods("POST").Path("/login").HandlerFunc(s.handleLogin)
-	s.Methods("GET").Path("/users").HandlerFunc(s.showAllUsers)
-	s.Methods("GET").Path("/ekadashi/next").HandlerFunc(s.showEkadashiEnpoint)
-	err := s.startEkadashi(context.Background())
+	s.Methods("GET").Path("/ekadashi/next").HandlerFunc(s.nextEkadashiHandler)
+	s.Methods("GET").Path("/ekadashi/next").HandlerFunc(s.nextEkadashiHandler)
+	err := s.fillEkadashi()
 	if err != nil {
 		return nil, fmt.Errorf("cannot fill ekadashiAPI: %v", err)
 	}

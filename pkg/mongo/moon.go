@@ -3,9 +3,10 @@ package mongo
 import (
 	"context"
 	"fmt"
-	"github.com/mongodb/mongo-go-driver/bson"
-	"github.com/mongodb/mongo-go-driver/mongo"
 	"time"
+
+	"github.com/mongodb/mongo-go-driver/bson"
+	"github.com/mongodb/mongo-go-driver/mongo/options"
 )
 
 // EkadashiDate is a structure that contains information about ekadashi date.
@@ -23,24 +24,19 @@ func (s *Service) AddEkadashi(day *EkadashiDate) error {
 	return nil
 }
 
-// SendEkadashi retrieves information from database and send it to another function.
-func (s *Service) RetrieveEkadashi(day time.Time) (EkadashiDate, error) {
-	c := s.db.Collection("ekadashi")
-	cur, err := c.Find(context.Background(), bson.D{{
-		Key: "date", Value: bson.D{{
-			Key: "$gt", Value: day,
-		}},
-	}})
-	if err != mongo.ErrNoDocuments {
-		return EkadashiDate{}, fmt.Errorf("cannot find an existing file: %v", err)
-	}
+// NextEkadashi retrieves information about the last ekadashi date from the database.
+func (s *Service) NextEkadashi(day time.Time) (EkadashiDate, error) {
 	var ekadashiDay EkadashiDate
-	for cur.Next(context.Background()) {
-		err := cur.Decode(&ekadashiDay)
-		if err != nil {
-			return EkadashiDate{}, fmt.Errorf("cannot decode date: %v", err)
-		}
-		break
+	searchOpt := options.FindOneOptions{}
+	searchOpt.Sort = bson.M{"date": 1}
+	c := s.db.Collection("ekadashi")
+	err := c.FindOne(context.Background(), bson.D{{
+		Key: "date", Value: bson.D{{
+			Key: "$gt", Value: day.Add(-24 * time.Hour),
+		}},
+	}}, &searchOpt).Decode(&ekadashiDay)
+	if err != nil {
+		return ekadashiDay, fmt.Errorf("cannot find next ekadashi date: %v", err)
 	}
-	return ekadashiDay, nil
+	return ekadashiDay, err
 }
