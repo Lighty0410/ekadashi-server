@@ -8,7 +8,7 @@ import (
 	"github.com/Lighty0410/ekadashi-server/pkg/mongo"
 )
 
-func (s *EkadashiServer) showEkadashiEnpoint(w http.ResponseWriter, r *http.Request) {
+func (s *EkadashiServer) nextEkadashiHandler(w http.ResponseWriter, r *http.Request) {
 	cookie, err := r.Cookie("session_token")
 	if err != nil {
 		jsonResponse(w, http.StatusUnauthorized, nil)
@@ -23,9 +23,10 @@ func (s *EkadashiServer) showEkadashiEnpoint(w http.ResponseWriter, r *http.Requ
 		jsonError(w, http.StatusInternalServerError, fmt.Errorf("cannot check authentification: %v", err))
 		return
 	}
-	ekadashiDate, err := s.db.RetrieveEkadashi(time.Now())
+	ekadashiDate, err := s.db.NextEkadashi(time.Now())
 	if err != nil {
-		jsonError(w, http.StatusInternalServerError, fmt.Errorf("there is no information in database: %v", err))
+		jsonError(w, http.StatusInternalServerError, fmt.Errorf("cannot get next ekadashi day: %v", err))
+		return
 	}
 	jsonResponse(w, http.StatusOK, ekadashiDate.Date)
 }
