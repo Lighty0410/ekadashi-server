@@ -12,6 +12,9 @@ func jsonError(w http.ResponseWriter, status int, err error) {
 func jsonResponse(w http.ResponseWriter, status int, payload interface{}) {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(status)
+	if payload == nil {
+		return
+	}
 	err := json.NewEncoder(w).Encode(payload)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
