@@ -31,7 +31,7 @@ lint:
 		--enable=gofmt \
 		--enable=goimports \
 		--enable=misspell \
-		--enable=unparam ./...
+		--enable=unused ./...
 
 mod:
 	go mod tidy
