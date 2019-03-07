@@ -32,7 +32,5 @@ func (s *EkadashiServer) nextEkadashiHandler(w http.ResponseWriter, r *http.Requ
 		jsonError(w, http.StatusInternalServerError, fmt.Errorf("cannot get next ekadashi day: %v", err))
 		return
 	}
-	jsonResponse(w, http.StatusOK, ekadashiJSON{Date: fmt.Sprintf("%v %s %v", ekadashiDate.Date.Day(),
-		ekadashiDate.Date.Month(), ekadashiDate.Date.Year()),
-	})
+	jsonResponse(w, http.StatusOK, ekadashiJSON{Date: ekadashiDate.Date.Format("January 2 2006")})
 }
