@@ -29,7 +29,7 @@ spec:
                   name: ekadashi-secret
                   key: client_secret
             - name: EKADASHI_MONGO_URL
-              value: "mongodb://mongo-service:27017"
+              value: "mongo-service:27017"
           ports:
             - containerPort: 9000
 ---
