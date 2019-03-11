@@ -13,10 +13,6 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-type message struct {
-	Reason string `json:"reason"`
-}
-
 const ekadashiURL = "EKADASHI_MONGO_URL"
 
 func createHandler() *EkadashiServer {
