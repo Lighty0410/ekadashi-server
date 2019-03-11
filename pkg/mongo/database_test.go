@@ -55,15 +55,16 @@ func TestAddAndReadUser(t *testing.T) {
 		},
 	}
 	for _, tc := range tt {
-		err := testService.AddUser(&tc.user)
-		assert.NoError(t, err, tc.name)
-		user, err := testService.ReadUser(tc.user.Name)
-		if assert.NoError(t, err) {
-			assert.Equal(t, user, tc.user, tc.name)
-		}
+		t.Run(tc.name, func(t *testing.T) {
+			err := testService.AddUser(&tc.user)
+			assert.NoError(t, err, tc.name)
+			user, err := testService.ReadUser(tc.user.Name)
+			if assert.NoError(t, err) {
+				assert.Equal(t, user, tc.user, tc.name)
+			}
+		})
 	}
 }
-
 func TestService_NextEkadashiAndAddEkadashi(t *testing.T) {
 	connectionURL := os.Getenv("EKADASHI_MONGO_URL")
 	assert.NotEmpty(t, connectionURL)
@@ -129,6 +130,5 @@ func TestService_NextEkadashiAndAddEkadashi(t *testing.T) {
 				assert.Equal(t, ekadashiDate.Date.UTC(), tc.expectedDate.UTC())
 			}
 		})
-
 	}
 }
