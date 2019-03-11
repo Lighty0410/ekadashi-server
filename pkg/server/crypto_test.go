@@ -1,49 +1,52 @@
 package server
 
 import (
-	"github.com/stretchr/testify/assert"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestCrypto(t *testing.T) {
 	tt := []struct {
-		testValue   string
+		name        string
 		password    string
 		expectError error
 	}{
 		{
-			testValue: "casual password",
-			password:  "hopeisverything,",
+			name:     "casual password",
+			password: "hopeisverything,",
 		},
 		{
-			testValue: "UPPERCASE",
-			password:  "WHATSMYSECRETKEY",
+			name:     "UPPERCASE",
+			password: "WHATSMYSECRETKEY",
 		},
 		{
-			testValue: "empty string",
-			password:  "",
+			name:     "empty string",
+			password: "",
 		},
 		{
-			testValue: "short password",
-			password:  "shrt",
+			name:     "short password",
+			password: "shrt",
 		},
 		{
-			testValue: "a lot of numbers",
-			password:  "120938219382109381",
+			name:     "a lot of numbers",
+			password: "120938219382109381",
 		},
 		{
-			testValue: "very long password",
-			password:  "OnMouseMoveFunctionalTestVerticalSplitIndicatorExactlyOnTheLeftBorderOfTheFirstCellOnTheTheWeekViewAndGroupByResourceAndTwoResources",
+			name:     "very long password",
+			password: "OnMouseMoveFunctionalTestVerticalSplitIndicatorExactlyOnTheLeftBorderOfTheFirstCellOnTheTheWeekViewAndGroupByResourceAndTwoResources",
 		},
 		{
-			testValue: "ASCII symbols",
-			password:  "!@#$%^&*()_+",
+			name:     "ASCII symbols",
+			password: "!@#$%^&*()_+",
 		},
 	}
 	for _, tc := range tt {
-		hash, err := generateHash(tc.password)
-		assert.NoError(t, err, tc.expectError)
-		err = compareHash(hash, []byte(tc.password))
-		assert.NoError(t, err, tc.expectError)
+		t.Run(tc.name, func(t *testing.T) {
+			hash, err := generateHash(tc.password)
+			assert.NoError(t, err, tc.expectError)
+			err = compareHash(hash, []byte(tc.password))
+			assert.NoError(t, err, tc.expectError)
+		})
 	}
 }

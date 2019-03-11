@@ -1,10 +1,11 @@
 package mongo
 
 import (
-	"github.com/stretchr/testify/assert"
 	"os"
 	"testing"
 	"time"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestAddAndReadUser(t *testing.T) {
@@ -65,21 +66,15 @@ func TestAddAndReadUser(t *testing.T) {
 
 func TestService_NextEkadashiAndAddEkadashi(t *testing.T) {
 	connectionURL := os.Getenv("EKADASHI_MONGO_URL")
-	if connectionURL == "" {
-		t.Error("incorrect environment variable")
-		return
-	}
-	testService, err := NewService(connectionURL)
-	if err != nil {
-		t.Fatalf("cannot connect to database: %v", err)
+	assert.NotEmpty(t, connectionURL)
 
-	}
+	testService, err := NewService(connectionURL)
+	assert.NoError(t, err, "could not ...")
 	tt := []struct {
 		name         string
 		userDate     time.Time
 		date         []EkadashiDate
 		expectedDate time.Time
-		expectErr    error
 	}{
 		{
 			name: "dateSince before the first date",
@@ -125,12 +120,15 @@ func TestService_NextEkadashiAndAddEkadashi(t *testing.T) {
 		},
 	}
 	for _, tc := range tt {
-		for _, date := range tc.date {
-			assert.NoError(t, testService.AddEkadashi(&date))
-		}
-		ekadashiDate, err := testService.NextEkadashi(tc.userDate)
-		if assert.NoError(t, err) {
-			assert.Equal(t, ekadashiDate.Date.UTC(), tc.expectedDate.UTC())
-		}
+		t.Run(tc.name, func(t *testing.T) {
+			for _, date := range tc.date {
+				assert.NoError(t, testService.AddEkadashi(&date))
+			}
+			ekadashiDate, err := testService.NextEkadashi(tc.userDate)
+			if assert.NoError(t, err) {
+				assert.Equal(t, ekadashiDate.Date.UTC(), tc.expectedDate.UTC())
+			}
+		})
+
 	}
 }
