@@ -1,6 +1,9 @@
 package server
 
-import "testing"
+import (
+	"github.com/stretchr/testify/assert"
+	"testing"
+)
 
 func TestCrypto(t *testing.T) {
 	tt := []struct {
@@ -9,57 +12,38 @@ func TestCrypto(t *testing.T) {
 		expectError error
 	}{
 		{
-			testValue:   "casual password",
-			password:    "hopeisverything,",
-			expectError: nil,
+			testValue: "casual password",
+			password:  "hopeisverything,",
 		},
 		{
-			testValue:   "UPPERCASE",
-			password:    "WHATSMYSECRETKEY",
-			expectError: nil,
+			testValue: "UPPERCASE",
+			password:  "WHATSMYSECRETKEY",
 		},
 		{
-			testValue:   "empty string",
-			password:    "",
-			expectError: nil,
+			testValue: "empty string",
+			password:  "",
 		},
 		{
-			testValue:   "short password",
-			password:    "shrt",
-			expectError: nil,
+			testValue: "short password",
+			password:  "shrt",
 		},
 		{
-			testValue:   "a lot of numbers",
-			password:    "120938219382109381",
-			expectError: nil,
+			testValue: "a lot of numbers",
+			password:  "120938219382109381",
 		},
 		{
-			testValue:   "very long password",
-			password:    "OnMouseMoveFunctionalTestVerticalSplitIndicatorExactlyOnTheLeftBorderOfTheFirstCellOnTheTheWeekViewAndGroupByResourceAndTwoResources",
-			expectError: nil,
+			testValue: "very long password",
+			password:  "OnMouseMoveFunctionalTestVerticalSplitIndicatorExactlyOnTheLeftBorderOfTheFirstCellOnTheTheWeekViewAndGroupByResourceAndTwoResources",
 		},
 		{
-			testValue:   "ASCII symbols",
-			password:    "!@#$%^&*()_+",
-			expectError: nil,
+			testValue: "ASCII symbols",
+			password:  "!@#$%^&*()_+",
 		},
 	}
 	for _, tc := range tt {
-		t.Run(tc.testValue, func(t *testing.T) {
-			hash, err := generateHash(tc.password)
-			if err != nil {
-				t.Fatal(
-					"for: ", tc.testValue,
-					"expected: ", tc.expectError,
-					"got: %v", err)
-			}
-			err = compareHash(hash, []byte(tc.password))
-			if err != nil {
-				t.Fatal(
-					"for: ", tc.testValue,
-					"expected: ", tc.expectError,
-					"got: %v", err)
-			}
-		})
+		hash, err := generateHash(tc.password)
+		assert.NoError(t, err, tc.expectError)
+		err = compareHash(hash, []byte(tc.password))
+		assert.NoError(t, err, tc.expectError)
 	}
 }

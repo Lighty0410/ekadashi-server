@@ -1,6 +1,7 @@
 package mongo
 
 import (
+	"github.com/stretchr/testify/assert"
 	"os"
 	"testing"
 	"time"
@@ -53,31 +54,12 @@ func TestAddAndReadUser(t *testing.T) {
 		},
 	}
 	for _, tc := range tt {
-		t.Run(tc.name, func(t *testing.T) {
-			err := testService.AddUser(&tc.user)
-			if err != tc.expectError {
-				t.Fatal(
-					"For: ", tc.user,
-					"\nExpected: ", tc.expectError,
-					"\nGot: ", err,
-				)
-			}
-			user, err := testService.ReadUser(tc.user.Name)
-			if err != tc.expectError {
-				t.Fatal(
-					"For: ", tc.expectError,
-					"\nExpected: ", tc.expectError,
-					"\nGot: ", err,
-				)
-			}
-			if user != tc.user {
-				t.Fatal(
-					"For: ", tc.user,
-					"\nExpected: ", tc.user,
-					"\nGot: ", user,
-				)
-			}
-		})
+		err := testService.AddUser(&tc.user)
+		assert.NoError(t, err, tc.name)
+		user, err := testService.ReadUser(tc.user.Name)
+		if assert.NoError(t, err) {
+			assert.Equal(t, user, tc.user, tc.name)
+		}
 	}
 }
 
@@ -143,23 +125,12 @@ func TestService_NextEkadashiAndAddEkadashi(t *testing.T) {
 		},
 	}
 	for _, tc := range tt {
-		t.Run(tc.name, func(t *testing.T) {
-			for _, date := range tc.date {
-				err := testService.AddEkadashi(&date)
-				if err != nil {
-					t.Fatalf("an error occurred in database: %v", err)
-				}
-			}
-			ekadashiDate, err := testService.NextEkadashi(tc.userDate)
-			if err != tc.expectErr {
-				t.Error("an error occurred in database: ", err)
-			}
-			if !ekadashiDate.Date.UTC().Equal(tc.expectedDate.UTC()) {
-				t.Fatal(
-					"For: ", tc.name, " ", tc.userDate,
-					"\nexpected: ", tc.expectedDate,
-					"\n     got: ", ekadashiDate.Date)
-			}
-		})
+		for _, date := range tc.date {
+			assert.NoError(t, testService.AddEkadashi(&date))
+		}
+		ekadashiDate, err := testService.NextEkadashi(tc.userDate)
+		if assert.NoError(t, err) {
+			assert.Equal(t, ekadashiDate.Date.UTC(), tc.expectedDate.UTC())
+		}
 	}
 }
