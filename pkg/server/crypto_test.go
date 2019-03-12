@@ -10,9 +10,8 @@ import (
 
 func TestCrypto(t *testing.T) {
 	tt := []struct {
-		name        string
-		password    string
-		expectError error
+		name     string
+		password string
 	}{
 		{
 			name:     "casual password",
