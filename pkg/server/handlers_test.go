@@ -143,7 +143,7 @@ func TestRegisterFunc(t *testing.T) {
 		t.Run(tc.name, func(t *testing.T) {
 			rec := httptest.NewRecorder()
 			bodyreq := bytes.NewBuffer([]byte(tc.request))
-			req := httptest.NewRequest("POST", "/register", bodyreq) // todo user httptest
+			req := httptest.NewRequest("POST", "/register", bodyreq)
 			handler.handleRegistration(rec, req)
 			res := rec.Result()
 			defer res.Body.Close()

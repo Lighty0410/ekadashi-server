@@ -68,10 +68,9 @@ func TestAddAndReadUser(t *testing.T) {
 
 func TestService_NextEkadashiAndAddEkadashi(t *testing.T) {
 	connectionURL := os.Getenv("EKADASHI_MONGO_URL")
-
 	require.NotEmpty(t, connectionURL)
 	testService, err := NewService(connectionURL)
-	require.NoError(t, err, "connectionURL cannot be empty")
+	require.NoError(t, err)
 	tt := []struct {
 		name         string
 		userDate     time.Time
