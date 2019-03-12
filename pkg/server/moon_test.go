@@ -38,6 +38,6 @@ func TestEkadashi(t *testing.T) {
 	}
 
 	for i, tc := range expectedData {
-		assert.Equal(t, tc.Sun.RiseISO, date[i].Sun.RiseISO)
+		assert.Equal(t, tc.Sun, date[i].Sun)
 	}
 }

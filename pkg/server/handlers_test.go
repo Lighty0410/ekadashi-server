@@ -3,7 +3,6 @@ package server
 import (
 	"bytes"
 	"io/ioutil"
-	"log"
 	"net/http"
 	"net/http/httptest"
 	"os"
@@ -11,23 +10,18 @@ import (
 
 	"github.com/Lighty0410/ekadashi-server/pkg/mongo"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 const ekadashiURL = "EKADASHI_MONGO_URL"
 
-func createHandler() *EkadashiServer {
+func createHandler(t *testing.T) *EkadashiServer {
 	connectionURL := os.Getenv(ekadashiURL)
-	if connectionURL == "" {
-		log.Fatalf("Innapropriate %v variable for mongoDB connection", ekadashiURL)
-	}
+	require.NotEmpty(t, connectionURL, "connectionURL cannot be empty")
 	mongoService, err := mongo.NewService(connectionURL)
-	if err != nil {
-		log.Fatalf("Could not create mongo service: %v", err)
-	}
+	require.NoError(t, err, "cannot create mongo service")
 	testEkadashi, err := NewEkadashiServer(mongoService)
-	if err != nil {
-		log.Fatalf("Could not create ekadashi server: %v", err)
-	}
+	require.NoError(t, err, "cannot create ekadashi server")
 	return testEkadashi
 }
 
@@ -144,7 +138,7 @@ func TestRegisterFunc(t *testing.T) {
 			expectedMessage:  "{\"reason\":\"user already exists\"}\n",
 		},
 	}
-	handler := createHandler()
+	handler := createHandler(t)
 	for _, tc := range tt {
 		t.Run(tc.name, func(t *testing.T) {
 			rec := httptest.NewRecorder()
@@ -154,9 +148,7 @@ func TestRegisterFunc(t *testing.T) {
 			res := rec.Result()
 			defer res.Body.Close()
 			responseBody, err := ioutil.ReadAll(res.Body)
-			if err != nil {
-				t.Error(err)
-			}
+			assert.NoError(t, err)
 			assert.Equal(t, res.StatusCode, tc.expectedResponse, tc.name)
 			assert.Equal(t, string(responseBody), tc.expectedMessage, "unexpected body")
 		})
@@ -227,7 +219,7 @@ func TestLogin(t *testing.T) {
 			expectedMessage:  "{\"reason\":\"incorrect username or password: crypto/bcrypt: hashedPassword is not the hash of the given password\"}\n",
 		},
 	}
-	handler := createHandler()
+	handler := createHandler(t)
 	for _, tc := range tt {
 		t.Run(tc.name, func(t *testing.T) {
 			rec := httptest.NewRecorder()
@@ -237,9 +229,7 @@ func TestLogin(t *testing.T) {
 			res := rec.Result()
 			defer res.Body.Close()
 			responseBody, err := ioutil.ReadAll(res.Body)
-			if err != nil {
-				t.Error(err)
-			}
+			assert.NoError(t, err)
 			assert.Equal(t, res.StatusCode, tc.expectedResponse, tc.name)
 			assert.Equal(t, string(responseBody), tc.expectedMessage, "unexpected body")
 		})

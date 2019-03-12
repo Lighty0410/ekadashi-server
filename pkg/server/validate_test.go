@@ -61,9 +61,7 @@ func TestValidateRequest(t *testing.T) {
 	for _, tc := range tt {
 		t.Run(tc.testValue, func(t *testing.T) {
 			err := tc.value.validateRequest()
-			if err != tc.expectedError {
-				assert.EqualError(t, err, tc.expectedError.Error())
-			}
+			assert.Equal(t, err, tc.expectedError)
 		})
 	}
 }

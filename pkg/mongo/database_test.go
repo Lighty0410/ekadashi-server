@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestAddAndReadUser(t *testing.T) {
@@ -59,18 +60,18 @@ func TestAddAndReadUser(t *testing.T) {
 			err := testService.AddUser(&tc.user)
 			assert.NoError(t, err, tc.name)
 			user, err := testService.ReadUser(tc.user.Name)
-			if assert.NoError(t, err) {
-				assert.Equal(t, user, tc.user, tc.name)
-			}
+			require.NoError(t, err)
+			assert.Equal(t, user, tc.user, tc.name)
 		})
 	}
 }
+
 func TestService_NextEkadashiAndAddEkadashi(t *testing.T) {
 	connectionURL := os.Getenv("EKADASHI_MONGO_URL")
-	assert.NotEmpty(t, connectionURL)
 
+	require.NotEmpty(t, connectionURL)
 	testService, err := NewService(connectionURL)
-	assert.NoError(t, err, "could not ...")
+	require.NoError(t, err, "connectionURL cannot be empty")
 	tt := []struct {
 		name         string
 		userDate     time.Time
