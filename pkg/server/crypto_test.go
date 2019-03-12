@@ -3,6 +3,8 @@ package server
 import (
 	"testing"
 
+	"github.com/stretchr/testify/require"
+
 	"github.com/stretchr/testify/assert"
 )
 
@@ -44,9 +46,9 @@ func TestCrypto(t *testing.T) {
 	for _, tc := range tt {
 		t.Run(tc.name, func(t *testing.T) {
 			hash, err := generateHash(tc.password)
-			assert.NoError(t, err, tc.expectError)
+			require.NoError(t, err)
 			err = compareHash(hash, []byte(tc.password))
-			assert.NoError(t, err, tc.expectError)
+			assert.NoError(t, err)
 		})
 	}
 }

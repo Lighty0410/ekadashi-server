@@ -58,7 +58,7 @@ func TestAddAndReadUser(t *testing.T) {
 	for _, tc := range tt {
 		t.Run(tc.name, func(t *testing.T) {
 			err := testService.AddUser(&tc.user)
-			assert.NoError(t, err, tc.name)
+			require.NoError(t, err)
 			user, err := testService.ReadUser(tc.user.Name)
 			require.NoError(t, err)
 			assert.Equal(t, user, tc.user, tc.name)
@@ -124,7 +124,7 @@ func TestService_NextEkadashiAndAddEkadashi(t *testing.T) {
 	for _, tc := range tt {
 		t.Run(tc.name, func(t *testing.T) {
 			for _, date := range tc.date {
-				assert.NoError(t, testService.AddEkadashi(&date))
+				require.NoError(t, testService.AddEkadashi(&date))
 			}
 			ekadashiDate, err := testService.NextEkadashi(tc.userDate)
 			if assert.NoError(t, err) {
