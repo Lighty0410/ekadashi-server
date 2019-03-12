@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net/http"
 	"regexp"
+	"strings"
 	"time"
 
 	"github.com/Lighty0410/ekadashi-server/pkg/mongo"
@@ -42,20 +43,25 @@ func (s *EkadashiServer) handleRegistration(w http.ResponseWriter, r *http.Reque
 		Hash: hashedPassword,
 	})
 	if err != nil {
+		if strings.Contains(err.Error(), "duplicate key error collection") {
+			jsonError(w, http.StatusConflict, fmt.Errorf("user already exists"))
+			return
+		}
 		jsonError(w, http.StatusInternalServerError, fmt.Errorf("could not add user: %v", err))
 		return
 	}
 	jsonResponse(w, http.StatusOK, nil)
 }
 
-var isLetter = regexp.MustCompile(`^[a-zA-Z1-9]+$`).MatchString
+var validPassword = regexp.MustCompile(`^[a-zA-Z1-9=]+$`).MatchString
+var validUsername = regexp.MustCompile(`^[a-zA-Z1-9]+$`).MatchString
 
 func (req *loginRequest) validateRequest() error {
 	const minSymbols = 6
-	if !isLetter(req.Username) {
+	if !validUsername(req.Username) {
 		return fmt.Errorf("field username contain latin characters and numbers without space only")
 	}
-	if !isLetter(req.Password) {
+	if !validPassword(req.Password) {
 		return fmt.Errorf("field password contain latin characters and numbers without space only")
 	}
 	if len(req.Username) < minSymbols {

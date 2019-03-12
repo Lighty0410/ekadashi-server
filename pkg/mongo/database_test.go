@@ -4,6 +4,9 @@ import (
 	"os"
 	"testing"
 	"time"
+
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestAddAndReadUser(t *testing.T) {
@@ -55,49 +58,24 @@ func TestAddAndReadUser(t *testing.T) {
 	for _, tc := range tt {
 		t.Run(tc.name, func(t *testing.T) {
 			err := testService.AddUser(&tc.user)
-			if err != tc.expectError {
-				t.Fatal(
-					"For: ", tc.user,
-					"\nExpected: ", tc.expectError,
-					"\nGot: ", err,
-				)
-			}
+			require.NoError(t, err)
 			user, err := testService.ReadUser(tc.user.Name)
-			if err != tc.expectError {
-				t.Fatal(
-					"For: ", tc.expectError,
-					"\nExpected: ", tc.expectError,
-					"\nGot: ", err,
-				)
-			}
-			if user != tc.user {
-				t.Fatal(
-					"For: ", tc.user,
-					"\nExpected: ", tc.user,
-					"\nGot: ", user,
-				)
-			}
+			require.NoError(t, err)
+			assert.Equal(t, user, tc.user, tc.name)
 		})
 	}
 }
 
 func TestService_NextEkadashiAndAddEkadashi(t *testing.T) {
 	connectionURL := os.Getenv("EKADASHI_MONGO_URL")
-	if connectionURL == "" {
-		t.Error("incorrect environment variable")
-		return
-	}
+	require.NotEmpty(t, connectionURL)
 	testService, err := NewService(connectionURL)
-	if err != nil {
-		t.Fatalf("cannot connect to database: %v", err)
-
-	}
+	require.NoError(t, err)
 	tt := []struct {
 		name         string
 		userDate     time.Time
 		date         []EkadashiDate
 		expectedDate time.Time
-		expectErr    error
 	}{
 		{
 			name: "dateSince before the first date",
@@ -145,20 +123,11 @@ func TestService_NextEkadashiAndAddEkadashi(t *testing.T) {
 	for _, tc := range tt {
 		t.Run(tc.name, func(t *testing.T) {
 			for _, date := range tc.date {
-				err := testService.AddEkadashi(&date)
-				if err != nil {
-					t.Fatalf("an error occurred in database: %v", err)
-				}
+				require.NoError(t, testService.AddEkadashi(&date))
 			}
 			ekadashiDate, err := testService.NextEkadashi(tc.userDate)
-			if err != tc.expectErr {
-				t.Error("an error occurred in database: ", err)
-			}
-			if !ekadashiDate.Date.UTC().Equal(tc.expectedDate.UTC()) {
-				t.Fatal(
-					"For: ", tc.name, " ", tc.userDate,
-					"\nexpected: ", tc.expectedDate,
-					"\n     got: ", ekadashiDate.Date)
+			if assert.NoError(t, err) {
+				assert.Equal(t, ekadashiDate.Date.UTC(), tc.expectedDate.UTC())
 			}
 		})
 	}

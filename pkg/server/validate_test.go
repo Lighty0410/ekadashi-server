@@ -3,6 +3,8 @@ package server
 import (
 	"fmt"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestValidateRequest(t *testing.T) {
@@ -59,13 +61,7 @@ func TestValidateRequest(t *testing.T) {
 	for _, tc := range tt {
 		t.Run(tc.testValue, func(t *testing.T) {
 			err := tc.value.validateRequest()
-			if err != tc.expectedError {
-				if err.Error() != tc.expectedError.Error() {
-					t.Fatal("\nFor: ", tc.testValue,
-						"\nExpected: ", tc.expectedError,
-						"\nGot: ", err)
-				}
-			}
+			assert.Equal(t, err, tc.expectedError)
 		})
 	}
 }

@@ -1,65 +1,53 @@
 package server
 
-import "testing"
+import (
+	"testing"
+
+	"github.com/stretchr/testify/require"
+
+	"github.com/stretchr/testify/assert"
+)
 
 func TestCrypto(t *testing.T) {
 	tt := []struct {
-		testValue   string
-		password    string
-		expectError error
+		name     string
+		password string
 	}{
 		{
-			testValue:   "casual password",
-			password:    "hopeisverything,",
-			expectError: nil,
+			name:     "casual password",
+			password: "hopeisverything,",
 		},
 		{
-			testValue:   "UPPERCASE",
-			password:    "WHATSMYSECRETKEY",
-			expectError: nil,
+			name:     "UPPERCASE",
+			password: "WHATSMYSECRETKEY",
 		},
 		{
-			testValue:   "empty string",
-			password:    "",
-			expectError: nil,
+			name:     "empty string",
+			password: "",
 		},
 		{
-			testValue:   "short password",
-			password:    "shrt",
-			expectError: nil,
+			name:     "short password",
+			password: "shrt",
 		},
 		{
-			testValue:   "a lot of numbers",
-			password:    "120938219382109381",
-			expectError: nil,
+			name:     "a lot of numbers",
+			password: "120938219382109381",
 		},
 		{
-			testValue:   "very long password",
-			password:    "OnMouseMoveFunctionalTestVerticalSplitIndicatorExactlyOnTheLeftBorderOfTheFirstCellOnTheTheWeekViewAndGroupByResourceAndTwoResources",
-			expectError: nil,
+			name:     "very long password",
+			password: "OnMouseMoveFunctionalTestVerticalSplitIndicatorExactlyOnTheLeftBorderOfTheFirstCellOnTheTheWeekViewAndGroupByResourceAndTwoResources",
 		},
 		{
-			testValue:   "ASCII symbols",
-			password:    "!@#$%^&*()_+",
-			expectError: nil,
+			name:     "ASCII symbols",
+			password: "!@#$%^&*()_+",
 		},
 	}
 	for _, tc := range tt {
-		t.Run(tc.testValue, func(t *testing.T) {
+		t.Run(tc.name, func(t *testing.T) {
 			hash, err := generateHash(tc.password)
-			if err != nil {
-				t.Fatal(
-					"for: ", tc.testValue,
-					"expected: ", tc.expectError,
-					"got: %v", err)
-			}
+			require.NoError(t, err)
 			err = compareHash(hash, []byte(tc.password))
-			if err != nil {
-				t.Fatal(
-					"for: ", tc.testValue,
-					"expected: ", tc.expectError,
-					"got: %v", err)
-			}
+			assert.NoError(t, err)
 		})
 	}
 }
