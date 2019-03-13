@@ -1,37 +1,32 @@
-package server
+package ekadashihttp
 
 import (
 	"bytes"
-	"context"
-	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
 
-	"github.com/Lighty0410/ekadashi-server/pkg/mongo"
+	"github.com/Lighty0410/ekadashi-server/pkg/server/controller"
+
 	"github.com/gorilla/mux"
 )
 
 // EkadashiServer serves ekadashi HTTP requests.
 type EkadashiServer struct {
 	*mux.Router
-	db *mongo.Service
+	controller controller.Controller
 }
 
 // NewEkadashiServer sets up http routs and returns server ready to use in http.ListenAndServe.
-func NewEkadashiServer(db *mongo.Service) (*EkadashiServer, error) {
+func NewHttpServer(controller *controller.Controller) (*EkadashiServer, error) {
 	s := &EkadashiServer{
-		Router: mux.NewRouter(),
-		db:     db,
+		Router:     mux.NewRouter(),
+		controller: *controller,
 	}
 	s.Use(withLogging)
 	s.Methods("POST").Path("/register").HandlerFunc(s.handleRegistration)
 	s.Methods("POST").Path("/login").HandlerFunc(s.handleLogin)
 	s.Methods("GET").Path("/ekadashi/next").HandlerFunc(s.nextEkadashiHandler)
-	err := s.startEkadashi(context.Background())
-	if err != nil {
-		return nil, fmt.Errorf("cannot fill ekadashiAPI: %v", err)
-	}
 	return s, nil
 }
 

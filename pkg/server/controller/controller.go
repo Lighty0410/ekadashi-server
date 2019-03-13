@@ -1,4 +1,4 @@
-package server
+package controller
 
 // TODO i don't like ekadashiHTTP name though. Gonna refactor it ASAP (when someone gonna helps me with it LOL)
 
@@ -34,7 +34,7 @@ type EkadashiDate struct {
 	Date time.Time
 }
 
-func (s *EkadashiServer) RegisterUser(u User) (string, error) { // TODO commentaries
+func (s *Controller) RegisterUser(u User) (string, error) { // TODO commentaries
 	hashedPassword, err := helper.GenerateHash(u.Password)
 	if err != nil {
 		return StatusInternalServerError, err
@@ -52,7 +52,7 @@ func (s *EkadashiServer) RegisterUser(u User) (string, error) { // TODO commenta
 	return StatusOK, err
 }
 
-func (s *EkadashiServer) LoginUser(u User) (string, Session, error) { // TODO add commentaries.
+func (s *Controller) LoginUser(u User) (string, Session, error) { // TODO add commentaries.
 	user, err := s.db.ReadUser(u.Username)
 	if err == mongo.ErrUserNotFound {
 		return StatusUnauthorized, Session{}, fmt.Errorf("incorrect username or password: %v", err)
@@ -74,11 +74,13 @@ func (s *EkadashiServer) LoginUser(u User) (string, Session, error) { // TODO ad
 		return StatusInternalServerError, Session{}, fmt.Errorf("cannot create a session: %v", err)
 	}
 	return StatusOK,
-		Session{Name: userSession.Name, SessionHash: userSession.SessionHash, LastModifiedDate: userSession.LastModifiedDate}, // TODO don't like it. TOOOOOO LONG
+		Session{Name: userSession.Name,
+			SessionHash:      userSession.SessionHash,
+			LastModifiedDate: userSession.LastModifiedDate}, // TODO don't like it. TOOOOOO LONG
 		nil
 }
 
-func (s *EkadashiServer) ShowEkadashi(session string) (string, EkadashiDate, error) { // TODO add commentaries. String or struct ?
+func (s *Controller) ShowEkadashi(session string) (string, EkadashiDate, error) { // TODO add commentaries. String or struct ?
 	err := s.checkAuth(session)
 	if err == mongo.ErrNoSession {
 		return StatusUnauthorized, EkadashiDate{}, err
@@ -95,7 +97,7 @@ func (s *EkadashiServer) ShowEkadashi(session string) (string, EkadashiDate, err
 
 // checkAuth check current user's session.
 // Return nil if succeed.
-func (s *EkadashiServer) checkAuth(token string) error { // TODO where to place it ?
+func (s *Controller) checkAuth(token string) error { // TODO where to place it ?
 	session, err := s.db.GetSession(token)
 	if err != nil {
 		return err

@@ -1,4 +1,4 @@
-package server
+package moonapi
 
 import (
 	"encoding/json"
@@ -19,20 +19,19 @@ func convertStringToTime(t *testing.T, str string) time.Time {
 }
 
 func TestEkadashi(t *testing.T) {
-	testService := &EkadashiServer{}
 	file, err := os.Open("../../test-data/ekadashi-data.json")
 	if err != nil {
 		t.Fatal("cannot open file: ", err)
 	}
 	defer file.Close()
-	var testMoonDate []sunMoon
+	var testMoonDate []SunMoon
 	err = json.NewDecoder(file).Decode(&testMoonDate)
 	if err != nil {
 		t.Fatal("cannot decode file: ", err)
 	}
 	date := ekadashiFilter(testMoonDate)
-	date = testService.shiftEkadashi(date)
-	expectedData := []sunMoon{
+	date = shiftEkadashi(date)
+	expectedData := []SunMoon{
 		{Sun: sun{RiseISO: convertStringToTime(t, "2019-01-17T07:45:05-06:00")}},
 		{Sun: sun{RiseISO: convertStringToTime(t, "2019-01-31T07:32:06-06:00")}},
 	}
