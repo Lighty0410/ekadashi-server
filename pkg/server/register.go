@@ -5,12 +5,8 @@ import (
 	"fmt"
 	"net/http"
 	"regexp"
-	"strings"
-	"time"
 
-	"github.com/Lighty0410/ekadashi-server/pkg/crypto"
-
-	"github.com/Lighty0410/ekadashi-server/pkg/mongo"
+	"github.com/Lighty0410/ekadashi-server/pkg/server/controller"
 )
 
 type loginRequest struct {
@@ -21,6 +17,9 @@ type loginRequest struct {
 type registerRequest struct {
 	loginRequest
 }
+
+var validPassword = regexp.MustCompile(`^[a-zA-Z1-9=]+$`).MatchString
+var validUsername = regexp.MustCompile(`^[a-zA-Z1-9]+$`).MatchString
 
 // handleRegistration registers user in the system.
 func (s *EkadashiServer) handleRegistration(w http.ResponseWriter, r *http.Request) {
@@ -35,59 +34,21 @@ func (s *EkadashiServer) handleRegistration(w http.ResponseWriter, r *http.Reque
 		jsonError(w, http.StatusBadRequest, err)
 		return
 	}
-	hashedPassword, err := crypto.GenerateHash(req.Password)
-	if err != nil {
-		jsonError(w, http.StatusInternalServerError, fmt.Errorf("incorrect password: %v", err))
+	response, err := s.controller.RegisterUser(controller.User{Username: req.Username, Password: req.Password})
+	switch response {
+	case controller.StatusOK:
+		jsonResponse(w, http.StatusOK, nil)
+		return
+	case controller.StatusInternalServerError:
+		jsonError(w, http.StatusInternalServerError, err)
+		return
+	case controller.StatusConflict:
+		jsonError(w, http.StatusConflict, err)
+		return
+	case controller.StatusBadRequest:
+		jsonError(w, http.StatusBadRequest, err)
 		return
 	}
-	err = s.db.AddUser(&mongo.User{
-		Name: req.Username,
-		Hash: hashedPassword,
-	})
-	if err != nil {
-		if strings.Contains(err.Error(), "duplicate key error collection") {
-			jsonError(w, http.StatusConflict, fmt.Errorf("user already exists"))
-			return
-		}
-		jsonError(w, http.StatusInternalServerError, fmt.Errorf("could not add user: %v", err))
-		return
-	}
-	jsonResponse(w, http.StatusOK, nil)
-}
-
-var validPassword = regexp.MustCompile(`^[a-zA-Z1-9=]+$`).MatchString
-var validUsername = regexp.MustCompile(`^[a-zA-Z1-9]+$`).MatchString
-
-func (req *loginRequest) validateRequest() error {
-	const minSymbols = 6
-	if !validUsername(req.Username) {
-		return fmt.Errorf("field username contain latin characters and numbers without space only")
-	}
-	if !validPassword(req.Password) {
-		return fmt.Errorf("field password contain latin characters and numbers without space only")
-	}
-	if len(req.Username) < minSymbols {
-		return fmt.Errorf("field username could not be less than 6 characters")
-	}
-	if len(req.Password) < minSymbols {
-		return fmt.Errorf("field password could not be less than 6 characters")
-	}
-	return nil
-}
-
-// checkAuth check current user's session.
-// Return nil if succeed.
-func (s *EkadashiServer) checkAuth(token string) error {
-	session, err := s.db.GetSession(token)
-	if err != nil {
-		return err
-	}
-	session.LastModifiedDate = time.Now()
-	err = s.db.UpdateSession(session)
-	if err != nil {
-		return err
-	}
-	return nil
 }
 
 // handleLogin retrieves information about login request.
@@ -104,32 +65,24 @@ func (s *EkadashiServer) handleLogin(w http.ResponseWriter, r *http.Request) {
 		jsonError(w, http.StatusBadRequest, err)
 		return
 	}
-	user, err := s.db.ReadUser(req.Username)
-	if err == mongo.ErrUserNotFound {
-		jsonError(w, http.StatusUnauthorized, fmt.Errorf("incorrect username or password: %v", err))
+	response, cookieValues, err := s.controller.LoginUser(controller.User{Username: req.Username, Password: req.Password})
+	switch response {
+	case controller.StatusUnauthorized:
+		jsonError(w, http.StatusUnauthorized, err)
 		return
-	}
-	if err != nil {
-		jsonError(w, http.StatusInternalServerError, fmt.Errorf("an error occurred in mongoDB: %v", err))
+	case controller.StatusInternalServerError:
+		jsonError(w, http.StatusInternalServerError, err)
 		return
-	}
-	err = crypto.CompareHash(user.Hash, []byte(req.Password))
-	if err != nil {
-		jsonError(w, http.StatusUnauthorized, fmt.Errorf("incorrect username or password: %v", err))
+	case controller.StatusConflict:
+		jsonError(w, http.StatusConflict, err)
 		return
-	}
-	userSession := &mongo.Session{
-		Name:             req.Username,
-		SessionHash:      crypto.GenerateToken(),
-		LastModifiedDate: time.Now(),
-	}
-	err = s.db.CreateSession(userSession)
-	if err != nil {
-		jsonError(w, http.StatusInternalServerError, fmt.Errorf("cannot create a session: %v", err))
+	case controller.StatusBadRequest:
+		jsonError(w, http.StatusBadRequest, err)
+		return
 	}
 	cookie := http.Cookie{
-		Name:  "session_token",
-		Value: userSession.SessionHash,
+		Name:  cookieValues.Name,
+		Value: cookieValues.SessionHash,
 	}
 	http.SetCookie(w, &cookie)
 	jsonResponse(w, http.StatusOK, nil)
