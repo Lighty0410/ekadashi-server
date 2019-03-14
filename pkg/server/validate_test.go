@@ -19,13 +19,13 @@ func TestValidateRequest(t *testing.T) {
 			expectedError: nil,
 		},
 		{
-			testValue:     "numbers only",
-			value:         loginRequest{Username: "1234567890", Password: "numbernununm"},
+			testValue:     "numbers only with nulls",
+			value:         loginRequest{Username: "123456007890", Password: "numbernununm"},
 			expectedError: nil,
 		},
 		{
-			testValue:     "numbers in revert order",
-			value:         loginRequest{Username: "0987654321", Password: "numnumn"},
+			testValue:     "numbers in password with nulls",
+			value:         loginRequest{Username: "numbernumber", Password: "12345600012"},
 			expectedError: nil,
 		},
 		{
