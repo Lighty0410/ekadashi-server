@@ -1,16 +1,10 @@
 package server
 
 import (
-	"fmt"
 	"net/http"
-	"time"
 
-	"github.com/Lighty0410/ekadashi-server/pkg/mongo"
+	"github.com/Lighty0410/ekadashi-server/pkg/server/controller"
 )
-
-type ekadashiJSON struct {
-	Date string `json:"date"`
-}
 
 func (s *EkadashiServer) nextEkadashiHandler(w http.ResponseWriter, r *http.Request) {
 	cookie, err := r.Cookie("session_token")
@@ -18,19 +12,20 @@ func (s *EkadashiServer) nextEkadashiHandler(w http.ResponseWriter, r *http.Requ
 		jsonResponse(w, http.StatusUnauthorized, nil)
 		return
 	}
-	err = s.checkAuth(cookie.Value)
-	if err == mongo.ErrNoSession {
-		jsonResponse(w, http.StatusUnauthorized, nil)
+	response, date, err := s.controller.ShowEkadashi(cookie.Value)
+	switch response {
+	case controller.StatusUnauthorized:
+		jsonError(w, http.StatusUnauthorized, err)
+		return
+	case controller.StatusInternalServerError:
+		jsonError(w, http.StatusInternalServerError, err)
+		return
+	case controller.StatusConflict:
+		jsonError(w, http.StatusConflict, err)
+		return
+	case controller.StatusBadRequest:
+		jsonError(w, http.StatusBadRequest, err)
 		return
 	}
-	if err != nil {
-		jsonError(w, http.StatusInternalServerError, fmt.Errorf("cannot check authentification: %v", err))
-		return
-	}
-	ekadashiDate, err := s.db.NextEkadashi(time.Now())
-	if err != nil {
-		jsonError(w, http.StatusInternalServerError, fmt.Errorf("cannot get next ekadashi day: %v", err))
-		return
-	}
-	jsonResponse(w, http.StatusOK, ekadashiJSON{Date: ekadashiDate.Date.Format("January 2 2006")})
+	jsonResponse(w, http.StatusOK, date.Format("January 2 2006"))
 }
