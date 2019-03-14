@@ -23,7 +23,7 @@ type EkadashiServer struct {
 
 // NewEkadashiServer sets up http routs and returns server ready to use in http.ListenAndServe.
 func NewEkadashiServer(db *mongo.Service) (*EkadashiServer, error) {
-	c := controller.CreateController(db)
+	c := controller.NewController(db)
 	s := &EkadashiServer{
 		Router:     mux.NewRouter(),
 		db:         db,

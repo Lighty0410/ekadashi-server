@@ -7,8 +7,8 @@ type Controller struct {
 	db *mongo.Service
 }
 
-// CreateController creates a new instance for the controller. // TODO maybe NewController idk ?
-func CreateController(db *mongo.Service) *Controller {
+// CreateController creates a new instance for the controller.
+func NewController(db *mongo.Service) *Controller {
 	c := &Controller{
 		db: db,
 	}

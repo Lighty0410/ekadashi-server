@@ -12,20 +12,19 @@ func (s *EkadashiServer) nextEkadashiHandler(w http.ResponseWriter, r *http.Requ
 		jsonResponse(w, http.StatusUnauthorized, nil)
 		return
 	}
-	response, date, err := s.controller.ShowEkadashi(cookie.Value)
-	switch response {
-	case controller.StatusUnauthorized:
-		jsonError(w, http.StatusUnauthorized, err)
-		return
-	case controller.StatusInternalServerError:
-		jsonError(w, http.StatusInternalServerError, err)
-		return
-	case controller.StatusConflict:
-		jsonError(w, http.StatusConflict, err)
-		return
-	case controller.StatusBadRequest:
-		jsonError(w, http.StatusBadRequest, err)
-		return
+	date, err := s.controller.ShowEkadashi(cookie.Value)
+	if err != nil {
+		switch err {
+		case controller.ErrAlreadyExists:
+			jsonResponse(w, http.StatusConflict, err)
+			return
+		case controller.ErrNotFound:
+			jsonError(w, http.StatusUnauthorized, err)
+			return
+		default:
+			jsonError(w, http.StatusInternalServerError, err)
+			return
+		}
 	}
 	jsonResponse(w, http.StatusOK, date.Format("January 2 2006"))
 }

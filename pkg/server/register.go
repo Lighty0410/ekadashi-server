@@ -34,21 +34,21 @@ func (s *EkadashiServer) handleRegistration(w http.ResponseWriter, r *http.Reque
 		jsonError(w, http.StatusBadRequest, err)
 		return
 	}
-	response, err := s.controller.RegisterUser(controller.User{Username: req.Username, Password: req.Password})
-	switch response {
-	case controller.StatusOK:
-		jsonResponse(w, http.StatusOK, nil)
-		return
-	case controller.StatusInternalServerError:
-		jsonError(w, http.StatusInternalServerError, err)
-		return
-	case controller.StatusConflict:
-		jsonError(w, http.StatusConflict, err)
-		return
-	case controller.StatusBadRequest:
-		jsonError(w, http.StatusBadRequest, err)
-		return
+	err = s.controller.RegisterUser(controller.User{Username: req.Username, Password: req.Password})
+	if err != nil {
+		switch err {
+		case controller.ErrAlreadyExists:
+			jsonResponse(w, http.StatusConflict, err)
+			return
+		case controller.ErrNotFound:
+			jsonError(w, http.StatusUnauthorized, err)
+			return
+		default:
+			jsonError(w, http.StatusInternalServerError, err)
+			return
+		}
 	}
+	jsonResponse(w, http.StatusOK, nil)
 }
 
 // handleLogin retrieves information about login request.
@@ -65,20 +65,19 @@ func (s *EkadashiServer) handleLogin(w http.ResponseWriter, r *http.Request) {
 		jsonError(w, http.StatusBadRequest, err)
 		return
 	}
-	response, cookieValues, err := s.controller.LoginUser(controller.User{Username: req.Username, Password: req.Password})
-	switch response {
-	case controller.StatusUnauthorized:
-		jsonError(w, http.StatusUnauthorized, err)
-		return
-	case controller.StatusInternalServerError:
-		jsonError(w, http.StatusInternalServerError, err)
-		return
-	case controller.StatusConflict:
-		jsonError(w, http.StatusConflict, err)
-		return
-	case controller.StatusBadRequest:
-		jsonError(w, http.StatusBadRequest, err)
-		return
+	cookieValues, err := s.controller.LoginUser(controller.User{Username: req.Username, Password: req.Password})
+	if err != nil {
+		switch err {
+		case controller.ErrAlreadyExists:
+			jsonResponse(w, http.StatusConflict, err)
+			return
+		case controller.ErrNotFound:
+			jsonError(w, http.StatusUnauthorized, err)
+			return
+		default:
+			jsonError(w, http.StatusInternalServerError, err)
+			return
+		}
 	}
 	cookie := http.Cookie{
 		Name:  cookieValues.Name,
