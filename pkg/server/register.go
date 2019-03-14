@@ -55,8 +55,8 @@ func (s *EkadashiServer) handleRegistration(w http.ResponseWriter, r *http.Reque
 	jsonResponse(w, http.StatusOK, nil)
 }
 
-var validPassword = regexp.MustCompile(`^[a-zA-Z1-9=]+$`).MatchString
-var validUsername = regexp.MustCompile(`^[a-zA-Z1-9]+$`).MatchString
+var validPassword = regexp.MustCompile(`^[a-zA-Z0-9=]+$`).MatchString
+var validUsername = regexp.MustCompile(`^[a-zA-Z0-9]+$`).MatchString
 
 func (req *loginRequest) validateRequest() error {
 	const minSymbols = 6
