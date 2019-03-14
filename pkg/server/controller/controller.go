@@ -27,7 +27,7 @@ type Session struct {
 	LastModifiedDate time.Time
 }
 
-// RegisterUser is a method that register user and have an access to the mongoDB.
+// RegisterUser is a method that register in the database.
 func (c *Controller) RegisterUser(u User) error {
 	hashedPassword, err := crypto.GenerateHash(u.Password)
 	if err != nil {
@@ -76,7 +76,7 @@ func (c *Controller) LoginUser(u User) (*Session, error) {
 }
 
 // ShowEkadashi checks an existing session.
-// If succeed returns ekadashi date
+// If succeed returns ekadashi date.
 func (c *Controller) ShowEkadashi(session string) (time.Time, error) { //
 	err := c.checkAuth(session)
 	if err == mongo.ErrNoSession {

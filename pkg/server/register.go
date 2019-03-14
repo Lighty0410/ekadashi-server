@@ -18,8 +18,8 @@ type registerRequest struct {
 	loginRequest
 }
 
-var validPassword = regexp.MustCompile(`^[a-zA-Z1-9=]+$`).MatchString
-var validUsername = regexp.MustCompile(`^[a-zA-Z1-9]+$`).MatchString
+var validPassword = regexp.MustCompile(`^[a-zA-Z0-9=]+$`).MatchString
+var validUsername = regexp.MustCompile(`^[a-zA-Z0-9]+$`).MatchString
 
 // handleRegistration registers user in the system.
 func (s *EkadashiServer) handleRegistration(w http.ResponseWriter, r *http.Request) {
