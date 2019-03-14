@@ -19,6 +19,16 @@ func TestValidateRequest(t *testing.T) {
 			expectedError: nil,
 		},
 		{
+			testValue:     "numbers only with nulls",
+			value:         loginRequest{Username: "123456007890", Password: "numbernununm"},
+			expectedError: nil,
+		},
+		{
+			testValue:     "numbers in password with nulls",
+			value:         loginRequest{Username: "numbernumber", Password: "12345600012"},
+			expectedError: nil,
+		},
+		{
 			testValue:     "spaces only",
 			value:         loginRequest{Username: "   ", Password: "    "},
 			expectedError: fmt.Errorf("field username contain latin characters and numbers without space only"),
