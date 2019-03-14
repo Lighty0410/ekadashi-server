@@ -1,11 +1,10 @@
-package server
+package crypto
 
 import (
 	"testing"
 
-	"github.com/stretchr/testify/require"
-
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestCrypto(t *testing.T) {
@@ -44,9 +43,9 @@ func TestCrypto(t *testing.T) {
 	}
 	for _, tc := range tt {
 		t.Run(tc.name, func(t *testing.T) {
-			hash, err := generateHash(tc.password)
+			hash, err := GenerateHash(tc.password)
 			require.NoError(t, err)
-			err = compareHash(hash, []byte(tc.password))
+			err = CompareHash(hash, []byte(tc.password))
 			assert.NoError(t, err)
 		})
 	}

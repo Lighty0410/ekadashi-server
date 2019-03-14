@@ -8,6 +8,8 @@ import (
 	"strings"
 	"time"
 
+	"github.com/Lighty0410/ekadashi-server/pkg/crypto"
+
 	"github.com/Lighty0410/ekadashi-server/pkg/mongo"
 )
 
@@ -33,7 +35,7 @@ func (s *EkadashiServer) handleRegistration(w http.ResponseWriter, r *http.Reque
 		jsonError(w, http.StatusBadRequest, err)
 		return
 	}
-	hashedPassword, err := generateHash(req.Password)
+	hashedPassword, err := crypto.GenerateHash(req.Password)
 	if err != nil {
 		jsonError(w, http.StatusInternalServerError, fmt.Errorf("incorrect password: %v", err))
 		return
@@ -111,14 +113,14 @@ func (s *EkadashiServer) handleLogin(w http.ResponseWriter, r *http.Request) {
 		jsonError(w, http.StatusInternalServerError, fmt.Errorf("an error occurred in mongoDB: %v", err))
 		return
 	}
-	err = compareHash(user.Hash, []byte(req.Password))
+	err = crypto.CompareHash(user.Hash, []byte(req.Password))
 	if err != nil {
 		jsonError(w, http.StatusUnauthorized, fmt.Errorf("incorrect username or password: %v", err))
 		return
 	}
 	userSession := &mongo.Session{
 		Name:             req.Username,
-		SessionHash:      generateToken(),
+		SessionHash:      crypto.GenerateToken(),
 		LastModifiedDate: time.Now(),
 	}
 	err = s.db.CreateSession(userSession)
