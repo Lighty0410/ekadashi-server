@@ -8,6 +8,8 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/Lighty0410/ekadashi-server/pkg/server/controller"
+
 	"github.com/Lighty0410/ekadashi-server/pkg/mongo"
 	"github.com/gorilla/mux"
 )
@@ -15,14 +17,17 @@ import (
 // EkadashiServer serves ekadashi HTTP requests.
 type EkadashiServer struct {
 	*mux.Router
-	db *mongo.Service
+	db         *mongo.Service
+	controller *controller.Controller
 }
 
 // NewEkadashiServer sets up http routs and returns server ready to use in http.ListenAndServe.
 func NewEkadashiServer(db *mongo.Service) (*EkadashiServer, error) {
+	c := new(controller.CreateController(db))
 	s := &EkadashiServer{
-		Router: mux.NewRouter(),
-		db:     db,
+		Router:     mux.NewRouter(),
+		db:         db,
+		controller: c,
 	}
 	s.Use(withLogging)
 	s.Methods("POST").Path("/register").HandlerFunc(s.handleRegistration)

@@ -134,3 +134,20 @@ func (s *EkadashiServer) handleLogin(w http.ResponseWriter, r *http.Request) {
 	http.SetCookie(w, &cookie)
 	jsonResponse(w, http.StatusOK, nil)
 }
+
+func (req *loginRequest) validateRequest() error { // TODO hmmm. Where should it place ?
+	const minSymbols = 6
+	if !validUsername(req.Username) {
+		return fmt.Errorf("field username contain latin characters and numbers without space only")
+	}
+	if !validPassword(req.Password) {
+		return fmt.Errorf("field password contain latin characters and numbers without space only")
+	}
+	if len(req.Username) < minSymbols {
+		return fmt.Errorf("field username could not be less than 6 characters")
+	}
+	if len(req.Password) < minSymbols {
+		return fmt.Errorf("field password could not be less than 6 characters")
+	}
+	return nil
+}
