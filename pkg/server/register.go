@@ -18,9 +18,6 @@ type registerRequest struct {
 	loginRequest
 }
 
-var validPassword = regexp.MustCompile(`^[a-zA-Z0-9=]+$`).MatchString
-var validUsername = regexp.MustCompile(`^[a-zA-Z0-9]+$`).MatchString
-
 // handleRegistration registers user in the system.
 func (s *EkadashiServer) handleRegistration(w http.ResponseWriter, r *http.Request) {
 	var req registerRequest
@@ -39,9 +36,6 @@ func (s *EkadashiServer) handleRegistration(w http.ResponseWriter, r *http.Reque
 		switch err {
 		case controller.ErrAlreadyExists:
 			jsonResponse(w, http.StatusConflict, err)
-			return
-		case controller.ErrNotFound:
-			jsonError(w, http.StatusUnauthorized, err)
 			return
 		default:
 			jsonError(w, http.StatusInternalServerError, err)
@@ -68,9 +62,6 @@ func (s *EkadashiServer) handleLogin(w http.ResponseWriter, r *http.Request) {
 	cookieValues, err := s.controller.LoginUser(controller.User{Username: req.Username, Password: req.Password})
 	if err != nil {
 		switch err {
-		case controller.ErrAlreadyExists:
-			jsonResponse(w, http.StatusConflict, err)
-			return
 		case controller.ErrNotFound:
 			jsonError(w, http.StatusUnauthorized, err)
 			return
@@ -86,6 +77,9 @@ func (s *EkadashiServer) handleLogin(w http.ResponseWriter, r *http.Request) {
 	http.SetCookie(w, &cookie)
 	jsonResponse(w, http.StatusOK, nil)
 }
+
+var validPassword = regexp.MustCompile(`^[a-zA-Z0-9=]+$`).MatchString
+var validUsername = regexp.MustCompile(`^[a-zA-Z0-9]+$`).MatchString
 
 func (req *loginRequest) validateRequest() error { // TODO hmmm. Where should it place ?
 	const minSymbols = 6

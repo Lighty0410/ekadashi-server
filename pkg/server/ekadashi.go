@@ -15,9 +15,6 @@ func (s *EkadashiServer) nextEkadashiHandler(w http.ResponseWriter, r *http.Requ
 	date, err := s.controller.ShowEkadashi(cookie.Value)
 	if err != nil {
 		switch err {
-		case controller.ErrAlreadyExists:
-			jsonResponse(w, http.StatusConflict, err)
-			return
 		case controller.ErrNotFound:
 			jsonError(w, http.StatusUnauthorized, err)
 			return

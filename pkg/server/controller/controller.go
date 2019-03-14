@@ -31,7 +31,7 @@ type Session struct {
 func (c *Controller) RegisterUser(u User) error {
 	hashedPassword, err := crypto.GenerateHash(u.Password)
 	if err != nil {
-		return err
+		return fmt.Errorf("cannot generate hash: %v", err)
 	}
 	err = c.db.AddUser(&mongo.User{
 		Name: u.Username,
@@ -51,14 +51,14 @@ func (c *Controller) RegisterUser(u User) error {
 func (c *Controller) LoginUser(u User) (*Session, error) {
 	user, err := c.db.ReadUser(u.Username)
 	if err == mongo.ErrUserNotFound {
-		return &Session{}, ErrNotFound
+		return nil, ErrNotFound
 	}
 	if err != nil {
-		return &Session{}, fmt.Errorf("an error occurred in mongoDB: %v", err)
+		return nil, fmt.Errorf("an error occurred in mongoDB during read user: %v", err)
 	}
 	err = crypto.CompareHash(user.Hash, []byte(u.Password))
 	if err != nil {
-		return &Session{}, ErrNotFound
+		return nil, ErrNotFound
 	}
 	userSession := &mongo.Session{
 		Name:             u.Username,
@@ -67,7 +67,7 @@ func (c *Controller) LoginUser(u User) (*Session, error) {
 	}
 	err = c.db.CreateSession(userSession)
 	if err != nil {
-		return &Session{}, fmt.Errorf("cannot create a session: %v", err)
+		return nil, fmt.Errorf("cannot create a session: %v", err)
 	}
 	return &Session{Name: userSession.Name,
 			SessionHash:      userSession.SessionHash,
@@ -77,19 +77,19 @@ func (c *Controller) LoginUser(u User) (*Session, error) {
 
 // ShowEkadashi checks an existing session.
 // If succeed returns ekadashi date.
-func (c *Controller) ShowEkadashi(session string) (time.Time, error) { //
-	err := c.checkAuth(session)
+func (c *Controller) ShowEkadashi(sessionToken string) (time.Time, error) { //
+	err := c.checkAuth(sessionToken)
 	if err == mongo.ErrNoSession {
-		return time.Now(), ErrNotFound
+		return time.Time{}, ErrNotFound
 	}
 	if err != nil {
-		return time.Now(), fmt.Errorf("cannot check authentification: %v", err)
+		return time.Time{}, fmt.Errorf("cannot check authentification: %v", err)
 	}
 	ekadashiDate, err := c.db.NextEkadashi(time.Now())
 	if err != nil {
-		return time.Now(), fmt.Errorf("cannot get next ekadashi day: %v", err)
+		return time.Time{}, fmt.Errorf("cannot get next ekadashi day: %v", err)
 	}
-	return ekadashiDate.Date, nil //
+	return ekadashiDate.Date, nil
 }
 
 // checkAuth check current user's session.
@@ -102,7 +102,7 @@ func (c *Controller) checkAuth(token string) error {
 	session.LastModifiedDate = time.Now()
 	err = c.db.UpdateSession(session)
 	if err != nil {
-		return err
+		return fmt.Errorf("cannot update user session: %v", err)
 	}
 	return nil
 }
