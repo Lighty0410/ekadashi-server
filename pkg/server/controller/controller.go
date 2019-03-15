@@ -10,8 +10,10 @@ import (
 	"github.com/Lighty0410/ekadashi-server/pkg/mongo"
 )
 
-// This constants are defined to handle errors.
+// ErrAlreadyExists is returned when such username already exists in the system.
 var ErrAlreadyExists = fmt.Errorf("user already exists")
+
+// ErrNotFound is returned when username or password doesn't exists or is incorrect.
 var ErrNotFound = fmt.Errorf("incorrect username or password")
 
 // User contains information about a single user.
@@ -27,7 +29,8 @@ type Session struct {
 	LastModifiedDate time.Time
 }
 
-// RegisterUser is a method that register in the database.
+// RegisterUser adds user and hashed password to the database.
+// If succeed returns nil.
 func (c *Controller) RegisterUser(u User) error {
 	hashedPassword, err := crypto.GenerateHash(u.Password)
 	if err != nil {
@@ -37,13 +40,12 @@ func (c *Controller) RegisterUser(u User) error {
 		Name: u.Username,
 		Hash: hashedPassword,
 	})
-	if err != nil {
-		if strings.Contains(err.Error(), "duplicate key error collection") {
-			return ErrAlreadyExists
-		}
-		return err
+	if err == nil {
+		return nil
+	} else if strings.Contains(err.Error(), "duplicate key error collection") {
+		return ErrAlreadyExists
 	}
-	return nil
+	return err
 }
 
 // LoginUser compares user's hash and password in the database.
@@ -69,7 +71,8 @@ func (c *Controller) LoginUser(u User) (*Session, error) {
 	if err != nil {
 		return nil, fmt.Errorf("cannot create a session: %v", err)
 	}
-	return &Session{Name: userSession.Name,
+	return &Session{
+			Name:             userSession.Name,
 			SessionHash:      userSession.SessionHash,
 			LastModifiedDate: userSession.LastModifiedDate},
 		nil
