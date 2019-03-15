@@ -35,7 +35,7 @@ func (s *EkadashiServer) handleRegistration(w http.ResponseWriter, r *http.Reque
 	if err != nil {
 		switch err {
 		case controller.ErrAlreadyExists:
-			jsonResponse(w, http.StatusConflict, err)
+			jsonError(w, http.StatusConflict, err)
 			return
 		default:
 			jsonError(w, http.StatusInternalServerError, err)

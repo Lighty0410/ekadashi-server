@@ -6,15 +6,14 @@ import (
 	"time"
 
 	"github.com/Lighty0410/ekadashi-server/pkg/crypto"
-
 	"github.com/Lighty0410/ekadashi-server/pkg/mongo"
 )
 
 // ErrAlreadyExists is returned when such username already exists in the system.
 var ErrAlreadyExists = fmt.Errorf("user already exists")
 
-// ErrNotFound is returned when username or password doesn't exists or is incorrect.
-var ErrNotFound = fmt.Errorf("incorrect username or password")
+// ErrNotFound is returned when username doesn't exist or is incorrect.
+var ErrNotFound = fmt.Errorf("user not found")
 
 // User contains information about a single user.
 type User struct {
@@ -29,6 +28,19 @@ type Session struct {
 	LastModifiedDate time.Time
 }
 
+// Controller is an object that provides an access for the controller's functionality.
+type Controller struct {
+	db *mongo.Service
+}
+
+// CreateController creates a new instance for the controller.
+func NewController(db *mongo.Service) *Controller {
+	c := &Controller{
+		db: db,
+	}
+	return c
+}
+
 // RegisterUser adds user and hashed password to the database.
 // If succeed returns nil.
 func (c *Controller) RegisterUser(u User) error {
@@ -40,12 +52,13 @@ func (c *Controller) RegisterUser(u User) error {
 		Name: u.Username,
 		Hash: hashedPassword,
 	})
-	if err == nil {
-		return nil
-	} else if strings.Contains(err.Error(), "duplicate key error collection") {
-		return ErrAlreadyExists
+	if err != nil {
+		if strings.Contains(err.Error(), "duplicate key error collection") {
+			return ErrAlreadyExists
+		}
+		return err
 	}
-	return err
+	return nil
 }
 
 // LoginUser compares user's hash and password in the database.
@@ -72,10 +85,10 @@ func (c *Controller) LoginUser(u User) (*Session, error) {
 		return nil, fmt.Errorf("cannot create a session: %v", err)
 	}
 	return &Session{
-			Name:             userSession.Name,
-			SessionHash:      userSession.SessionHash,
-			LastModifiedDate: userSession.LastModifiedDate},
-		nil
+		Name:             userSession.Name,
+		SessionHash:      userSession.SessionHash,
+		LastModifiedDate: userSession.LastModifiedDate,
+	}, nil
 }
 
 // ShowEkadashi checks an existing session.

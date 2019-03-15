@@ -195,28 +195,28 @@ func TestLogin(t *testing.T) {
 			requst: `{"username":"newusernameus",
               "password":"newpasswordus"}`,
 			expectedResponse: http.StatusUnauthorized,
-			expectedMessage:  "{\"reason\":\"incorrect username or password: mongo: no documents in result\"}\n",
+			expectedMessage:  "{\"reason\":\"user not found\"}\n",
 		},
 		{
 			name: "another status 401 when user doesn't exist ",
 			requst: `{"username":"newusernameus",
               "password":"userpass"}`,
 			expectedResponse: http.StatusUnauthorized,
-			expectedMessage:  "{\"reason\":\"incorrect username or password: mongo: no documents in result\"}\n",
+			expectedMessage:  "{\"reason\":\"user not found\"}\n",
 		},
 		{
 			name: "status 401 when field password is incorrect",
 			requst: `{"username":"passwordpass",
 				"password":"qwihoaslk"}`,
 			expectedResponse: http.StatusUnauthorized,
-			expectedMessage:  "{\"reason\":\"incorrect username or password: crypto/bcrypt: hashedPassword is not the hash of the given password\"}\n",
+			expectedMessage:  "{\"reason\":\"user not found\"}\n",
 		},
 		{
 			name: "another status 401 when field password is incorrect",
 			requst: `{"username":"1234username",
               "password":"asda21"}`,
 			expectedResponse: http.StatusUnauthorized,
-			expectedMessage:  "{\"reason\":\"incorrect username or password: crypto/bcrypt: hashedPassword is not the hash of the given password\"}\n",
+			expectedMessage:  "{\"reason\":\"user not found\"}\n",
 		},
 	}
 	handler := createHandler(t)

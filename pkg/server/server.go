@@ -8,9 +8,8 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/Lighty0410/ekadashi-server/pkg/server/controller"
-
 	"github.com/Lighty0410/ekadashi-server/pkg/mongo"
+	"github.com/Lighty0410/ekadashi-server/pkg/server/controller"
 	"github.com/gorilla/mux"
 )
 
