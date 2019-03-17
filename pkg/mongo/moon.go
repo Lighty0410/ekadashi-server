@@ -3,11 +3,15 @@ package mongo
 import (
 	"context"
 	"fmt"
+
 	"time"
 
 	"github.com/mongodb/mongo-go-driver/bson"
+	"github.com/mongodb/mongo-go-driver/mongo"
 	"github.com/mongodb/mongo-go-driver/mongo/options"
 )
+
+var ErrNoEkadashi = fmt.Errorf("cannot find next ekadashi date")
 
 // EkadashiDate is a structure that contains information about ekadashi date.
 type EkadashiDate struct {
@@ -25,7 +29,7 @@ func (s *Service) AddEkadashi(day *EkadashiDate) error {
 }
 
 // NextEkadashi retrieves information about the last ekadashi date from the database.
-func (s *Service) NextEkadashi(day time.Time) (EkadashiDate, error) {
+func (s *Service) NextEkadashi(day time.Time) (*EkadashiDate, error) {
 	var ekadashiDay EkadashiDate
 	searchOpt := options.FindOneOptions{}
 	searchOpt.Sort = bson.M{"date": 1}
@@ -36,7 +40,10 @@ func (s *Service) NextEkadashi(day time.Time) (EkadashiDate, error) {
 		}},
 	}}, &searchOpt).Decode(&ekadashiDay)
 	if err != nil {
-		return ekadashiDay, fmt.Errorf("cannot find next ekadashi date: %v", err)
+		if err != mongo.ErrNoDocuments {
+			return nil, nil
+		}
+		return &ekadashiDay, ErrNoEkadashi
 	}
-	return ekadashiDay, err
+	return &ekadashiDay, nil
 }
