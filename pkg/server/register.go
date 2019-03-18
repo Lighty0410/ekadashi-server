@@ -71,7 +71,7 @@ func (s *EkadashiServer) handleLogin(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 	cookie := http.Cookie{
-		Name:  session.Name,
+		Name:  "sesssion_token",
 		Value: session.Token,
 	}
 	http.SetCookie(w, &cookie)
@@ -81,7 +81,7 @@ func (s *EkadashiServer) handleLogin(w http.ResponseWriter, r *http.Request) {
 var validPassword = regexp.MustCompile(`^[a-zA-Z0-9=]+$`).MatchString
 var validUsername = regexp.MustCompile(`^[a-zA-Z0-9]+$`).MatchString
 
-func (req *loginRequest) validateRequest() error { // TODO hmmm. Where should it place ?
+func (req *loginRequest) validateRequest() error {
 	const minSymbols = 6
 	if !validUsername(req.Username) {
 		return fmt.Errorf("field username contain latin characters and numbers without space only")

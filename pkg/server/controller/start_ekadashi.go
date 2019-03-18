@@ -12,13 +12,12 @@ import (
 
 // FillEkadashi is a goroutine that autofill ekadashi dates via getEkadashi().
 // If succeed it adds ekadashi date to the database.
-// It gonna logs errors only. Not to return themselves.
-func (c *Controller) FillEkadashi(ctx context.Context) {
+func (c *Controller) FillEkadashi(ctx context.Context) error {
+	actualEkadashi, err := c.getEkadashi()
+	if err != nil {
+		return err
+	}
 	go func() {
-		actualEkadashi, err := c.getEkadashi()
-		if err != nil {
-			log.Println(err)
-		}
 		timer := time.NewTimer(actualEkadashi.Date.Sub(time.Now().Add(time.Hour * 24)))
 		defer timer.Stop()
 		for {
@@ -34,6 +33,7 @@ func (c *Controller) FillEkadashi(ctx context.Context) {
 			}
 		}
 	}()
+	return nil
 }
 
 func (c *Controller) getEkadashi() (*mongo.EkadashiDate, error) {
