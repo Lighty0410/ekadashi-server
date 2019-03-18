@@ -1,4 +1,4 @@
-package server
+package http
 
 import (
 	"bytes"
@@ -8,7 +8,6 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/Lighty0410/ekadashi-server/pkg/mongo"
 	"github.com/Lighty0410/ekadashi-server/pkg/server/controller"
 	"github.com/gorilla/mux"
 )
@@ -19,9 +18,8 @@ type EkadashiServer struct {
 	controller *controller.Controller
 }
 
-// NewEkadashiServer sets up http routs and returns server ready to use in http.ListenAndServe.
-func NewEkadashiServer(db *mongo.Service) (*EkadashiServer, error) {
-	c := controller.NewController(db)
+// NewEkadashiServer sets up http routs and returns server.
+func NewServer(address string, c *controller.Controller) (*http.Server, error) {
 	s := &EkadashiServer{
 		Router:     mux.NewRouter(),
 		controller: c,
@@ -32,9 +30,19 @@ func NewEkadashiServer(db *mongo.Service) (*EkadashiServer, error) {
 	s.Methods("GET").Path("/ekadashi/next").HandlerFunc(s.nextEkadashiHandler)
 	err := s.controller.FillEkadashi(context.Background())
 	if err != nil {
-		return nil, fmt.Errorf("cannot fill ekadashi: %v", err)
+		return nil, fmt.Errorf("cannot fill ekadashi dates: %v", err)
 	}
-	return s, nil
+	server := &http.Server{
+		Addr:    address,
+		Handler: s.Router,
+	}
+	go func() {
+		err := server.ListenAndServe()
+		if err != nil {
+			log.Printf("Could not listen: %v", err)
+		}
+	}()
+	return server, nil
 }
 
 func withLogging(wrappedHandler http.Handler) http.Handler {
