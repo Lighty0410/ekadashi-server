@@ -19,7 +19,7 @@ type EkadashiServer struct {
 }
 
 // NewEkadashiServer sets up http routs and returns server.
-func NewServer(c *controller.Controller, address string) (*http.Server, error) {
+func NewServer(address string, c *controller.Controller) (*http.Server, error) {
 	s := &EkadashiServer{
 		Router:     mux.NewRouter(),
 		controller: c,
