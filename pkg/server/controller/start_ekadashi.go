@@ -26,11 +26,11 @@ func (c *Controller) FillEkadashi(ctx context.Context) {
 			case <-ctx.Done():
 				return
 			case <-timer.C:
-				actualEkadashi, err = c.getEkadashi()
+				nextEkadashi, err := c.getEkadashi()
 				if err != nil {
 					log.Println(err)
 				}
-				timer.Reset(actualEkadashi.Date.Sub(time.Now().Add(time.Hour * 24)))
+				timer.Reset(nextEkadashi.Date.Sub(time.Now().Add(time.Hour * 24)))
 			}
 		}
 	}()
