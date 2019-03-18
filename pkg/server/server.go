@@ -15,7 +15,6 @@ import (
 // EkadashiServer serves ekadashi HTTP requests.
 type EkadashiServer struct {
 	*mux.Router
-	db         *mongo.Service
 	controller *controller.Controller
 }
 
