@@ -28,6 +28,8 @@ func (c *Controller) FillEkadashi(ctx context.Context) error {
 				nextEkadashi, err := c.getEkadashi()
 				if err != nil {
 					log.Println(err)
+					timer.Reset(time.Hour)
+					continue
 				}
 				timer.Reset(nextEkadashi.Date.Sub(time.Now().Add(time.Hour * 24)))
 			}
