@@ -9,7 +9,7 @@ import (
 
 	"github.com/Lighty0410/ekadashi-server/pkg/mongo"
 	"github.com/Lighty0410/ekadashi-server/pkg/server/controller"
-	internalHTTP "github.com/Lighty0410/ekadashi-server/pkg/server/http"
+	"github.com/Lighty0410/ekadashi-server/pkg/server/http"
 )
 
 const ekadashiURL = "EKADASHI_MONGO_URL"
@@ -24,7 +24,7 @@ func main() {
 		log.Fatalf("Could not create mongo service: %v", err)
 	}
 	newController := controller.NewController(mongoService)
-	server, err := internalHTTP.NewServer(newController)
+	server, err := http.NewServer(newController, ":9000")
 	if err != nil {
 		log.Fatalf("Could not create ekadashi server: %v", err)
 	}

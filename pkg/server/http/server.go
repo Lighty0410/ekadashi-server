@@ -19,7 +19,7 @@ type EkadashiServer struct {
 }
 
 // NewEkadashiServer sets up http routs and returns server.
-func NewServer(c *controller.Controller) (*http.Server, error) {
+func NewServer(c *controller.Controller, address string) (*http.Server, error) {
 	s := &EkadashiServer{
 		Router:     mux.NewRouter(),
 		controller: c,
@@ -33,7 +33,7 @@ func NewServer(c *controller.Controller) (*http.Server, error) {
 		return nil, fmt.Errorf("cannot fill ekadashi dates: %v", err)
 	}
 	server := &http.Server{
-		Addr:    ":9000",
+		Addr:    address,
 		Handler: s.Router,
 	}
 	go func() {
