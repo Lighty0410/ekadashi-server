@@ -1,8 +1,11 @@
 package main
 
 import (
+	"context"
 	"log"
 	"os"
+	"os/signal"
+	"syscall"
 
 	"github.com/Lighty0410/ekadashi-server/pkg/mongo"
 	"github.com/Lighty0410/ekadashi-server/pkg/server/controller"
@@ -21,8 +24,16 @@ func main() {
 		log.Fatalf("Could not create mongo service: %v", err)
 	}
 	newController := controller.NewController(mongoService)
-	err = internalHTTP.NewServer(newController)
+	server, err := internalHTTP.NewServer(newController)
 	if err != nil {
 		log.Fatalf("Could not create ekadashi server: %v", err)
+	}
+	stop := make(chan os.Signal, 1)
+	signal.Notify(stop, syscall.SIGINT, syscall.SIGTERM)
+	sig := <-stop
+	log.Printf("Shutting down due to signal: %v", sig)
+	err = server.Shutdown(context.Background())
+	if err != nil {
+		log.Fatalf("cannot shutdown the server: %v", err)
 	}
 }
