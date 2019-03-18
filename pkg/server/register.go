@@ -5,12 +5,8 @@ import (
 	"fmt"
 	"net/http"
 	"regexp"
-	"strings"
-	"time"
 
-	"github.com/Lighty0410/ekadashi-server/pkg/crypto"
-
-	"github.com/Lighty0410/ekadashi-server/pkg/mongo"
+	"github.com/Lighty0410/ekadashi-server/pkg/server/controller"
 )
 
 type loginRequest struct {
@@ -35,23 +31,50 @@ func (s *EkadashiServer) handleRegistration(w http.ResponseWriter, r *http.Reque
 		jsonError(w, http.StatusBadRequest, err)
 		return
 	}
-	hashedPassword, err := crypto.GenerateHash(req.Password)
+	err = s.controller.RegisterUser(controller.User{Username: req.Username, Password: req.Password})
 	if err != nil {
-		jsonError(w, http.StatusInternalServerError, fmt.Errorf("incorrect password: %v", err))
-		return
-	}
-	err = s.db.AddUser(&mongo.User{
-		Name: req.Username,
-		Hash: hashedPassword,
-	})
-	if err != nil {
-		if strings.Contains(err.Error(), "duplicate key error collection") {
-			jsonError(w, http.StatusConflict, fmt.Errorf("user already exists"))
+		switch err {
+		case controller.ErrAlreadyExists:
+			jsonError(w, http.StatusConflict, err)
+			return
+		default:
+			jsonError(w, http.StatusInternalServerError, err)
 			return
 		}
-		jsonError(w, http.StatusInternalServerError, fmt.Errorf("could not add user: %v", err))
+	}
+	jsonResponse(w, http.StatusOK, nil)
+}
+
+// handleLogin retrieves information about login request.
+// If login succeed it assigns cookie to user.
+func (s *EkadashiServer) handleLogin(w http.ResponseWriter, r *http.Request) {
+	var req loginRequest
+	err := json.NewDecoder(r.Body).Decode(&req)
+	if err != nil {
+		jsonError(w, http.StatusBadRequest, fmt.Errorf("can not decode the request: %v", err))
 		return
 	}
+	err = req.validateRequest()
+	if err != nil {
+		jsonError(w, http.StatusBadRequest, err)
+		return
+	}
+	session, err := s.controller.LoginUser(controller.User{Username: req.Username, Password: req.Password})
+	if err != nil {
+		switch err {
+		case controller.ErrNotFound:
+			jsonError(w, http.StatusUnauthorized, err)
+			return
+		default:
+			jsonError(w, http.StatusInternalServerError, err)
+			return
+		}
+	}
+	cookie := http.Cookie{
+		Name:  "sesssion_token",
+		Value: session.Token,
+	}
+	http.SetCookie(w, &cookie)
 	jsonResponse(w, http.StatusOK, nil)
 }
 
@@ -73,64 +96,4 @@ func (req *loginRequest) validateRequest() error {
 		return fmt.Errorf("field password could not be less than 6 characters")
 	}
 	return nil
-}
-
-// checkAuth check current user's session.
-// Return nil if succeed.
-func (s *EkadashiServer) checkAuth(token string) error {
-	session, err := s.db.GetSession(token)
-	if err != nil {
-		return err
-	}
-	session.LastModifiedDate = time.Now()
-	err = s.db.UpdateSession(session)
-	if err != nil {
-		return err
-	}
-	return nil
-}
-
-// handleLogin retrieves information about login request.
-// If login succeed it assigns cookie to user.
-func (s *EkadashiServer) handleLogin(w http.ResponseWriter, r *http.Request) {
-	var req loginRequest
-	err := json.NewDecoder(r.Body).Decode(&req)
-	if err != nil {
-		jsonError(w, http.StatusBadRequest, fmt.Errorf("can not decode the request: %v", err))
-		return
-	}
-	err = req.validateRequest()
-	if err != nil {
-		jsonError(w, http.StatusBadRequest, err)
-		return
-	}
-	user, err := s.db.ReadUser(req.Username)
-	if err == mongo.ErrUserNotFound {
-		jsonError(w, http.StatusUnauthorized, fmt.Errorf("incorrect username or password: %v", err))
-		return
-	}
-	if err != nil {
-		jsonError(w, http.StatusInternalServerError, fmt.Errorf("an error occurred in mongoDB: %v", err))
-		return
-	}
-	err = crypto.CompareHash(user.Hash, []byte(req.Password))
-	if err != nil {
-		jsonError(w, http.StatusUnauthorized, fmt.Errorf("incorrect username or password: %v", err))
-		return
-	}
-	userSession := &mongo.Session{
-		Name:             req.Username,
-		SessionHash:      crypto.GenerateToken(),
-		LastModifiedDate: time.Now(),
-	}
-	err = s.db.CreateSession(userSession)
-	if err != nil {
-		jsonError(w, http.StatusInternalServerError, fmt.Errorf("cannot create a session: %v", err))
-	}
-	cookie := http.Cookie{
-		Name:  "session_token",
-		Value: userSession.SessionHash,
-	}
-	http.SetCookie(w, &cookie)
-	jsonResponse(w, http.StatusOK, nil)
 }
