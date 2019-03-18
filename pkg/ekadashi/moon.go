@@ -66,8 +66,8 @@ func NextMonth() ([]Date, error) {
 		return nil, fmt.Errorf("cannot succeed with API response: %v", moonPhase.Err)
 	}
 	filteredDate := Filter(moonPhase.Resp)
-	dayFilter := shiftEkadashi(filteredDate)
-	return dayFilter, nil
+	nextEkadashi := shiftEkadashi(filteredDate)
+	return nextEkadashi, nil
 }
 
 func Filter(sm []Date) []Date {
