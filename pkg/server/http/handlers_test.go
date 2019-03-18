@@ -8,6 +8,8 @@ import (
 	"os"
 	"testing"
 
+	"github.com/gorilla/mux"
+
 	"github.com/Lighty0410/ekadashi-server/pkg/server/controller"
 
 	"github.com/Lighty0410/ekadashi-server/pkg/mongo"
@@ -23,7 +25,10 @@ func createHandler(t *testing.T) *EkadashiServer {
 	mongoService, err := mongo.NewService(connectionURL)
 	require.NoError(t, err, "cannot create mongo service")
 	ctrl := controller.NewController(mongoService)
-	testEkadashi, err := NewServer(ctrl)
+	testEkadashi := &EkadashiServer{
+		Router:     mux.NewRouter(),
+		controller: ctrl,
+	}
 	require.NoError(t, err, "cannot create ekadashi server")
 	return testEkadashi
 }
@@ -191,7 +196,7 @@ func TestLogin(t *testing.T) {
 			requst: `"1234username",
               "password":"12414password"`,
 			expectedResponse: http.StatusBadRequest,
-			expectedMessage:  "{\"reason\":\"can not decode the request: json: cannot unmarshal string into Go value of type server.loginRequest\"}\n",
+			expectedMessage:  "{\"reason\":\"can not decode the request: json: cannot unmarshal string into Go value of type http.loginRequest\"}\n",
 		},
 		{
 			name: "status 401 when user doesn't exist",
