@@ -113,7 +113,7 @@ func (c *Controller) ShowEkadashi(sessionToken string) (time.Time, error) { //
 func (c *Controller) checkAuth(token string) error {
 	session, err := c.db.GetSession(token)
 	if err != nil {
-		return fmt.Errorf("cannot get user's session: %v", err)
+		return fmt.Errorf("cannot get user session: %v", err)
 	}
 	session.LastModifiedDate = time.Now()
 	err = c.db.UpdateSession(session)

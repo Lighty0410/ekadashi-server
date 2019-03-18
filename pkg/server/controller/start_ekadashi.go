@@ -11,7 +11,7 @@ import (
 )
 
 // FillEkadashi is a goroutine that autofills ekadashi dates.
-// If succeed it adds ekadashi date to the database.
+// If succeed it adds ekadashi dates to the database.
 func (c *Controller) FillEkadashi(ctx context.Context) error {
 	actualEkadashi, err := c.getEkadashi()
 	if err != nil {

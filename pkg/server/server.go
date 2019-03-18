@@ -32,7 +32,7 @@ func NewEkadashiServer(db *mongo.Service) (*EkadashiServer, error) {
 	s.Methods("GET").Path("/ekadashi/next").HandlerFunc(s.nextEkadashiHandler)
 	err := s.controller.FillEkadashi(context.Background())
 	if err != nil {
-		return nil, fmt.Errorf("cannot fill ekadashi: %v", err)
+		return nil, fmt.Errorf("cannot fill ekadashi dates: %v", err)
 	}
 	return s, nil
 }
