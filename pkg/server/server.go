@@ -24,7 +24,6 @@ func NewEkadashiServer(db *mongo.Service) (*EkadashiServer, error) {
 	c := controller.NewController(db)
 	s := &EkadashiServer{
 		Router:     mux.NewRouter(),
-		db:         db,
 		controller: c,
 	}
 	s.Use(withLogging)
