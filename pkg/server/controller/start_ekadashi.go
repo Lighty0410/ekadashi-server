@@ -10,7 +10,7 @@ import (
 	"github.com/Lighty0410/ekadashi-server/pkg/mongo"
 )
 
-// FillEkadashi is a goroutine that autofill ekadashi dates via getEkadashi().
+// FillEkadashi is a goroutine that autofills ekadashi dates.
 // If succeed it adds ekadashi date to the database.
 func (c *Controller) FillEkadashi(ctx context.Context) error {
 	actualEkadashi, err := c.getEkadashi()

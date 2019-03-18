@@ -56,7 +56,7 @@ func (c *Controller) RegisterUser(u User) error {
 		if strings.Contains(err.Error(), "duplicate key error collection") {
 			return ErrAlreadyExists
 		}
-		return err
+		return fmt.Errorf("cannot add user to the database: %v", err)
 	}
 	return nil
 }
@@ -113,7 +113,7 @@ func (c *Controller) ShowEkadashi(sessionToken string) (time.Time, error) { //
 func (c *Controller) checkAuth(token string) error {
 	session, err := c.db.GetSession(token)
 	if err != nil {
-		return err
+		return fmt.Errorf("cannot get user's session: %v", err)
 	}
 	session.LastModifiedDate = time.Now()
 	err = c.db.UpdateSession(session)
