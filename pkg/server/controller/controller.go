@@ -24,7 +24,7 @@ type User struct {
 // Session contains information about user's session.
 type Session struct {
 	Name             string
-	SessionHash      string
+	Token            string
 	LastModifiedDate time.Time
 }
 
@@ -86,7 +86,7 @@ func (c *Controller) LoginUser(u User) (*Session, error) {
 	}
 	return &Session{
 		Name:             userSession.Name,
-		SessionHash:      userSession.SessionHash,
+		Token:            userSession.SessionHash,
 		LastModifiedDate: userSession.LastModifiedDate,
 	}, nil
 }

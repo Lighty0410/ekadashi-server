@@ -59,7 +59,7 @@ func (s *EkadashiServer) handleLogin(w http.ResponseWriter, r *http.Request) {
 		jsonError(w, http.StatusBadRequest, err)
 		return
 	}
-	cookieValues, err := s.controller.LoginUser(controller.User{Username: req.Username, Password: req.Password})
+	session, err := s.controller.LoginUser(controller.User{Username: req.Username, Password: req.Password})
 	if err != nil {
 		switch err {
 		case controller.ErrNotFound:
@@ -71,8 +71,8 @@ func (s *EkadashiServer) handleLogin(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 	cookie := http.Cookie{
-		Name:  cookieValues.Name,
-		Value: cookieValues.SessionHash,
+		Name:  session.Name,
+		Value: session.Token,
 	}
 	http.SetCookie(w, &cookie)
 	jsonResponse(w, http.StatusOK, nil)
