@@ -1,4 +1,4 @@
-package server
+package http
 
 import (
 	"bytes"
@@ -8,7 +8,6 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/Lighty0410/ekadashi-server/pkg/mongo"
 	"github.com/Lighty0410/ekadashi-server/pkg/server/controller"
 	"github.com/gorilla/mux"
 )
@@ -20,8 +19,7 @@ type EkadashiServer struct {
 }
 
 // NewEkadashiServer sets up http routs and returns server ready to use in http.ListenAndServe.
-func NewEkadashiServer(db *mongo.Service) (*EkadashiServer, error) {
-	c := controller.NewController(db)
+func NewServer(c *controller.Controller) (*EkadashiServer, error) {
 	s := &EkadashiServer{
 		Router:     mux.NewRouter(),
 		controller: c,
