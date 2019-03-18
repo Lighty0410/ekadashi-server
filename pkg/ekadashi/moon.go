@@ -47,7 +47,9 @@ func getJSON(url string, target interface{}) (err error) {
 	return json.NewDecoder(r.Body).Decode(&target)
 }
 
-func FillEkadashi() ([]Date, error) {
+// NextMonth retrieves next ekadashi dates from API.
+// If succeed returns dates.
+func NextMonth() ([]Date, error) {
 	accessID := os.Getenv(clientID)
 	secretKey := os.Getenv(clientSecret)
 	if accessID == "" || secretKey == "" {
@@ -63,13 +65,12 @@ func FillEkadashi() ([]Date, error) {
 	if !moonPhase.Success {
 		return nil, fmt.Errorf("cannot succeed with API response: %v", moonPhase.Err)
 	}
-
-	filteredDate := ekadashiFilter(moonPhase.Resp)
+	filteredDate := Filter(moonPhase.Resp)
 	dayFilter := shiftEkadashi(filteredDate)
 	return dayFilter, nil
 }
 
-func ekadashiFilter(sm []Date) []Date {
+func Filter(sm []Date) []Date {
 	const (
 		newMoon  = "new moon"
 		fullMoon = "full moon"

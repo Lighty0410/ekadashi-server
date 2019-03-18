@@ -11,6 +11,7 @@ import (
 	"github.com/mongodb/mongo-go-driver/mongo/options"
 )
 
+// ErrNoEkadashi is returned if there's no ekadashi dates in mongo.
 var ErrNoEkadashi = fmt.Errorf("cannot find next ekadashi date")
 
 // EkadashiDate is a structure that contains information about ekadashi date.
@@ -40,10 +41,10 @@ func (s *Service) NextEkadashi(day time.Time) (*EkadashiDate, error) {
 		}},
 	}}, &searchOpt).Decode(&ekadashiDay)
 	if err != nil {
-		if err != mongo.ErrNoDocuments {
-			return nil, nil
+		if err == mongo.ErrNoDocuments {
+			return nil, ErrNoEkadashi
 		}
-		return &ekadashiDay, ErrNoEkadashi
+		return nil, err
 	}
 	return &ekadashiDay, nil
 }
