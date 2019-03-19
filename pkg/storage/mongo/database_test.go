@@ -5,6 +5,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/Lighty0410/ekadashi-server/pkg/storage"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
@@ -26,32 +27,32 @@ func TestAddAndReadUser(t *testing.T) {
 	}
 	tt := []struct {
 		name        string
-		user        User
+		user        storage.User
 		expectError error
 	}{
 		{
 			name:        "empty password",
-			user:        User{Name: "Greatestmateofalltime", Hash: ""},
+			user:        storage.User{Name: "Greatestmateofalltime", PasswordHash: ""},
 			expectError: nil,
 		},
 		{
 			name:        "empty name",
-			user:        User{Name: "", Hash: ""},
+			user:        storage.User{Name: "", PasswordHash: ""},
 			expectError: nil,
 		},
 		{
 			name:        "empty password",
-			user:        User{Name: "Leva", Hash: ""},
+			user:        storage.User{Name: "Leva", PasswordHash: ""},
 			expectError: nil,
 		},
 		{
 			name:        "ASCII symobols as a string",
-			user:        User{Name: "@!#@!#", Hash: "123213"},
+			user:        storage.User{Name: "@!#@!#", PasswordHash: "123213"},
 			expectError: nil,
 		},
 		{
 			name:        "casual database info",
-			user:        User{Name: "Mesropyan", Hash: "SecretKey"},
+			user:        storage.User{Name: "Mesropyan", PasswordHash: "SecretKey"},
 			expectError: nil,
 		},
 	}
@@ -59,7 +60,7 @@ func TestAddAndReadUser(t *testing.T) {
 		t.Run(tc.name, func(t *testing.T) {
 			err := testService.AddUser(&tc.user)
 			require.NoError(t, err)
-			user, err := testService.ReadUser(tc.user.Name)
+			user, err := testService.GetUser(tc.user.Name)
 			require.NoError(t, err)
 			assert.Equal(t, user, tc.user, tc.name)
 		})
@@ -74,14 +75,14 @@ func TestService_NextEkadashiAndAddEkadashi(t *testing.T) {
 	tt := []struct {
 		name         string
 		userDate     time.Time
-		date         []EkadashiDate
+		date         []storage.Ekadashi
 		expectedDate time.Time
 	}{
 		{
 			name: "dateSince before the first date",
 			userDate: time.Date(
 				2009, 11, 17, 20, 34, 58, 0, time.UTC),
-			date: []EkadashiDate{
+			date: []storage.Ekadashi{
 				{Date: time.Date(
 					2009, 11, 23, 20, 34, 58, 0, time.UTC)},
 				{Date: time.Date(
@@ -95,7 +96,7 @@ func TestService_NextEkadashiAndAddEkadashi(t *testing.T) {
 			name: "dateSince before the second date",
 			userDate: time.Date(
 				2009, 11, 25, 20, 34, 58, 0, time.UTC),
-			date: []EkadashiDate{
+			date: []storage.Ekadashi{
 				{Date: time.Date(
 					2009, 11, 23, 20, 34, 58, 0, time.UTC)},
 				{Date: time.Date(
@@ -109,7 +110,7 @@ func TestService_NextEkadashiAndAddEkadashi(t *testing.T) {
 			name: "day to day",
 			userDate: time.Date(
 				2009, 11, 30, 20, 34, 58, 0, time.UTC),
-			date: []EkadashiDate{
+			date: []storage.Ekadashi{
 				{Date: time.Date(
 					2009, 11, 23, 20, 34, 58, 0, time.UTC)},
 				{Date: time.Date(
