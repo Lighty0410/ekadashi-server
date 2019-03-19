@@ -7,7 +7,6 @@ import (
 
 	"github.com/Lighty0410/ekadashi-server/pkg/crypto"
 	"github.com/Lighty0410/ekadashi-server/pkg/storage"
-	"github.com/Lighty0410/ekadashi-server/pkg/storage/mongo"
 )
 
 // ErrAlreadyExists is returned when such username already exists in the system.
@@ -70,7 +69,7 @@ func (c *Controller) RegisterUser(u User) error {
 // If succeed it add user's session to the database and returns it.
 func (c *Controller) LoginUser(u User) (*Session, error) {
 	user, err := c.user.ReadUser(u.Username)
-	if err == mongo.ErrUserNotFound {
+	if err == storage.ErrUserNotFound {
 		return nil, ErrNotFound
 	}
 	if err != nil {
@@ -98,7 +97,7 @@ func (c *Controller) LoginUser(u User) (*Session, error) {
 // If succeed returns ekadashi date.
 func (c *Controller) ShowEkadashi(sessionToken string) (time.Time, error) { //
 	err := c.checkAuth(sessionToken)
-	if err == mongo.ErrNoSession {
+	if err == storage.ErrNoSession {
 		return time.Time{}, ErrNotFound
 	}
 	if err != nil {
@@ -116,8 +115,8 @@ func (c *Controller) ShowEkadashi(sessionToken string) (time.Time, error) { //
 func (c *Controller) checkAuth(token string) error {
 	session, err := c.session.GetSession(token)
 	if err != nil {
-		if err == mongo.ErrNoSession {
-			return mongo.ErrNoSession
+		if err == storage.ErrNoSession {
+			return storage.ErrNoSession
 		}
 		return fmt.Errorf("cannot get user session: %v", err)
 	}

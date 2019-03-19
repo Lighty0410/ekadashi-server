@@ -10,9 +10,6 @@ import (
 	"github.com/mongodb/mongo-go-driver/mongo"
 )
 
-// ErrNoSession is returned when session is not found.
-var ErrNoSession = fmt.Errorf("session not found")
-
 // CreateSession gets an information about session and insert it to database.
 func (s *Service) CreateSession(u *storage.Session) error {
 	c := s.db.Collection("session")
@@ -30,7 +27,7 @@ func (s *Service) GetSession(hash string) (*storage.Session, error) {
 	filter := bson.D{{Key: "hash", Value: hash}}
 	err := c.FindOne(context.Background(), filter).Decode(&session)
 	if err == mongo.ErrNoDocuments {
-		return nil, ErrNoSession
+		return nil, storage.ErrNoSession
 	}
 	if err != nil {
 		return nil, fmt.Errorf("could not find session: %v", err)

@@ -1,8 +1,15 @@
 package storage
 
 import (
+	"fmt"
 	"time"
 )
+
+// ErrUserNotFound is an error that returns if user is not found.
+var ErrUserNotFound = fmt.Errorf("mongo: no documents in result")
+
+// ErrNoSession is returned when session is not found.
+var ErrNoSession = fmt.Errorf("session not found")
 
 // Session contains an information about user session.
 type Session struct {

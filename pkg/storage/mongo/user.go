@@ -12,9 +12,6 @@ import (
 	"github.com/mongodb/mongo-go-driver/mongo/options"
 )
 
-// ErrUserNotFound is an error that returns if user is not found.
-var ErrUserNotFound = fmt.Errorf("mongo: no documents in result")
-
 // AddUser adds passed user into users collection.
 func (s *Service) AddUser(u *storage.User) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
@@ -33,7 +30,7 @@ func (s *Service) ReadUser(username string) (storage.User, error) {
 	filter := bson.D{{Key: "name", Value: username}}
 	err := s.db.Collection("users").FindOne(context.Background(), filter).Decode(&hash)
 	if err == mongo.ErrNoDocuments {
-		return hash, ErrUserNotFound
+		return hash, storage.ErrUserNotFound
 	}
 	if err != nil {
 		return hash, fmt.Errorf("cannot search user, %v", err)
