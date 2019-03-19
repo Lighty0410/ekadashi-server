@@ -13,28 +13,31 @@ var ErrNoSession = fmt.Errorf("session not found")
 
 // Session contains an information about user session.
 type Session struct {
-	SessionHash      string    `bson:"hash"`
+	Token            string    `bson:"hash"`
 	LastModifiedDate time.Time `bson:"modified"`
 }
 
+// ErrNoEkadashi is returned if there's no ekadashi dates in mongo.
+var ErrNoEkadashi = fmt.Errorf("cannot find next ekadashi date")
+
 // User contains an information about single user in a system.
 type User struct {
-	Name string `bson:"name"`
-	Hash string `bson:"hash"`
+	Name         string `bson:"name"`
+	PasswordHash string `bson:"hash"`
 }
 
 // EkadashiDate is a structure that contains information about ekadashi date.
-type EkadashiDate struct {
+type Ekadashi struct {
 	Date time.Time `bson:"date"`
 }
 
-// Service in the interface that uses to handle user's CRUD operations, user's session and ekadashi date.
+// Service in the interface that is used to handle user's CRUD operations, user's session and ekadashi date.
 type Service interface {
 	GetSession(hash string) (*Session, error)
-	UpdateSession(session *Session) error
-	AddSession(u *Session) error
-	AddEkadashi(day *EkadashiDate) error
-	NextEkadashi(day time.Time) (*EkadashiDate, error)
+	UpdateSession(*Session) error
+	AddSession(*Session) error
+	AddEkadashi(*Ekadashi) error
+	NextEkadashi(time.Time) (*Ekadashi, error)
 	AddUser(*User) error
 	GetUser(username string) (User, error)
 }

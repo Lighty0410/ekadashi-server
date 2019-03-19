@@ -48,8 +48,8 @@ func (c *Controller) RegisterUser(u User) error {
 		return fmt.Errorf("cannot generate hash: %v", err)
 	}
 	user := &storage.User{
-		Name: u.Username,
-		Hash: hashedPassword,
+		Name:         u.Username,
+		PasswordHash: hashedPassword,
 	}
 	err = c.service.AddUser(user)
 	if err != nil {
@@ -71,12 +71,12 @@ func (c *Controller) LoginUser(u User) (*Session, error) {
 	if err != nil {
 		return nil, fmt.Errorf("an error occurred in mongoDB during read user: %v", err)
 	}
-	err = crypto.CompareHash(user.Hash, []byte(u.Password))
+	err = crypto.CompareHash(user.PasswordHash, []byte(u.Password))
 	if err != nil {
 		return nil, ErrNotFound
 	}
 	userSession := &storage.Session{
-		SessionHash:      crypto.GenerateToken(), //todo
+		Token:            crypto.GenerateToken(), //todo
 		LastModifiedDate: time.Now(),
 	}
 	err = c.service.AddSession(userSession)
@@ -84,7 +84,7 @@ func (c *Controller) LoginUser(u User) (*Session, error) {
 		return nil, fmt.Errorf("cannot create a session: %v", err)
 	}
 	return &Session{
-		Token:            userSession.SessionHash,
+		Token:            userSession.Token,
 		LastModifiedDate: userSession.LastModifiedDate,
 	}, nil
 }
@@ -111,10 +111,7 @@ func (c *Controller) ShowEkadashi(sessionToken string) (time.Time, error) { //
 func (c *Controller) checkAuth(token string) error {
 	session, err := c.service.GetSession(token)
 	if err != nil {
-		if err == storage.ErrNoSession {
-			return storage.ErrNoSession
-		}
-		return fmt.Errorf("cannot get user session: %v", err)
+		return err
 	}
 	session.LastModifiedDate = time.Now()
 	err = c.service.UpdateSession(session)

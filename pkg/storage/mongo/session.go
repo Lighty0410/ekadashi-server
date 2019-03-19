@@ -38,7 +38,7 @@ func (s *Service) GetSession(hash string) (*storage.Session, error) {
 // UpdateSession updates TTL index of current session.
 func (s *Service) UpdateSession(session *storage.Session) error {
 	c := s.db.Collection("session")
-	_, err := c.UpdateOne(context.Background(), bson.D{{Key: "hash", Value: session.SessionHash}}, bson.D{{
+	_, err := c.UpdateOne(context.Background(), bson.D{{Key: "hash", Value: session.Token}}, bson.D{{
 		Key: "$set", Value: bson.D{{
 			Key: "modified", Value: session.LastModifiedDate,
 		}},

@@ -6,7 +6,6 @@ import (
 	"time"
 
 	"github.com/Lighty0410/ekadashi-server/pkg/storage"
-
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
@@ -33,27 +32,27 @@ func TestAddAndReadUser(t *testing.T) {
 	}{
 		{
 			name:        "empty password",
-			user:        storage.User{Name: "Greatestmateofalltime", Hash: ""},
+			user:        storage.User{Name: "Greatestmateofalltime", PasswordHash: ""},
 			expectError: nil,
 		},
 		{
 			name:        "empty name",
-			user:        storage.User{Name: "", Hash: ""},
+			user:        storage.User{Name: "", PasswordHash: ""},
 			expectError: nil,
 		},
 		{
 			name:        "empty password",
-			user:        storage.User{Name: "Leva", Hash: ""},
+			user:        storage.User{Name: "Leva", PasswordHash: ""},
 			expectError: nil,
 		},
 		{
 			name:        "ASCII symobols as a string",
-			user:        storage.User{Name: "@!#@!#", Hash: "123213"},
+			user:        storage.User{Name: "@!#@!#", PasswordHash: "123213"},
 			expectError: nil,
 		},
 		{
 			name:        "casual database info",
-			user:        storage.User{Name: "Mesropyan", Hash: "SecretKey"},
+			user:        storage.User{Name: "Mesropyan", PasswordHash: "SecretKey"},
 			expectError: nil,
 		},
 	}
@@ -76,14 +75,14 @@ func TestService_NextEkadashiAndAddEkadashi(t *testing.T) {
 	tt := []struct {
 		name         string
 		userDate     time.Time
-		date         []storage.EkadashiDate
+		date         []storage.Ekadashi
 		expectedDate time.Time
 	}{
 		{
 			name: "dateSince before the first date",
 			userDate: time.Date(
 				2009, 11, 17, 20, 34, 58, 0, time.UTC),
-			date: []storage.EkadashiDate{
+			date: []storage.Ekadashi{
 				{Date: time.Date(
 					2009, 11, 23, 20, 34, 58, 0, time.UTC)},
 				{Date: time.Date(
@@ -97,7 +96,7 @@ func TestService_NextEkadashiAndAddEkadashi(t *testing.T) {
 			name: "dateSince before the second date",
 			userDate: time.Date(
 				2009, 11, 25, 20, 34, 58, 0, time.UTC),
-			date: []storage.EkadashiDate{
+			date: []storage.Ekadashi{
 				{Date: time.Date(
 					2009, 11, 23, 20, 34, 58, 0, time.UTC)},
 				{Date: time.Date(
@@ -111,7 +110,7 @@ func TestService_NextEkadashiAndAddEkadashi(t *testing.T) {
 			name: "day to day",
 			userDate: time.Date(
 				2009, 11, 30, 20, 34, 58, 0, time.UTC),
-			date: []storage.EkadashiDate{
+			date: []storage.Ekadashi{
 				{Date: time.Date(
 					2009, 11, 23, 20, 34, 58, 0, time.UTC)},
 				{Date: time.Date(
