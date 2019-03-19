@@ -10,8 +10,8 @@ import (
 	"github.com/mongodb/mongo-go-driver/mongo"
 )
 
-// CreateSession gets an information about session and insert it to database.
-func (s *Service) CreateSession(u *storage.Session) error {
+// AddSession gets an information about session and insert it to database.
+func (s *Service) AddSession(u *storage.Session) error {
 	c := s.db.Collection("session")
 	_, err := c.InsertOne(context.Background(), u)
 	if err != nil {

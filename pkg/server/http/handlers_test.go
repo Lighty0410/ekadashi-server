@@ -24,7 +24,7 @@ func createHandler(t *testing.T) *EkadashiServer {
 	require.NotEmpty(t, connectionURL, "connectionURL cannot be empty")
 	mongoService, err := mongo.NewService(connectionURL)
 	require.NoError(t, err, "cannot create mongo service")
-	ctrl := controller.NewController(mongoService, mongoService, mongoService)
+	ctrl := controller.NewController(mongoService)
 	testEkadashi := &EkadashiServer{
 		Router:     mux.NewRouter(),
 		controller: ctrl,

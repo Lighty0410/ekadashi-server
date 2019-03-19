@@ -28,22 +28,13 @@ type EkadashiDate struct {
 	Date time.Time `bson:"date"`
 }
 
-// SessionService in the interface that uses to handle session.
-type SessionService interface {
+// Service in the interface that uses to handle user's CRUD operations, user's session and ekadashi date.
+type Service interface {
 	GetSession(hash string) (*Session, error)
 	UpdateSession(session *Session) error
-	CreateSession(u *Session) error
-}
-
-// EkadashiService is the interface that uses to add and get ekadashi date.
-type EkadashiService interface {
+	AddSession(u *Session) error
 	AddEkadashi(day *EkadashiDate) error
 	NextEkadashi(day time.Time) (*EkadashiDate, error)
-}
-
-// UserService is the interface that provides basic CRUD operations for user.
-type UserService interface {
-	Add(*User) error
-	Read(username string) (User, error)
-	Get() ([]string, error)
+	AddUser(*User) error
+	GetUser(username string) (User, error)
 }

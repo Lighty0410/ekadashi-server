@@ -29,17 +29,13 @@ type Session struct {
 
 // Controller is an object that provides an access for the controller's functionality.
 type Controller struct {
-	ekadashi storage.EkadashiService
-	session  storage.SessionService
-	user     storage.UserService
+	service storage.Service
 }
 
 // CreateController creates a new instance for the controller.
-func NewController(ekad storage.EkadashiService, sess storage.SessionService, us storage.UserService) *Controller {
+func NewController(service storage.Service) *Controller {
 	c := &Controller{
-		ekadashi: ekad,
-		session:  sess,
-		user:     us,
+		service: service,
 	}
 	return c
 }
@@ -55,7 +51,7 @@ func (c *Controller) RegisterUser(u User) error {
 		Name: u.Username,
 		Hash: hashedPassword,
 	}
-	err = c.user.Add(user)
+	err = c.service.AddUser(user)
 	if err != nil {
 		if strings.Contains(err.Error(), "duplicate key error collection") {
 			return ErrAlreadyExists
@@ -68,7 +64,7 @@ func (c *Controller) RegisterUser(u User) error {
 // LoginUser compares user's hash and password in the database.
 // If succeed it add user's session to the database and returns it.
 func (c *Controller) LoginUser(u User) (*Session, error) {
-	user, err := c.user.Read(u.Username)
+	user, err := c.service.GetUser(u.Username)
 	if err == storage.ErrUserNotFound {
 		return nil, ErrNotFound
 	}
@@ -83,7 +79,7 @@ func (c *Controller) LoginUser(u User) (*Session, error) {
 		SessionHash:      crypto.GenerateToken(), //todo
 		LastModifiedDate: time.Now(),
 	}
-	err = c.session.CreateSession(userSession)
+	err = c.service.AddSession(userSession)
 	if err != nil {
 		return nil, fmt.Errorf("cannot create a session: %v", err)
 	}
@@ -103,7 +99,7 @@ func (c *Controller) ShowEkadashi(sessionToken string) (time.Time, error) { //
 	if err != nil {
 		return time.Time{}, fmt.Errorf("cannot check authentification: %v", err)
 	}
-	ekadashiDate, err := c.ekadashi.NextEkadashi(time.Now())
+	ekadashiDate, err := c.service.NextEkadashi(time.Now())
 	if err != nil {
 		return time.Time{}, fmt.Errorf("cannot get next ekadashi day: %v", err)
 	}
@@ -113,7 +109,7 @@ func (c *Controller) ShowEkadashi(sessionToken string) (time.Time, error) { //
 // checkAuth check current user's session.
 // Return nil if succeed.
 func (c *Controller) checkAuth(token string) error {
-	session, err := c.session.GetSession(token)
+	session, err := c.service.GetSession(token)
 	if err != nil {
 		if err == storage.ErrNoSession {
 			return storage.ErrNoSession
@@ -121,7 +117,7 @@ func (c *Controller) checkAuth(token string) error {
 		return fmt.Errorf("cannot get user session: %v", err)
 	}
 	session.LastModifiedDate = time.Now()
-	err = c.session.UpdateSession(session)
+	err = c.service.UpdateSession(session)
 	if err != nil {
 		return fmt.Errorf("cannot update user session: %v", err)
 	}
