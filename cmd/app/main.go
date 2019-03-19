@@ -24,7 +24,7 @@ func main() {
 		log.Fatalf("Could not create mongo service: %v", err)
 	}
 	newController := controller.NewController(mongoService)
-	server, err := http.NewServer(newController, ":9000")
+	server, err := http.NewServer(":9000", newController)
 	if err != nil {
 		log.Fatalf("Could not create ekadashi server: %v", err)
 	}
