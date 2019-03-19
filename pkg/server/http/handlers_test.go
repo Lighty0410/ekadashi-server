@@ -12,7 +12,7 @@ import (
 
 	"github.com/Lighty0410/ekadashi-server/pkg/server/controller"
 
-	"github.com/Lighty0410/ekadashi-server/pkg/mongo"
+	"github.com/Lighty0410/ekadashi-server/pkg/storage/mongo"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )

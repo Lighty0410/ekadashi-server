@@ -4,6 +4,8 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/Lighty0410/ekadashi-server/pkg/storage"
+
 	"time"
 
 	"github.com/mongodb/mongo-go-driver/bson"
@@ -14,13 +16,8 @@ import (
 // ErrNoEkadashi is returned if there's no ekadashi dates in mongo.
 var ErrNoEkadashi = fmt.Errorf("cannot find next ekadashi date")
 
-// EkadashiDate is a structure that contains information about ekadashi date.
-type EkadashiDate struct {
-	Date time.Time `bson:"date"`
-}
-
 // AddEkadashi add ekadashi date to the database.
-func (s *Service) AddEkadashi(day *EkadashiDate) error {
+func (s *Service) AddEkadashi(day *storage.EkadashiDate) error {
 	c := s.db.Collection("ekadashi")
 	_, err := c.InsertOne(context.Background(), day)
 	if err != nil {
@@ -30,8 +27,8 @@ func (s *Service) AddEkadashi(day *EkadashiDate) error {
 }
 
 // NextEkadashi retrieves information about the last ekadashi date from the database.
-func (s *Service) NextEkadashi(day time.Time) (*EkadashiDate, error) {
-	var ekadashiDay EkadashiDate
+func (s *Service) NextEkadashi(day time.Time) (*storage.EkadashiDate, error) {
+	var ekadashiDay storage.EkadashiDate
 	searchOpt := options.FindOneOptions{}
 	searchOpt.Sort = bson.M{"date": 1}
 	c := s.db.Collection("ekadashi")
