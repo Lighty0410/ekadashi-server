@@ -6,8 +6,10 @@ import (
 	"log"
 	"time"
 
+	"github.com/Lighty0410/ekadashi-server/pkg/storage"
+
 	"github.com/Lighty0410/ekadashi-server/pkg/ekadashi"
-	"github.com/Lighty0410/ekadashi-server/pkg/mongo"
+	"github.com/Lighty0410/ekadashi-server/pkg/storage/mongo"
 )
 
 // FillEkadashi is a goroutine that autofills ekadashi dates.
@@ -38,8 +40,8 @@ func (c *Controller) FillEkadashi(ctx context.Context) error {
 	return nil
 }
 
-func (c *Controller) getEkadashi() (*mongo.EkadashiDate, error) {
-	ek, err := c.db.NextEkadashi(time.Now())
+func (c *Controller) getEkadashi() (*storage.EkadashiDate, error) {
+	ek, err := c.ekadashi.NextEkadashi(time.Now())
 	if err != nil && err != mongo.ErrNoEkadashi {
 		return nil, err
 	}
@@ -52,7 +54,7 @@ func (c *Controller) getEkadashi() (*mongo.EkadashiDate, error) {
 		if err != nil {
 			return nil, fmt.Errorf("cannot save ekadashi: %v", err)
 		}
-		ek, err = c.db.NextEkadashi(time.Now())
+		ek, err = c.ekadashi.NextEkadashi(time.Now())
 		if err == mongo.ErrNoEkadashi {
 			return nil, err
 		}
@@ -62,7 +64,7 @@ func (c *Controller) getEkadashi() (*mongo.EkadashiDate, error) {
 
 func (c *Controller) saveEkadashi(ekadashiDate []ekadashi.Date) error {
 	for _, ekadashiDay := range ekadashiDate {
-		err := c.db.AddEkadashi(&mongo.EkadashiDate{Date: ekadashiDay.Sun.RiseISO})
+		err := c.ekadashi.AddEkadashi(&storage.EkadashiDate{Date: ekadashiDay.Sun.RiseISO})
 		if err != nil {
 			return fmt.Errorf("cannot add date to the database: %v", err)
 		}

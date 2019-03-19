@@ -12,7 +12,7 @@ import (
 
 	"github.com/Lighty0410/ekadashi-server/pkg/server/controller"
 
-	"github.com/Lighty0410/ekadashi-server/pkg/mongo"
+	"github.com/Lighty0410/ekadashi-server/pkg/storage/mongo"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
@@ -24,7 +24,7 @@ func createHandler(t *testing.T) *EkadashiServer {
 	require.NotEmpty(t, connectionURL, "connectionURL cannot be empty")
 	mongoService, err := mongo.NewService(connectionURL)
 	require.NoError(t, err, "cannot create mongo service")
-	ctrl := controller.NewController(mongoService)
+	ctrl := controller.NewController(mongoService, mongoService, mongoService)
 	testEkadashi := &EkadashiServer{
 		Router:     mux.NewRouter(),
 		controller: ctrl,
