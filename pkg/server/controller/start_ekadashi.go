@@ -41,7 +41,7 @@ func (c *Controller) FillEkadashi(ctx context.Context) error {
 }
 
 func (c *Controller) getEkadashi() (*storage.EkadashiDate, error) {
-	ek, err := c.ekad.NextEkadashi(time.Now())
+	ek, err := c.ekadashi.NextEkadashi(time.Now())
 	if err != nil && err != mongo.ErrNoEkadashi {
 		return nil, err
 	}
@@ -54,7 +54,7 @@ func (c *Controller) getEkadashi() (*storage.EkadashiDate, error) {
 		if err != nil {
 			return nil, fmt.Errorf("cannot save ekadashi: %v", err)
 		}
-		ek, err = c.ekad.NextEkadashi(time.Now())
+		ek, err = c.ekadashi.NextEkadashi(time.Now())
 		if err == mongo.ErrNoEkadashi {
 			return nil, err
 		}
@@ -64,7 +64,7 @@ func (c *Controller) getEkadashi() (*storage.EkadashiDate, error) {
 
 func (c *Controller) saveEkadashi(ekadashiDate []ekadashi.Date) error {
 	for _, ekadashiDay := range ekadashiDate {
-		err := c.ekad.AddEkadashi(&storage.EkadashiDate{Date: ekadashiDay.Sun.RiseISO})
+		err := c.ekadashi.AddEkadashi(&storage.EkadashiDate{Date: ekadashiDay.Sun.RiseISO})
 		if err != nil {
 			return fmt.Errorf("cannot add date to the database: %v", err)
 		}

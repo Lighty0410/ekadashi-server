@@ -6,7 +6,6 @@ import (
 
 // Session contains an information about user session.
 type Session struct {
-	Name             string    `bson:"name"`
 	SessionHash      string    `bson:"hash"`
 	LastModifiedDate time.Time `bson:"modified"`
 }
@@ -22,18 +21,18 @@ type EkadashiDate struct {
 	Date time.Time `bson:"date"`
 }
 
-type Sessioner interface {
+type SessionService interface {
 	GetSession(hash string) (*Session, error)
 	UpdateSession(session *Session) error
 	CreateSession(u *Session) error
 }
 
-type Ekadasher interface {
+type EkadashiService interface {
 	AddEkadashi(day *EkadashiDate) error
 	NextEkadashi(day time.Time) (*EkadashiDate, error)
 }
 
-type Userer interface {
+type UserService interface {
 	AddUser(*User) error
 	ReadUser(username string) (User, error)
 	GetUsers() ([]string, error)
