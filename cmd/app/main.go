@@ -7,10 +7,9 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/Lighty0410/ekadashi-server/pkg/storage/mongo"
-
 	"github.com/Lighty0410/ekadashi-server/pkg/server/controller"
 	"github.com/Lighty0410/ekadashi-server/pkg/server/http"
+	"github.com/Lighty0410/ekadashi-server/pkg/storage/mongo"
 )
 
 const ekadashiURL = "EKADASHI_MONGO_URL"

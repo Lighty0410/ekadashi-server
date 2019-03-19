@@ -13,7 +13,7 @@ import (
 )
 
 // AddUser adds passed user into users collection.
-func (s *Service) AddUser(u *storage.User) error {
+func (s *Service) Add(u *storage.User) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 	c := s.db.Collection("users")
@@ -25,7 +25,7 @@ func (s *Service) AddUser(u *storage.User) error {
 }
 
 // ReadUser retrieves an information from the database and compares it with a request.
-func (s *Service) ReadUser(username string) (storage.User, error) {
+func (s *Service) Read(username string) (storage.User, error) {
 	var hash storage.User
 	filter := bson.D{{Key: "name", Value: username}}
 	err := s.db.Collection("users").FindOne(context.Background(), filter).Decode(&hash)
@@ -39,7 +39,7 @@ func (s *Service) ReadUser(username string) (storage.User, error) {
 }
 
 // GetUsers gets an information about username of users.
-func (s *Service) GetUsers() ([]string, error) {
+func (s *Service) Get() ([]string, error) {
 	c := s.db.Collection("users")
 	findOption := options.Find()
 	findOption.SetProjection(bson.M{"name": 1})

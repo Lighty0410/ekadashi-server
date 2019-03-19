@@ -59,9 +59,9 @@ func TestAddAndReadUser(t *testing.T) {
 	}
 	for _, tc := range tt {
 		t.Run(tc.name, func(t *testing.T) {
-			err := testService.AddUser(&tc.user)
+			err := testService.Add(&tc.user)
 			require.NoError(t, err)
-			user, err := testService.ReadUser(tc.user.Name)
+			user, err := testService.Read(tc.user.Name)
 			require.NoError(t, err)
 			assert.Equal(t, user, tc.user, tc.name)
 		})

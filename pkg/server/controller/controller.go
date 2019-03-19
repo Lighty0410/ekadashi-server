@@ -55,7 +55,7 @@ func (c *Controller) RegisterUser(u User) error {
 		Name: u.Username,
 		Hash: hashedPassword,
 	}
-	err = c.user.AddUser(user)
+	err = c.user.Add(user)
 	if err != nil {
 		if strings.Contains(err.Error(), "duplicate key error collection") {
 			return ErrAlreadyExists
@@ -68,7 +68,7 @@ func (c *Controller) RegisterUser(u User) error {
 // LoginUser compares user's hash and password in the database.
 // If succeed it add user's session to the database and returns it.
 func (c *Controller) LoginUser(u User) (*Session, error) {
-	user, err := c.user.ReadUser(u.Username)
+	user, err := c.user.Read(u.Username)
 	if err == storage.ErrUserNotFound {
 		return nil, ErrNotFound
 	}
