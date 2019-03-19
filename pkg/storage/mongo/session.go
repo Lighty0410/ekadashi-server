@@ -3,25 +3,29 @@ package mongo
 import (
 	"context"
 	"fmt"
-	"time"
+
+	"github.com/Lighty0410/ekadashi-server/pkg/storage"
 
 	"github.com/mongodb/mongo-go-driver/bson"
 	"github.com/mongodb/mongo-go-driver/mongo"
 )
 
-// Session contains an information about user session.
-type Session struct {
-	Name             string    `bson:"name"`
-	SessionHash      string    `bson:"hash"`
-	LastModifiedDate time.Time `bson:"modified"`
-}
-
 // ErrNoSession is returned when session is not found.
 var ErrNoSession = fmt.Errorf("session not found")
 
+// CreateSession gets an information about session and insert it to database.
+func (s *Service) CreateSession(u *storage.Session) error {
+	c := s.db.Collection("session")
+	_, err := c.InsertOne(context.Background(), u)
+	if err != nil {
+		return fmt.Errorf("cannot create a session: %v", err)
+	}
+	return nil
+}
+
 // GetSession receive information about user's hash and if succeed, returns Session structure.
-func (s *Service) GetSession(hash string) (*Session, error) {
-	var session Session
+func (s *Service) GetSession(hash string) (*storage.Session, error) {
+	var session storage.Session
 	c := s.db.Collection("session")
 	filter := bson.D{{Key: "hash", Value: hash}}
 	err := c.FindOne(context.Background(), filter).Decode(&session)
@@ -35,7 +39,7 @@ func (s *Service) GetSession(hash string) (*Session, error) {
 }
 
 // UpdateSession updates TTL index of current session.
-func (s *Service) UpdateSession(session *Session) error {
+func (s *Service) UpdateSession(session *storage.Session) error {
 	c := s.db.Collection("session")
 	_, err := c.UpdateOne(context.Background(), bson.D{{Key: "hash", Value: session.SessionHash}}, bson.D{{
 		Key: "$set", Value: bson.D{{

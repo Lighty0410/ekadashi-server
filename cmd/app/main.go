@@ -7,7 +7,8 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/Lighty0410/ekadashi-server/pkg/mongo"
+	"github.com/Lighty0410/ekadashi-server/pkg/storage/mongo"
+
 	"github.com/Lighty0410/ekadashi-server/pkg/server/controller"
 	"github.com/Lighty0410/ekadashi-server/pkg/server/http"
 )
@@ -23,7 +24,7 @@ func main() {
 	if err != nil {
 		log.Fatalf("Could not create mongo service: %v", err)
 	}
-	newController := controller.NewController(mongoService)
+	newController := controller.NewController(mongoService, mongoService, mongoService)
 	server, err := http.NewServer(":9000", newController)
 	if err != nil {
 		log.Fatalf("Could not create ekadashi server: %v", err)
