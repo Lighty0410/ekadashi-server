@@ -76,7 +76,7 @@ func (c *Controller) LoginUser(u User) (*Session, error) {
 		return nil, ErrNotFound
 	}
 	userSession := &storage.Session{
-		Token:            crypto.GenerateToken(), //todo
+		Token:            crypto.GenerateToken(),
 		LastModifiedDate: time.Now(),
 	}
 	err = c.service.AddSession(userSession)
@@ -97,7 +97,7 @@ func (c *Controller) ShowEkadashi(sessionToken string) (time.Time, error) { //
 		return time.Time{}, ErrNotFound
 	}
 	if err != nil {
-		return time.Time{}, fmt.Errorf("cannot check authentification: %v", err)
+		return time.Time{}, fmt.Errorf("cannot check authentication: %v", err)
 	}
 	ekadashiDate, err := c.service.NextEkadashi(time.Now())
 	if err != nil {
