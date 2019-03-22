@@ -1,5 +1,7 @@
 BIN_DIR := ./bin
 BUILDNAME := $(BIN_DIR)/server
+PROTO_DIR := ./pkg/server/grpc/api
+PROTOFILE := ./pkg/server/grpc/api/server.proto
 
 build:
 	go build -o $(BUILDNAME) ./cmd/app
@@ -11,6 +13,10 @@ test:
 clean:
 	go clean
 	rm -rf $(BIN_DIR)
+
+.PHONY:
+proto:
+	protoc -I $(PROTO_DIR) $(PROTOFILE) --go_out=plugins=grpc:$(PROTO_DIR)
 
 .PHONY: lint
 lint:
