@@ -38,7 +38,7 @@ func (s *Service) HandleRegistration(ctx context.Context, u *api.User) (*api.Res
 }
 
 // HandleRegistration validate login request and sends it to the controller.
-// If succeed it register user in the system and returns successful response.
+// If succeed it login user in the system and returns successful response.
 func (s *Service) HandleLogin(ctx context.Context, u *api.User) (*api.Response, error) {
 	err := validateRequest(u)
 	if err != nil {
