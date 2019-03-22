@@ -1,7 +1,6 @@
 package grpc
 
 import (
-	"fmt"
 	"log"
 	"net"
 
@@ -17,12 +16,13 @@ func NewGrpcServer(c *controller.Controller) (*grpc.Server, error) {
 		log.Println("cannot connect to gRPC: ", err)
 	}
 	service := NewService(c)
-	implementation := api.EkadashiServer(service)
 	server := grpc.NewServer()
-	api.RegisterEkadashiServer(server, implementation)
-	err = server.Serve(listener)
-	if err != nil {
-		return nil, fmt.Errorf("cannot to listen to gRPC server: %v", err)
-	}
+	api.RegisterEkadashiServer(server, service)
+	go func() {
+		err = server.Serve(listener)
+		if err != nil {
+			log.Printf("cannot to listen to gRPC server: %v", err)
+		}
+	}()
 	return server, nil
 }

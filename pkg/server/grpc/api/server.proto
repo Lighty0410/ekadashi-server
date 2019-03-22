@@ -2,26 +2,39 @@ syntax = "proto3";
 
 package grpc;
 
+message User {
+    string name = 1;
+    string password = 2;
+}
 
 message Session {
-    string name = 1;
-    string token = 2;
+    string token = 1;
 }
 
-message User {
-    string user = 1;
-    string password = 2;
-    Session auth = 3;
+message RegisterRequest {
+    User user = 1;
 }
 
-message Response {
-    string response = 1;
-    Session session = 2;
-    int64 Ekadashi = 3;
+message LoginRequest {
+    User user = 1;
 }
+
+message LoginResponse {
+    Session token = 1;
+}
+
+message ShowEkadashiRequest {
+    Session request = 1;
+}
+
+message ShowEkadashiResponse {
+    int64 ekadashi = 1;
+}
+
+message Empty {}
 
 service Ekadashi {
-    rpc HandleRegistration (User) returns (Response) {}
-    rpc HandleLogin (User) returns (Response) {}
-    rpc ShowEkadashi (User) returns (Response) {}
+    rpc Register (RegisterRequest) returns (Empty) {}
+    rpc Login (LoginRequest) returns (LoginResponse) {}
+    rpc ShowEkadashi (ShowEkadashiRequest) returns (ShowEkadashiResponse) {}
 }

@@ -9,14 +9,14 @@ import (
 
 // ShowEkadashi send an endpoint request to the controller.
 // If succeed returns ekadashi date.
-func (s *Service) ShowEkadashi(ctx context.Context, u *api.User) (*api.Response, error) {
-	if u.Auth.Name != "session_token" {
-		return nil, fmt.Errorf("incorrect session name")
+func (s *Service) ShowEkadashi(ctx context.Context, u *api.Session) (*api.ShowEkadashiResponse, error) {
+	if u.Token == "" {
+		return nil, fmt.Errorf("cannot handle an empty token")
 	}
-	date, err := s.controller.ShowEkadashi(u.Auth.Token)
+	date, err := s.controller.ShowEkadashi(u.Token)
 	if err != nil {
 		return nil, err
 	}
 	ekadashiDate := date.Unix()
-	return &api.Response{Ekadashi: ekadashiDate}, nil
+	return &api.ShowEkadashiResponse{Ekadashi: ekadashiDate}, nil
 }

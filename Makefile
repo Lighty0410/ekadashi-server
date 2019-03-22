@@ -1,7 +1,7 @@
 BIN_DIR := ./bin
 BUILDNAME := $(BIN_DIR)/server
 PROTO_DIR := ./pkg/server/grpc/api
-PROTOFILE := ./pkg/server/grpc/api/server.proto
+PROTOFILE := $(PROTO_DIR)/server.proto
 
 build:
 	go build -o $(BUILDNAME) ./cmd/app
