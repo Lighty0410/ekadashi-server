@@ -23,8 +23,8 @@ var _ = math.Inf
 const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
 type Session struct {
-	Token                string   `protobuf:"bytes,1,opt,name=token,proto3" json:"token,omitempty"`
-	LastModifiedDate     int64    `protobuf:"varint,2,opt,name=LastModifiedDate,json=lastModifiedDate,proto3" json:"LastModifiedDate,omitempty"`
+	Name                 string   `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -55,6 +55,13 @@ func (m *Session) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_Session proto.InternalMessageInfo
 
+func (m *Session) GetName() string {
+	if m != nil {
+		return m.Name
+	}
+	return ""
+}
+
 func (m *Session) GetToken() string {
 	if m != nil {
 		return m.Token
@@ -62,16 +69,10 @@ func (m *Session) GetToken() string {
 	return ""
 }
 
-func (m *Session) GetLastModifiedDate() int64 {
-	if m != nil {
-		return m.LastModifiedDate
-	}
-	return 0
-}
-
 type User struct {
 	User                 string   `protobuf:"bytes,1,opt,name=user,proto3" json:"user,omitempty"`
 	Password             string   `protobuf:"bytes,2,opt,name=password,proto3" json:"password,omitempty"`
+	Auth                 *Session `protobuf:"bytes,3,opt,name=auth,proto3" json:"auth,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -116,19 +117,66 @@ func (m *User) GetPassword() string {
 	return ""
 }
 
-type Response struct {
-	Response             string   `protobuf:"bytes,1,opt,name=response,proto3" json:"response,omitempty"`
-	Session              *Session `protobuf:"bytes,2,opt,name=session,proto3" json:"session,omitempty"`
+func (m *User) GetAuth() *Session {
+	if m != nil {
+		return m.Auth
+	}
+	return nil
+}
+
+type EkadashiDate struct {
+	Ekadashi             int64    `protobuf:"varint,1,opt,name=Ekadashi,json=ekadashi,proto3" json:"Ekadashi,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *EkadashiDate) Reset()         { *m = EkadashiDate{} }
+func (m *EkadashiDate) String() string { return proto.CompactTextString(m) }
+func (*EkadashiDate) ProtoMessage()    {}
+func (*EkadashiDate) Descriptor() ([]byte, []int) {
+	return fileDescriptor_ad098daeda4239f7, []int{2}
+}
+
+func (m *EkadashiDate) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_EkadashiDate.Unmarshal(m, b)
+}
+func (m *EkadashiDate) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_EkadashiDate.Marshal(b, m, deterministic)
+}
+func (m *EkadashiDate) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_EkadashiDate.Merge(m, src)
+}
+func (m *EkadashiDate) XXX_Size() int {
+	return xxx_messageInfo_EkadashiDate.Size(m)
+}
+func (m *EkadashiDate) XXX_DiscardUnknown() {
+	xxx_messageInfo_EkadashiDate.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_EkadashiDate proto.InternalMessageInfo
+
+func (m *EkadashiDate) GetEkadashi() int64 {
+	if m != nil {
+		return m.Ekadashi
+	}
+	return 0
+}
+
+type Response struct {
+	Response             string        `protobuf:"bytes,1,opt,name=response,proto3" json:"response,omitempty"`
+	Session              *Session      `protobuf:"bytes,2,opt,name=session,proto3" json:"session,omitempty"`
+	Ekadashi             *EkadashiDate `protobuf:"bytes,3,opt,name=Ekadashi,json=ekadashi,proto3" json:"Ekadashi,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}      `json:"-"`
+	XXX_unrecognized     []byte        `json:"-"`
+	XXX_sizecache        int32         `json:"-"`
 }
 
 func (m *Response) Reset()         { *m = Response{} }
 func (m *Response) String() string { return proto.CompactTextString(m) }
 func (*Response) ProtoMessage()    {}
 func (*Response) Descriptor() ([]byte, []int) {
-	return fileDescriptor_ad098daeda4239f7, []int{2}
+	return fileDescriptor_ad098daeda4239f7, []int{3}
 }
 
 func (m *Response) XXX_Unmarshal(b []byte) error {
@@ -163,32 +211,42 @@ func (m *Response) GetSession() *Session {
 	return nil
 }
 
+func (m *Response) GetEkadashi() *EkadashiDate {
+	if m != nil {
+		return m.Ekadashi
+	}
+	return nil
+}
+
 func init() {
 	proto.RegisterType((*Session)(nil), "grpc.Session")
 	proto.RegisterType((*User)(nil), "grpc.User")
+	proto.RegisterType((*EkadashiDate)(nil), "grpc.EkadashiDate")
 	proto.RegisterType((*Response)(nil), "grpc.Response")
 }
 
 func init() { proto.RegisterFile("server.proto", fileDescriptor_ad098daeda4239f7) }
 
 var fileDescriptor_ad098daeda4239f7 = []byte{
-	// 253 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x84, 0x50, 0x4d, 0x4b, 0xc3, 0x40,
-	0x14, 0x34, 0x1a, 0xfb, 0xf1, 0x5a, 0xa5, 0x3c, 0x3c, 0x94, 0x9e, 0x4a, 0x2e, 0x16, 0x95, 0x1c,
-	0x22, 0xf8, 0x0b, 0x14, 0x04, 0x2b, 0xc2, 0x06, 0x7f, 0xc0, 0xea, 0x3e, 0xd3, 0xa5, 0x25, 0x1b,
-	0xde, 0x5b, 0xed, 0x4f, 0xf1, 0xef, 0x4a, 0x76, 0xd3, 0x1c, 0x3c, 0xe8, 0x6d, 0x66, 0x77, 0x66,
-	0x98, 0x79, 0x30, 0x15, 0xe2, 0x2f, 0xe2, 0xbc, 0x61, 0xe7, 0x1d, 0xa6, 0x15, 0x37, 0xef, 0xd9,
-	0x13, 0x0c, 0x4b, 0x12, 0xb1, 0xae, 0xc6, 0x0b, 0x38, 0xf5, 0x6e, 0x4b, 0xf5, 0x3c, 0x59, 0x26,
-	0xab, 0xb1, 0x8a, 0x04, 0xaf, 0x60, 0xb6, 0xd6, 0xe2, 0x9f, 0x9d, 0xb1, 0x1f, 0x96, 0xcc, 0xbd,
-	0xf6, 0x34, 0x3f, 0x5e, 0x26, 0xab, 0x13, 0x35, 0xdb, 0xfd, 0x7a, 0xcf, 0xee, 0x20, 0x7d, 0x15,
-	0x62, 0x44, 0x48, 0x3f, 0x85, 0xb8, 0x0b, 0x0a, 0x18, 0x17, 0x30, 0x6a, 0xb4, 0xc8, 0xde, 0xb1,
-	0x09, 0xfe, 0xb1, 0xea, 0x79, 0xf6, 0x02, 0x23, 0x45, 0xd2, 0xb8, 0x5a, 0xa8, 0xd5, 0x71, 0x87,
-	0x3b, 0x7f, 0xcf, 0xf1, 0x12, 0x86, 0x12, 0xcb, 0x86, 0x88, 0x49, 0x71, 0x96, 0xb7, 0x23, 0xf2,
-	0x6e, 0x81, 0x3a, 0xfc, 0x16, 0xdf, 0x09, 0x0c, 0xca, 0x30, 0x16, 0x0b, 0xc0, 0x47, 0x5d, 0x9b,
-	0x1d, 0x29, 0xaa, 0xac, 0x78, 0xd6, 0xbe, 0xdd, 0x0a, 0xd1, 0xd8, 0xb6, 0x5d, 0x9c, 0x47, 0x7c,
-	0x68, 0x90, 0x1d, 0xe1, 0x35, 0x4c, 0xa2, 0x67, 0xed, 0x2a, 0xfb, 0x9f, 0xf8, 0x06, 0xa6, 0xe5,
-	0xc6, 0xed, 0x1f, 0xb6, 0xda, 0x68, 0xd9, 0xd8, 0xbf, 0xd5, 0x6f, 0x83, 0x70, 0xfc, 0xdb, 0x9f,
-	0x00, 0x00, 0x00, 0xff, 0xff, 0x79, 0xd0, 0x93, 0x2e, 0x8c, 0x01, 0x00, 0x00,
+	// 276 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x84, 0x91, 0xbd, 0x4e, 0xc3, 0x40,
+	0x10, 0x84, 0x31, 0x31, 0xc4, 0x6c, 0x0c, 0xc5, 0x8a, 0xc2, 0x4a, 0x15, 0xdc, 0x10, 0x01, 0x72,
+	0xe1, 0xbc, 0x02, 0x48, 0x14, 0x54, 0x8e, 0x28, 0x28, 0x0f, 0xbc, 0xb2, 0xad, 0xc0, 0x9d, 0x75,
+	0x7b, 0x21, 0x25, 0xcf, 0xc1, 0xdb, 0xa2, 0xfb, 0xb1, 0x13, 0x09, 0x09, 0xba, 0x1d, 0xef, 0xcc,
+	0xce, 0x27, 0x1f, 0xa4, 0x4c, 0xfa, 0x93, 0x74, 0xd1, 0x6b, 0x65, 0x14, 0xc6, 0x8d, 0xee, 0xdf,
+	0xf2, 0x15, 0x4c, 0xd7, 0xc4, 0xdc, 0x29, 0x89, 0x08, 0xb1, 0x14, 0x1f, 0x94, 0x45, 0x8b, 0x68,
+	0x79, 0x56, 0xb9, 0x19, 0x2f, 0xe1, 0xc4, 0xa8, 0x0d, 0xc9, 0xec, 0xd8, 0x7d, 0xf4, 0x22, 0x7f,
+	0x81, 0xf8, 0x99, 0x49, 0xdb, 0xc4, 0x96, 0x49, 0x0f, 0x09, 0x3b, 0xe3, 0x1c, 0x92, 0x5e, 0x30,
+	0xef, 0x94, 0xae, 0x43, 0x68, 0xd4, 0x78, 0x05, 0xb1, 0xd8, 0x9a, 0x36, 0x9b, 0x2c, 0xa2, 0xe5,
+	0xac, 0x3c, 0x2f, 0x2c, 0x41, 0x11, 0xea, 0x2b, 0xb7, 0xca, 0x6f, 0x20, 0x7d, 0xd8, 0x88, 0x5a,
+	0x70, 0xdb, 0xdd, 0x0b, 0x43, 0xf6, 0xdc, 0xa0, 0x5d, 0xcd, 0xa4, 0x4a, 0x28, 0xe8, 0xfc, 0x0b,
+	0x92, 0x8a, 0xb8, 0x57, 0x92, 0x9d, 0x4f, 0x87, 0x39, 0xe0, 0x8c, 0x1a, 0xaf, 0x61, 0xca, 0xbe,
+	0xc4, 0x11, 0xfd, 0x6a, 0x1e, 0xb6, 0x58, 0x1c, 0x94, 0x79, 0x46, 0xf4, 0xce, 0x43, 0xa4, 0x3d,
+	0x40, 0xf9, 0x1d, 0xed, 0x03, 0x58, 0x02, 0x3e, 0x0a, 0x59, 0xbf, 0x53, 0x45, 0x4d, 0xc7, 0x46,
+	0x0b, 0x63, 0x4f, 0x82, 0x3f, 0x60, 0x7f, 0xd7, 0xfc, 0xc2, 0xcf, 0x03, 0x73, 0x7e, 0x84, 0xb7,
+	0x30, 0xf3, 0x99, 0x27, 0xd5, 0x74, 0xff, 0x99, 0xef, 0x20, 0x5d, 0xb7, 0x6a, 0x37, 0x16, 0xfe,
+	0xe9, 0x7e, 0x3d, 0x75, 0xaf, 0xbc, 0xfa, 0x09, 0x00, 0x00, 0xff, 0xff, 0x98, 0x71, 0xca, 0x54,
+	0xf5, 0x01, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -199,130 +257,130 @@ var _ grpc.ClientConn
 // is compatible with the grpc package it is being compiled against.
 const _ = grpc.SupportPackageIsVersion4
 
-// ServerClient is the client API for Server service.
+// EkadashiClient is the client API for Ekadashi service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
-type ServerClient interface {
+type EkadashiClient interface {
 	HandleRegistration(ctx context.Context, in *User, opts ...grpc.CallOption) (*Response, error)
 	HandleLogin(ctx context.Context, in *User, opts ...grpc.CallOption) (*Response, error)
 	ShowEkadashi(ctx context.Context, in *User, opts ...grpc.CallOption) (*Response, error)
 }
 
-type serverClient struct {
+type ekadashiClient struct {
 	cc *grpc.ClientConn
 }
 
-func NewServerClient(cc *grpc.ClientConn) ServerClient {
-	return &serverClient{cc}
+func NewEkadashiClient(cc *grpc.ClientConn) EkadashiClient {
+	return &ekadashiClient{cc}
 }
 
-func (c *serverClient) HandleRegistration(ctx context.Context, in *User, opts ...grpc.CallOption) (*Response, error) {
+func (c *ekadashiClient) HandleRegistration(ctx context.Context, in *User, opts ...grpc.CallOption) (*Response, error) {
 	out := new(Response)
-	err := c.cc.Invoke(ctx, "/grpc.Server/HandleRegistration", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/grpc.Ekadashi/HandleRegistration", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *serverClient) HandleLogin(ctx context.Context, in *User, opts ...grpc.CallOption) (*Response, error) {
+func (c *ekadashiClient) HandleLogin(ctx context.Context, in *User, opts ...grpc.CallOption) (*Response, error) {
 	out := new(Response)
-	err := c.cc.Invoke(ctx, "/grpc.Server/HandleLogin", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/grpc.Ekadashi/HandleLogin", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *serverClient) ShowEkadashi(ctx context.Context, in *User, opts ...grpc.CallOption) (*Response, error) {
+func (c *ekadashiClient) ShowEkadashi(ctx context.Context, in *User, opts ...grpc.CallOption) (*Response, error) {
 	out := new(Response)
-	err := c.cc.Invoke(ctx, "/grpc.Server/ShowEkadashi", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/grpc.Ekadashi/ShowEkadashi", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// ServerServer is the server API for Server service.
-type ServerServer interface {
+// EkadashiServer is the server API for Ekadashi service.
+type EkadashiServer interface {
 	HandleRegistration(context.Context, *User) (*Response, error)
 	HandleLogin(context.Context, *User) (*Response, error)
 	ShowEkadashi(context.Context, *User) (*Response, error)
 }
 
-func RegisterServerServer(s *grpc.Server, srv ServerServer) {
-	s.RegisterService(&_Server_serviceDesc, srv)
+func RegisterEkadashiServer(s *grpc.Server, srv EkadashiServer) {
+	s.RegisterService(&_Ekadashi_serviceDesc, srv)
 }
 
-func _Server_HandleRegistration_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Ekadashi_HandleRegistration_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(User)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ServerServer).HandleRegistration(ctx, in)
+		return srv.(EkadashiServer).HandleRegistration(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/grpc.Server/HandleRegistration",
+		FullMethod: "/grpc.Ekadashi/HandleRegistration",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ServerServer).HandleRegistration(ctx, req.(*User))
+		return srv.(EkadashiServer).HandleRegistration(ctx, req.(*User))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Server_HandleLogin_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Ekadashi_HandleLogin_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(User)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ServerServer).HandleLogin(ctx, in)
+		return srv.(EkadashiServer).HandleLogin(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/grpc.Server/HandleLogin",
+		FullMethod: "/grpc.Ekadashi/HandleLogin",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ServerServer).HandleLogin(ctx, req.(*User))
+		return srv.(EkadashiServer).HandleLogin(ctx, req.(*User))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Server_ShowEkadashi_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Ekadashi_ShowEkadashi_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(User)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ServerServer).ShowEkadashi(ctx, in)
+		return srv.(EkadashiServer).ShowEkadashi(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/grpc.Server/ShowEkadashi",
+		FullMethod: "/grpc.Ekadashi/ShowEkadashi",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ServerServer).ShowEkadashi(ctx, req.(*User))
+		return srv.(EkadashiServer).ShowEkadashi(ctx, req.(*User))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-var _Server_serviceDesc = grpc.ServiceDesc{
-	ServiceName: "grpc.Server",
-	HandlerType: (*ServerServer)(nil),
+var _Ekadashi_serviceDesc = grpc.ServiceDesc{
+	ServiceName: "grpc.Ekadashi",
+	HandlerType: (*EkadashiServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "HandleRegistration",
-			Handler:    _Server_HandleRegistration_Handler,
+			Handler:    _Ekadashi_HandleRegistration_Handler,
 		},
 		{
 			MethodName: "HandleLogin",
-			Handler:    _Server_HandleLogin_Handler,
+			Handler:    _Ekadashi_HandleLogin_Handler,
 		},
 		{
 			MethodName: "ShowEkadashi",
-			Handler:    _Server_ShowEkadashi_Handler,
+			Handler:    _Ekadashi_ShowEkadashi_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
