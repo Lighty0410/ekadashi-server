@@ -17,6 +17,6 @@ func (s *Service) ShowEkadashi(ctx context.Context, u *api.User) (*api.Response,
 	if err != nil {
 		return nil, err
 	}
-	ekadashi := date.Unix()
-	return &api.Response{Ekadashi: &api.EkadashiDate{Ekadashi: ekadashi}}, nil
+	ekadashiDate := date.Unix()
+	return &api.Response{Ekadashi: &api.Date{Ekadashi: ekadashiDate}}, nil
 }

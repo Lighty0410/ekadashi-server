@@ -14,14 +14,14 @@ message User {
     Session auth = 3;
 }
 
-message EkadashiDate {
+message Date {
     int64 Ekadashi = 1;
 }
 
 message Response {
     string response = 1;
     Session session = 2;
-    EkadashiDate Ekadashi = 3;
+    Date Ekadashi = 3;
 }
 
 service Ekadashi {
