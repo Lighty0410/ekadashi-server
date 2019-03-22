@@ -36,10 +36,10 @@ func main() {
 	stop := make(chan os.Signal, 1)
 	signal.Notify(stop, syscall.SIGINT, syscall.SIGTERM)
 	sig := <-stop
-	log.Printf("Shutting down due to signal: %v", sig)
 	err = httpServer.Shutdown(context.Background())
+	grpcServer.GracefulStop()
+	log.Printf("Shutting down due to signal: %v", sig)
 	if err != nil {
 		log.Fatalf("cannot shutdown the server: %v", err)
 	}
-	grpcServer.GracefulStop()
 }
