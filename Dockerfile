@@ -18,6 +18,6 @@ FROM scratch AS final
 
 COPY --from=builder /app /app
 
-EXPOSE 9000
+EXPOSE 9000 50051
 
 ENTRYPOINT ["/app"]
