@@ -29,7 +29,7 @@ func main() {
 	if err != nil {
 		log.Fatalf("Could not create ekadashi server: %v", err)
 	}
-	grpcServer, err := grpc.NewGrpcServer(newController)
+	grpcServer, err := grpc.NewGrpcServer(":50051", newController)
 	if err != nil {
 		log.Fatalf("Could not create gRPC server: %v", err)
 	}

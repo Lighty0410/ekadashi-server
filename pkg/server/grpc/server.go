@@ -10,8 +10,8 @@ import (
 )
 
 // NewGrpcServer sets up a new TCP route and creates a new gRPC server.
-func NewGrpcServer(c *controller.Controller) (*grpc.Server, error) {
-	listener, err := net.Listen("tcp", ":50051")
+func NewGrpcServer(address string, c *controller.Controller) (*grpc.Server, error) {
+	listener, err := net.Listen("tcp", address)
 	if err != nil {
 		log.Println("cannot connect to gRPC: ", err)
 	}
