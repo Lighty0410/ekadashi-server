@@ -47,5 +47,5 @@ func (s *Service) Login(ctx context.Context, u *api.LoginRequest) (*api.LoginRes
 		return nil, fmt.Errorf("could not login user: %v", err)
 	}
 	return &api.LoginResponse{
-		Response: &api.Session{Token: session.Token}}, nil
+		Auth: &api.Session{Token: session.Token}}, nil
 }

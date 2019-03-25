@@ -10,10 +10,10 @@ import (
 // ShowEkadashi send an endpoint request to the controller.
 // If succeed returns ekadashi date.
 func (s *Service) ShowEkadashi(ctx context.Context, u *api.ShowEkadashiRequest) (*api.ShowEkadashiResponse, error) {
-	if u.Request.Token == "" {
+	if u.Session.Token == "" {
 		return nil, fmt.Errorf("auth token is required")
 	}
-	date, err := s.controller.ShowEkadashi(u.Request.Token)
+	date, err := s.controller.ShowEkadashi(u.Session.Token)
 	if err != nil {
 		return nil, fmt.Errorf("cannot get ekadashi date from gRPC: %v", err)
 	}

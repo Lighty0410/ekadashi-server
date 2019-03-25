@@ -20,11 +20,11 @@ message LoginRequest {
 }
 
 message LoginResponse {
-    Session response = 1;
+    Session auth = 1;
 }
 
 message ShowEkadashiRequest {
-    Session request = 1;
+    Session session = 1;
 }
 
 message ShowEkadashiResponse {
