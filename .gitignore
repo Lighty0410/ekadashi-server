@@ -17,3 +17,4 @@ secrets.yaml
 .vscode/ 
 .idea/
 bin/
+/pkg/server/grpc/client/
