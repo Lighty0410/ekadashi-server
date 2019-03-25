@@ -21,7 +21,7 @@ func NewGrpcServer(c *controller.Controller) (*grpc.Server, error) {
 	go func() {
 		err = server.Serve(listener)
 		if err != nil {
-			log.Printf("cannot to listen to gRPC server: %v", err)
+			log.Printf("cannot listen to gRPC server: %v", err)
 		}
 	}()
 	return server, nil

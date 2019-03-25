@@ -26,13 +26,13 @@ func NewService(c *controller.Controller) *Service {
 func (s *Service) Register(ctx context.Context, u *api.RegisterRequest) (*api.Empty, error) {
 	err := validateRequest(u.User)
 	if err != nil {
-		return nil, fmt.Errorf("cannot validate request: %v", err)
+		return nil, fmt.Errorf("cannot validate the request: %v", err)
 	}
 	err = s.controller.RegisterUser(controller.User{Username: u.User.Name, Password: u.User.Password})
 	if err != nil {
-		return nil, fmt.Errorf("gRPC request failed: %v", err)
+		return nil, fmt.Errorf("could not register user: %v", err)
 	}
-	return nil, nil
+	return &api.Empty{}, nil
 }
 
 // HandleRegistration validate login request and sends it to the controller.
@@ -40,11 +40,11 @@ func (s *Service) Register(ctx context.Context, u *api.RegisterRequest) (*api.Em
 func (s *Service) Login(ctx context.Context, u *api.LoginRequest) (*api.LoginResponse, error) {
 	err := validateRequest(u.User)
 	if err != nil {
-		return nil, fmt.Errorf("cannot validate request: %v", err)
+		return nil, fmt.Errorf("cannot validate the request: %v", err)
 	}
 	session, err := s.controller.LoginUser(controller.User{Username: u.User.Name, Password: u.User.Password})
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("could not login user: %v", err)
 	}
 	return &api.LoginResponse{
 		Token: &api.Session{Token: session.Token}}, nil

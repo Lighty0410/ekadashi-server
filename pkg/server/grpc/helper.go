@@ -15,10 +15,10 @@ func validateRequest(u *api.User) error {
 	if !validUsername(u.Name) {
 		return fmt.Errorf("field username contain latin characters and numbers without space only")
 	}
-	if !validPassword(u.Name) {
+	if !validPassword(u.Password) {
 		return fmt.Errorf("field password contain latin characters and numbers without space only")
 	}
-	if len(u.Password) < minSymbols {
+	if len(u.Name) < minSymbols {
 		return fmt.Errorf("field username could not be less than 6 characters")
 	}
 	if len(u.Password) < minSymbols {

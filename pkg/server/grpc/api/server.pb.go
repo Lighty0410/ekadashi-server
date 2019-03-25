@@ -22,123 +22,6 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
-type RegisterRequest struct {
-	User                 *User    `protobuf:"bytes,1,opt,name=user,proto3" json:"user,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
-}
-
-func (m *RegisterRequest) Reset()         { *m = RegisterRequest{} }
-func (m *RegisterRequest) String() string { return proto.CompactTextString(m) }
-func (*RegisterRequest) ProtoMessage()    {}
-func (*RegisterRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_ad098daeda4239f7, []int{0}
-}
-
-func (m *RegisterRequest) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_RegisterRequest.Unmarshal(m, b)
-}
-func (m *RegisterRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_RegisterRequest.Marshal(b, m, deterministic)
-}
-func (m *RegisterRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_RegisterRequest.Merge(m, src)
-}
-func (m *RegisterRequest) XXX_Size() int {
-	return xxx_messageInfo_RegisterRequest.Size(m)
-}
-func (m *RegisterRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_RegisterRequest.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_RegisterRequest proto.InternalMessageInfo
-
-func (m *RegisterRequest) GetUser() *User {
-	if m != nil {
-		return m.User
-	}
-	return nil
-}
-
-type LoginRequest struct {
-	User                 *User    `protobuf:"bytes,1,opt,name=user,proto3" json:"user,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
-}
-
-func (m *LoginRequest) Reset()         { *m = LoginRequest{} }
-func (m *LoginRequest) String() string { return proto.CompactTextString(m) }
-func (*LoginRequest) ProtoMessage()    {}
-func (*LoginRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_ad098daeda4239f7, []int{1}
-}
-
-func (m *LoginRequest) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_LoginRequest.Unmarshal(m, b)
-}
-func (m *LoginRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_LoginRequest.Marshal(b, m, deterministic)
-}
-func (m *LoginRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_LoginRequest.Merge(m, src)
-}
-func (m *LoginRequest) XXX_Size() int {
-	return xxx_messageInfo_LoginRequest.Size(m)
-}
-func (m *LoginRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_LoginRequest.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_LoginRequest proto.InternalMessageInfo
-
-func (m *LoginRequest) GetUser() *User {
-	if m != nil {
-		return m.User
-	}
-	return nil
-}
-
-type LoginResponse struct {
-	Token                *Session `protobuf:"bytes,1,opt,name=token,proto3" json:"token,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
-}
-
-func (m *LoginResponse) Reset()         { *m = LoginResponse{} }
-func (m *LoginResponse) String() string { return proto.CompactTextString(m) }
-func (*LoginResponse) ProtoMessage()    {}
-func (*LoginResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_ad098daeda4239f7, []int{2}
-}
-
-func (m *LoginResponse) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_LoginResponse.Unmarshal(m, b)
-}
-func (m *LoginResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_LoginResponse.Marshal(b, m, deterministic)
-}
-func (m *LoginResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_LoginResponse.Merge(m, src)
-}
-func (m *LoginResponse) XXX_Size() int {
-	return xxx_messageInfo_LoginResponse.Size(m)
-}
-func (m *LoginResponse) XXX_DiscardUnknown() {
-	xxx_messageInfo_LoginResponse.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_LoginResponse proto.InternalMessageInfo
-
-func (m *LoginResponse) GetToken() *Session {
-	if m != nil {
-		return m.Token
-	}
-	return nil
-}
-
 type User struct {
 	Name                 string   `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
 	Password             string   `protobuf:"bytes,2,opt,name=password,proto3" json:"password,omitempty"`
@@ -151,7 +34,7 @@ func (m *User) Reset()         { *m = User{} }
 func (m *User) String() string { return proto.CompactTextString(m) }
 func (*User) ProtoMessage()    {}
 func (*User) Descriptor() ([]byte, []int) {
-	return fileDescriptor_ad098daeda4239f7, []int{3}
+	return fileDescriptor_ad098daeda4239f7, []int{0}
 }
 
 func (m *User) XXX_Unmarshal(b []byte) error {
@@ -197,7 +80,7 @@ func (m *Session) Reset()         { *m = Session{} }
 func (m *Session) String() string { return proto.CompactTextString(m) }
 func (*Session) ProtoMessage()    {}
 func (*Session) Descriptor() ([]byte, []int) {
-	return fileDescriptor_ad098daeda4239f7, []int{4}
+	return fileDescriptor_ad098daeda4239f7, []int{1}
 }
 
 func (m *Session) XXX_Unmarshal(b []byte) error {
@@ -223,6 +106,123 @@ func (m *Session) GetToken() string {
 		return m.Token
 	}
 	return ""
+}
+
+type RegisterRequest struct {
+	User                 *User    `protobuf:"bytes,1,opt,name=user,proto3" json:"user,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *RegisterRequest) Reset()         { *m = RegisterRequest{} }
+func (m *RegisterRequest) String() string { return proto.CompactTextString(m) }
+func (*RegisterRequest) ProtoMessage()    {}
+func (*RegisterRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_ad098daeda4239f7, []int{2}
+}
+
+func (m *RegisterRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_RegisterRequest.Unmarshal(m, b)
+}
+func (m *RegisterRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_RegisterRequest.Marshal(b, m, deterministic)
+}
+func (m *RegisterRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_RegisterRequest.Merge(m, src)
+}
+func (m *RegisterRequest) XXX_Size() int {
+	return xxx_messageInfo_RegisterRequest.Size(m)
+}
+func (m *RegisterRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_RegisterRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_RegisterRequest proto.InternalMessageInfo
+
+func (m *RegisterRequest) GetUser() *User {
+	if m != nil {
+		return m.User
+	}
+	return nil
+}
+
+type LoginRequest struct {
+	User                 *User    `protobuf:"bytes,1,opt,name=user,proto3" json:"user,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *LoginRequest) Reset()         { *m = LoginRequest{} }
+func (m *LoginRequest) String() string { return proto.CompactTextString(m) }
+func (*LoginRequest) ProtoMessage()    {}
+func (*LoginRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_ad098daeda4239f7, []int{3}
+}
+
+func (m *LoginRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_LoginRequest.Unmarshal(m, b)
+}
+func (m *LoginRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_LoginRequest.Marshal(b, m, deterministic)
+}
+func (m *LoginRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_LoginRequest.Merge(m, src)
+}
+func (m *LoginRequest) XXX_Size() int {
+	return xxx_messageInfo_LoginRequest.Size(m)
+}
+func (m *LoginRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_LoginRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_LoginRequest proto.InternalMessageInfo
+
+func (m *LoginRequest) GetUser() *User {
+	if m != nil {
+		return m.User
+	}
+	return nil
+}
+
+type LoginResponse struct {
+	Token                *Session `protobuf:"bytes,1,opt,name=token,proto3" json:"token,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *LoginResponse) Reset()         { *m = LoginResponse{} }
+func (m *LoginResponse) String() string { return proto.CompactTextString(m) }
+func (*LoginResponse) ProtoMessage()    {}
+func (*LoginResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_ad098daeda4239f7, []int{4}
+}
+
+func (m *LoginResponse) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_LoginResponse.Unmarshal(m, b)
+}
+func (m *LoginResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_LoginResponse.Marshal(b, m, deterministic)
+}
+func (m *LoginResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_LoginResponse.Merge(m, src)
+}
+func (m *LoginResponse) XXX_Size() int {
+	return xxx_messageInfo_LoginResponse.Size(m)
+}
+func (m *LoginResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_LoginResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_LoginResponse proto.InternalMessageInfo
+
+func (m *LoginResponse) GetToken() *Session {
+	if m != nil {
+		return m.Token
+	}
+	return nil
 }
 
 type ShowEkadashiRequest struct {
@@ -335,11 +335,11 @@ func (m *Empty) XXX_DiscardUnknown() {
 var xxx_messageInfo_Empty proto.InternalMessageInfo
 
 func init() {
+	proto.RegisterType((*User)(nil), "grpc.User")
+	proto.RegisterType((*Session)(nil), "grpc.Session")
 	proto.RegisterType((*RegisterRequest)(nil), "grpc.RegisterRequest")
 	proto.RegisterType((*LoginRequest)(nil), "grpc.LoginRequest")
 	proto.RegisterType((*LoginResponse)(nil), "grpc.LoginResponse")
-	proto.RegisterType((*User)(nil), "grpc.User")
-	proto.RegisterType((*Session)(nil), "grpc.Session")
 	proto.RegisterType((*ShowEkadashiRequest)(nil), "grpc.ShowEkadashiRequest")
 	proto.RegisterType((*ShowEkadashiResponse)(nil), "grpc.ShowEkadashiResponse")
 	proto.RegisterType((*Empty)(nil), "grpc.Empty")
@@ -348,26 +348,26 @@ func init() {
 func init() { proto.RegisterFile("server.proto", fileDescriptor_ad098daeda4239f7) }
 
 var fileDescriptor_ad098daeda4239f7 = []byte{
-	// 301 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x8c, 0x52, 0xc1, 0x4e, 0xeb, 0x30,
-	0x10, 0x6c, 0xdf, 0x4b, 0x49, 0xba, 0x4d, 0x85, 0xb4, 0x2d, 0x52, 0xe5, 0x03, 0x20, 0x73, 0x80,
-	0x53, 0x04, 0x01, 0x71, 0x41, 0xe2, 0xd6, 0x1b, 0x27, 0x57, 0x7c, 0x40, 0xa0, 0xab, 0x34, 0xaa,
-	0x1a, 0x07, 0x6f, 0x4a, 0xc5, 0x47, 0xf1, 0x8f, 0xa8, 0xb6, 0x53, 0x25, 0xa8, 0x07, 0x6e, 0xde,
-	0xf1, 0xcc, 0x78, 0x67, 0xd7, 0x10, 0x33, 0x99, 0x4f, 0x32, 0x49, 0x65, 0x74, 0xad, 0x31, 0xc8,
-	0x4d, 0xf5, 0x2e, 0xef, 0xe0, 0x54, 0x51, 0x5e, 0x70, 0x4d, 0x46, 0xd1, 0xc7, 0x96, 0xb8, 0xc6,
-	0x73, 0x08, 0xb6, 0x4c, 0x66, 0xd6, 0xbf, 0xec, 0xdf, 0x8c, 0x52, 0x48, 0xf6, 0xbc, 0xe4, 0x95,
-	0xc9, 0x28, 0x8b, 0xcb, 0x04, 0xe2, 0x17, 0x9d, 0x17, 0xe5, 0x5f, 0xf9, 0x0f, 0x30, 0xf6, 0x7c,
-	0xae, 0x74, 0xc9, 0x84, 0x57, 0x30, 0xa8, 0xf5, 0x9a, 0x4a, 0xaf, 0x18, 0x3b, 0xc5, 0x82, 0x98,
-	0x0b, 0x5d, 0x2a, 0x77, 0x27, 0x1f, 0x21, 0xd8, 0x7b, 0x20, 0x42, 0x50, 0x66, 0x1b, 0xb2, 0xdc,
-	0xa1, 0xb2, 0x67, 0x14, 0x10, 0x55, 0x19, 0xf3, 0x4e, 0x9b, 0xe5, 0xec, 0x9f, 0xc5, 0x0f, 0xb5,
-	0xbc, 0x80, 0xd0, 0x3b, 0xe1, 0xb4, 0xfd, 0xce, 0xb0, 0x31, 0x7e, 0x86, 0xc9, 0x62, 0xa5, 0x77,
-	0xf3, 0x75, 0xb6, 0xcc, 0x78, 0x55, 0x34, 0x29, 0xae, 0x21, 0x34, 0xee, 0x78, 0xbc, 0xad, 0xe6,
-	0x56, 0xa6, 0x30, 0xed, 0xea, 0x7d, 0x2a, 0x01, 0x11, 0x79, 0xcc, 0x3a, 0xfc, 0x57, 0x87, 0x5a,
-	0x86, 0x30, 0x98, 0x6f, 0xaa, 0xfa, 0x2b, 0xfd, 0xee, 0x43, 0xd4, 0x28, 0xf1, 0x16, 0xa2, 0x66,
-	0xf6, 0x78, 0xe6, 0x5e, 0xfb, 0xb5, 0x0b, 0x31, 0x72, 0xb0, 0x15, 0xcb, 0x1e, 0xa6, 0x30, 0xb0,
-	0xa3, 0x44, 0x74, 0x78, 0x7b, 0x0f, 0x62, 0xd2, 0xc1, 0x5c, 0x57, 0xb2, 0x87, 0x4f, 0x10, 0xb7,
-	0xfb, 0xc5, 0x6e, 0x2e, 0x21, 0x7c, 0x79, 0x24, 0x92, 0xec, 0xbd, 0x9d, 0xd8, 0xbf, 0x72, 0xff,
-	0x13, 0x00, 0x00, 0xff, 0xff, 0x62, 0xe2, 0xad, 0x2d, 0x3b, 0x02, 0x00, 0x00,
+	// 300 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x8c, 0x52, 0x4d, 0x4f, 0xc2, 0x40,
+	0x10, 0x05, 0x2d, 0x52, 0xa7, 0x25, 0x26, 0x03, 0x26, 0xb8, 0x07, 0x35, 0xeb, 0x41, 0x4f, 0x8d,
+	0x56, 0xe3, 0xd1, 0x1b, 0xf1, 0xe2, 0xa9, 0xc4, 0x1f, 0x50, 0x65, 0x52, 0x1a, 0x42, 0xb7, 0xee,
+	0x14, 0x89, 0x3f, 0xcd, 0x7f, 0x67, 0xd8, 0x0f, 0x52, 0x94, 0x83, 0xb7, 0x9d, 0x37, 0xf3, 0xe6,
+	0xbd, 0x79, 0x59, 0x88, 0x99, 0xf4, 0x27, 0xe9, 0xa4, 0xd6, 0xaa, 0x51, 0x18, 0x14, 0xba, 0x7e,
+	0x97, 0x8f, 0x10, 0xbc, 0x32, 0x69, 0x44, 0x08, 0xaa, 0x7c, 0x49, 0xe3, 0xee, 0x65, 0xf7, 0xe6,
+	0x38, 0x33, 0x6f, 0x14, 0x10, 0xd6, 0x39, 0xf3, 0x5a, 0xe9, 0xd9, 0xf8, 0xc0, 0xe0, 0xdb, 0x5a,
+	0x5e, 0x40, 0x7f, 0x4a, 0xcc, 0xa5, 0xaa, 0x70, 0x04, 0xbd, 0x46, 0x2d, 0xa8, 0x72, 0x5c, 0x5b,
+	0xc8, 0x3b, 0x38, 0xc9, 0xa8, 0x28, 0xb9, 0x21, 0x9d, 0xd1, 0xc7, 0x8a, 0xb8, 0xc1, 0x73, 0x08,
+	0x56, 0x4c, 0xda, 0xcc, 0x45, 0x29, 0x24, 0x1b, 0x03, 0xc9, 0x46, 0x3d, 0x33, 0xb8, 0x4c, 0x20,
+	0x7e, 0x51, 0x45, 0x59, 0xfd, 0x77, 0xfe, 0x01, 0x06, 0x6e, 0x9e, 0x6b, 0x55, 0x31, 0xe1, 0x55,
+	0xdb, 0x49, 0x94, 0x0e, 0x2c, 0xc3, 0xf9, 0xf4, 0xc6, 0x9e, 0x60, 0x38, 0x9d, 0xab, 0xf5, 0x64,
+	0x91, 0xcf, 0x72, 0x9e, 0x97, 0x5e, 0xec, 0x1a, 0xfa, 0xda, 0x3e, 0xf7, 0xb3, 0x7d, 0x57, 0xa6,
+	0x30, 0xda, 0xe5, 0x3b, 0x71, 0x01, 0x21, 0x39, 0xcc, 0x6c, 0x38, 0xcc, 0xb6, 0xb5, 0xec, 0x43,
+	0x6f, 0xb2, 0xac, 0x9b, 0xaf, 0xf4, 0xbb, 0x0b, 0xa1, 0x67, 0xe2, 0x2d, 0x84, 0x3e, 0x22, 0x3c,
+	0xb5, 0x6a, 0xbf, 0x22, 0x13, 0x91, 0x85, 0x0d, 0x59, 0x76, 0x30, 0x85, 0x9e, 0xb9, 0x18, 0xd1,
+	0xe2, 0xed, 0xb8, 0xc4, 0x70, 0x07, 0xb3, 0xae, 0x64, 0x07, 0x9f, 0x21, 0x6e, 0xfb, 0xc5, 0x33,
+	0x77, 0xd7, 0xdf, 0x0c, 0x84, 0xd8, 0xd7, 0xf2, 0x8b, 0xde, 0x8e, 0xcc, 0xbf, 0xb9, 0xff, 0x09,
+	0x00, 0x00, 0xff, 0xff, 0x8f, 0xc5, 0x96, 0xcc, 0x47, 0x02, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -384,7 +384,7 @@ const _ = grpc.SupportPackageIsVersion4
 type EkadashiClient interface {
 	Register(ctx context.Context, in *RegisterRequest, opts ...grpc.CallOption) (*Empty, error)
 	Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*LoginResponse, error)
-	ShowEkadashi(ctx context.Context, in *Session, opts ...grpc.CallOption) (*ShowEkadashiResponse, error)
+	ShowEkadashi(ctx context.Context, in *ShowEkadashiRequest, opts ...grpc.CallOption) (*ShowEkadashiResponse, error)
 }
 
 type ekadashiClient struct {
@@ -413,7 +413,7 @@ func (c *ekadashiClient) Login(ctx context.Context, in *LoginRequest, opts ...gr
 	return out, nil
 }
 
-func (c *ekadashiClient) ShowEkadashi(ctx context.Context, in *Session, opts ...grpc.CallOption) (*ShowEkadashiResponse, error) {
+func (c *ekadashiClient) ShowEkadashi(ctx context.Context, in *ShowEkadashiRequest, opts ...grpc.CallOption) (*ShowEkadashiResponse, error) {
 	out := new(ShowEkadashiResponse)
 	err := c.cc.Invoke(ctx, "/grpc.Ekadashi/ShowEkadashi", in, out, opts...)
 	if err != nil {
@@ -426,7 +426,7 @@ func (c *ekadashiClient) ShowEkadashi(ctx context.Context, in *Session, opts ...
 type EkadashiServer interface {
 	Register(context.Context, *RegisterRequest) (*Empty, error)
 	Login(context.Context, *LoginRequest) (*LoginResponse, error)
-	ShowEkadashi(context.Context, *Session) (*ShowEkadashiResponse, error)
+	ShowEkadashi(context.Context, *ShowEkadashiRequest) (*ShowEkadashiResponse, error)
 }
 
 func RegisterEkadashiServer(s *grpc.Server, srv EkadashiServer) {
@@ -470,7 +470,7 @@ func _Ekadashi_Login_Handler(srv interface{}, ctx context.Context, dec func(inte
 }
 
 func _Ekadashi_ShowEkadashi_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Session)
+	in := new(ShowEkadashiRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -482,7 +482,7 @@ func _Ekadashi_ShowEkadashi_Handler(srv interface{}, ctx context.Context, dec fu
 		FullMethod: "/grpc.Ekadashi/ShowEkadashi",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(EkadashiServer).ShowEkadashi(ctx, req.(*Session))
+		return srv.(EkadashiServer).ShowEkadashi(ctx, req.(*ShowEkadashiRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }

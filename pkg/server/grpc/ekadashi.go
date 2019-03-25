@@ -9,13 +9,13 @@ import (
 
 // ShowEkadashi send an endpoint request to the controller.
 // If succeed returns ekadashi date.
-func (s *Service) ShowEkadashi(ctx context.Context, u *api.Session) (*api.ShowEkadashiResponse, error) {
-	if u.Token == "" {
-		return nil, fmt.Errorf("cannot handle an empty token")
+func (s *Service) ShowEkadashi(ctx context.Context, u *api.ShowEkadashiRequest) (*api.ShowEkadashiResponse, error) {
+	if u.Request.Token == "" {
+		return nil, fmt.Errorf("auth token is required")
 	}
-	date, err := s.controller.ShowEkadashi(u.Token)
+	date, err := s.controller.ShowEkadashi(u.Request.Token)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("cannot get ekadashi date from gRPC: %v", err)
 	}
 	ekadashiDate := date.Unix()
 	return &api.ShowEkadashiResponse{Ekadashi: ekadashiDate}, nil
