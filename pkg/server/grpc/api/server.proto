@@ -20,7 +20,7 @@ message LoginRequest {
 }
 
 message LoginResponse {
-    Session token = 1;
+    Session response = 1;
 }
 
 message ShowEkadashiRequest {
